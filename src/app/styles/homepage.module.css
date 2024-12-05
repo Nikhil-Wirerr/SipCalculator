@@ -1,0 +1,121 @@
+.gradient-red{
+    background: transparent linear-gradient(213deg, #F2F6FF 0%, #FFF2F2 100%) 0% 0% no-repeat padding-box;
+}
+
+.gradient-yellow{
+    background: transparent linear-gradient(213deg, #F2F6FF 0%, #FCF3E2 100%) 0% 0% no-repeat padding-box;
+}
+
+.gradient-green{
+    background: transparent linear-gradient(213deg, #F2F6FF 0%, #E8FDEC 100%) 0% 0% no-repeat padding-box;
+}
+
+.gradient-blue{
+    background: transparent linear-gradient(213deg, #F2F6FF 0%, #D6E3FF 100%) 0% 0% ;
+}
+
+
+
+
+
+
+.solutionSection {
+    padding: 50px 0;
+  }
+  
+  .calculatorheading h1 {
+    font-size: 3rem;
+    font-weight: 600;
+    /* font-size: 48px; */
+    font-family: "Poppins-SemiBold";
+    color: #383E42;
+}
+  
+  .calculatorheading p {
+    color: #383E42;
+    font-size: 20px;
+    font-family: "Poppins-Regular";
+    text-align: center;
+  }
+
+  .row{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .customSolutionCard {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+    height: 370px; 
+    width: 100%; 
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between; 
+    padding: 20px;
+  
+  }
+  
+  .customSolutionCard:hover {
+    transform: translateY(-10px);
+  }
+  
+  .customSolutionCard a{
+    text-decoration: none;
+  }
+
+  .cardPrefix {
+    font-style: italic;
+    color: #383E42;
+    font-size: 1.5rem;
+    /* font-size: 24px; */
+    text-align: left;
+  }
+  
+  .cardTitle {
+    font-size: 1.5rem;
+    /* font-size: 24px; */
+    font-weight: 600;
+    margin: 10px 0;
+    text-align: left;
+    font-family: "Poppins-SemiBold";
+    color: #383E42;
+}
+  
+  .cardDescription {
+    font-size: 1.1rem;
+    /* font-size: 18px; */
+    color: #383E42;
+    margin-bottom: 15px;
+    text-align: left;
+    margin: 15px 0 20px;
+
+  }
+  
+  .cardIcon{
+    text-align: left !important;
+    margin-top: auto; 
+    width: 50px;
+    height: 50px;
+  }
+
+  .calcdetailsheading {
+    font-size: 3rem;
+    font-weight: 600;
+    /* font-size: 48px; */
+    font-family: "Poppins-SemiBold";
+    color: #383E42;
+    text-align: center !important;
+    text-align: center !important;
+margin-bottom: 0;
+  }
+
+  .calcsubheading {
+    color: #383E42;
+    font-size: 20px;
+    font-family: "Poppins-Regular";
+    text-align: center !important;
+    margin: 0;
+  }
+  
