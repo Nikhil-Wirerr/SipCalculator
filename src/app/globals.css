@@ -41,6 +41,12 @@ a {
   }
 } */
 
+*{
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
 
 
 
@@ -67,4 +73,9 @@ a {
 @font-face {
   font-family: "Poppins-Medium";
   src: url(../app/fonts/Poppins-Medium.ttf)
+}
+
+@font-face {
+  font-family: 'alex-brush-regular';
+  src: url(../app/fonts/AlexBrush-Regular.ttf);
 }

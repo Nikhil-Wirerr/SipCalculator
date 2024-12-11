@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <g id="Group_42836" data-name="Group 42836" transform="translate(-294 -542)">
+    <circle id="Ellipse_1660" data-name="Ellipse 1660" cx="24" cy="24" r="24" transform="translate(294 542)" fill="#edf4f8"/>
+    <g id="Group_42835" data-name="Group 42835" transform="translate(-66 -1955.355)" opacity="0.8">
+      <path id="Path_42978" data-name="Path 42978" d="M30,18.1H19.2v5.4H30Z" transform="translate(359.4 2496.055)" fill="none" stroke="#1f1a17" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <path id="Path_42979" data-name="Path 42979" d="M34,35.6V15.8a.9.9,0,0,0-.9-.9H16.9a.9.9,0,0,0-.9.9V35.6a.9.9,0,0,0,.9.9H33.1A.9.9,0,0,0,34,35.6Z" transform="translate(359 2495.655)" fill="none" stroke="#1f1a17" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <path id="Path_42980" data-name="Path 42980" d="M20.563,26.557a.506.506,0,1,1-.506-.506A.506.506,0,0,1,20.563,26.557Z" transform="translate(359.444 2497.049)" fill="#1f1a17" stroke="#1f1a17" stroke-width="1.5"/>
+      <path id="Path_42981" data-name="Path 42981" d="M24.562,26.557a.506.506,0,1,1-.506-.506A.506.506,0,0,1,24.562,26.557Z" transform="translate(359.944 2497.049)" fill="#1f1a17" stroke="#1f1a17" stroke-width="1.5"/>
+      <path id="Path_42982" data-name="Path 42982" d="M28.563,26.557a.506.506,0,1,1-.506-.506A.506.506,0,0,1,28.563,26.557Z" transform="translate(360.444 2497.049)" fill="#1f1a17" stroke="#1f1a17" stroke-width="1.5"/>
+      <path id="Path_42983" data-name="Path 42983" d="M20.563,30.557a.506.506,0,1,1-.506-.506A.506.506,0,0,1,20.563,30.557Z" transform="translate(359.444 2497.549)" fill="#1f1a17" stroke="#1f1a17" stroke-width="1.5"/>
+      <path id="Path_42984" data-name="Path 42984" d="M24.562,30.557a.506.506,0,1,1-.506-.506A.506.506,0,0,1,24.562,30.557Z" transform="translate(359.944 2497.549)" fill="#1f1a17" stroke="#1f1a17" stroke-width="1.5"/>
+      <path id="Path_42985" data-name="Path 42985" d="M28.563,30.557a.506.506,0,1,1-.506-.506A.506.506,0,0,1,28.563,30.557Z" transform="translate(360.444 2497.549)" fill="#1f1a17" stroke="#1f1a17" stroke-width="1.5"/>
+    </g>
+  </g>
+</svg>

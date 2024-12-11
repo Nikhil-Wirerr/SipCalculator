@@ -1,22 +1,25 @@
 .gradient-red{
-    background: transparent linear-gradient(213deg, #F2F6FF 0%, #FFF2F2 100%) 0% 0% no-repeat padding-box;
+    background:  linear-gradient(213deg, #F2F6FF 0%, #FFF2F2 100%) 0% 0% no-repeat padding-box;
+    border-radius: 12px;
+
 }
 
 .gradient-yellow{
-    background: transparent linear-gradient(213deg, #F2F6FF 0%, #FCF3E2 100%) 0% 0% no-repeat padding-box;
+    background:  linear-gradient(213deg, #F2F6FF 0%, #FCF3E2 100%) ;
+    border-radius: 12px;
+
 }
 
 .gradient-green{
-    background: transparent linear-gradient(213deg, #F2F6FF 0%, #E8FDEC 100%) 0% 0% no-repeat padding-box;
+    background:  linear-gradient(213deg, #F2F6FF 0%, #E8FDEC 100%) ;
+    border-radius: 12px;
+
 }
 
 .gradient-blue{
-    background: transparent linear-gradient(213deg, #F2F6FF 0%, #D6E3FF 100%) 0% 0% ;
+    background:  linear-gradient(213deg, #F2F6FF 0%, #D6E3FF 100%)  ;
+    border-radius: 12px;
 }
-
-
-
-
 
 
 .solutionSection {
@@ -71,6 +74,8 @@
     font-size: 1.5rem;
     /* font-size: 24px; */
     text-align: left;
+    font-family: 'alex-brush-regular';
+
   }
   
   .cardTitle {

@@ -1,0 +1,77 @@
+.gstBackground{
+    background: transparent linear-gradient(0deg, #E3EDFE00 0%, #E3EDFE 100%) ;
+
+}
+
+.gstpreHeading h1{
+    font-family: "Poppins-SemiBold";
+    font-size: 42px;
+    color: #1F1A17;
+    text-align: left;
+}
+
+.gstpreHeading p{
+    font-family: "Poppins-Regular";
+    color: #1F1A17;
+    font-size: 16px;
+}
+
+.subHeading h1 {
+    font-size: 42px;
+    font-family: "Poppins-SemiBold";
+    color: #383e42;
+    padding: 7%;
+  }
+  
+  .sidebar {
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    /* padding: 20px; */
+    border-right: 1px solid;
+  }
+  .sidebarItem {
+    padding: 10px 0px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    /* border-right: 1px solid; */
+    font-family: "Poppins-SemiBold";
+    font-size: 18px;
+    text-align: left;
+  }
+
+  
+.qandA {
+    padding: 0px 20px;
+  }
+  
+  .quesAnsSection h3 {
+    font-family: "Poppins-SemiBold";
+    font-size: 30px;
+    text-align: left;
+    margin-bottom: 10px;
+  }
+  
+  .quesAnsSection p {
+    font-family: "Poppins-Regular";
+    color: #707070;
+    font-size: 16px;
+  }
+  
+  .accordionHeader {
+    color: #1f1a17;
+    font-family: "Poppins-SemiBold";
+    font-size: 30px;
+    text-align: left;
+    font-weight: 600;
+    border: none !important;
+    background-color: transparent;
+  }
+  
+  .accordionbody {
+    font-family: "Poppins-Regular";
+    color: #707070;
+    font-size: 16px;
+  }
+  
+  
