@@ -40,33 +40,30 @@ border-radius: 50px;
   color: #1F1A17;
 }
 
-.rangefield input{
-  font-size: 24px;
-  font-family: "Poppins-SemiBold";
-  color: #1F1A17;
-}
-
-.rangefield p{
-  font-size: 18px;
-  font-family: "Poppins-Regular";
-  color: #1F1A17;
-}
 
 .rangefield span{
   color: #272D34;
   font-size: 24px;
+  color: #4279F4;
   font-family: "Poppins-SemiBold";
+  background: #D3EAFE 0% 0% no-repeat padding-box;
+
 }
 
-.totalGst{
+.rangefield input{
+    background: #D3EAFE 0% 0% no-repeat padding-box;
+    font-size: 24px;
+    font-family: "Poppins-SemiBold";
+  color: #4279F4;
+
+}
+
+/* .totalGst{
   max-width: 300px;
   width: 100%;
-}
+} */
 
-/* .togglebtn{
-  color: #1F1A17 !important;
-}
-*/
+
   
   
   .sidebar {

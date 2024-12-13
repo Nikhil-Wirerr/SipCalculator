@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import GstStyle from "@/app/styles/gstcal.module.css";
 
 import {
-    Accordion,
+  Accordion,
   Card,
   Col,
   Form,
@@ -17,6 +17,8 @@ import {
 
 const GstCal = () => {
   const [investmentType, setInvestmentType] = useState("Lumpsum");
+  const [totalAmount, setTotalAmount] = useState(1000);
+
   const handleInvestmentTypeChange = (value) => {
     setInvestmentType(value);
   };
@@ -24,10 +26,13 @@ const GstCal = () => {
   return (
     <>
       <div className={GstStyle.gstBackground}>
-        <div className={`${GstStyle.gstpreHeading} container`}>
+        <div className={`${GstStyle.gstpreHeading} container py-5`}>
           <h1 className="text-left pt-3">GST Calculator</h1>
           <p className="pt-2 pb-4">
-          The SIP calculator helps estimate the potential growth of your Systematic Investment Plan (SIP) investment over your chosen time frame. SIP is a convenient method to save for your long-term financial goals.
+            The GST calculator helps estimate the potential growth of your Good
+            and Services Tax Calculator (GST) investment over your chosen time
+            frame. GST is a convenient method to save for your long-term
+            financial goals.
           </p>
         </div>
       </div>
@@ -35,18 +40,19 @@ const GstCal = () => {
       <div className="container">
         <Card className="p-4 border-0 shadow">
           <Row>
-            <Col className="mb-4">
+            <div>
               <ToggleButtonGroup
                 type="radio"
                 name="investmentType"
                 value={investmentType}
                 onChange={handleInvestmentTypeChange}
-                // className={lumpsumStyle.togglbgrp}
+                className={`${GstStyle.togglebtngroup} ps-3`}
               >
                 <ToggleButton
                   id="sip-toggle"
                   value="SIP"
                   variant="outline-primary"
+                  className={GstStyle.togglebtn}
                 >
                   Excluding GST
                 </ToggleButton>
@@ -58,24 +64,61 @@ const GstCal = () => {
                   Including GST
                 </ToggleButton>
               </ToggleButtonGroup>
-
+            </div>
+            <Col className="mb-4">
               <Form>
-                <Form.Group className="m-3">
-                  <Form.Label>Total Amount</Form.Label>
-                  <Form.Control type="number" placeholder="5,000" />
+                {/* <Form.Group className="m-3 pt-4">
+                  <div className={ `${GstStyle.rangefield} d-flex justify-content-between`}>
+                    <Form.Label>Total amount</Form.Label>
+                    <span>₹ 69,174</span>
+                  </div>
+                  <Form.Range min={1} max={40} defaultValue={10} />
+                </Form.Group> */}
+
+                <Form.Group className="m-3 pt-4">
+                  <div
+                    className={`d-flex justify-content-between ${GstStyle.rangefield}`}
+                  >
+                    <Form.Label>Total Amount</Form.Label>
+                    <div>
+                      <span className="me-2 text-end">₹</span>
+                      <input
+                        type="number"
+                        value={totalAmount}
+                        onChange={(e) => setTotalAmount(Number(e.target.value))}
+                        className="border-0 text-end"
+                        style={{ width: "70px", textAlign: "right" }}
+                      />
+                    </div>
+                  </div>
+                  <Form.Range
+                    min={1}
+                    max={5000}
+                    value={totalAmount}
+                    onChange={(e) => setTotalAmount(Number(e.target.value))}
+                  />
                 </Form.Group>
 
                 <Form.Group className="m-3 pt-4">
-                  <div className="d-flex justify-content-between">
-                    <Form.Label>Select Duration</Form.Label>
-                  </div>
-                  <Form.Range min={1} max={40} defaultValue={10} />
-                  <div className="d-flex justify-content-between">
-                    <span>1 Yr</span>
-                    <span>30 Yr</span>
+                  <div
+                    className={`d-flex justify-content-between ${GstStyle.rangefield}`}
+                  >
+                    <p>Tax GST</p>
+                    <span>12%</span>
                   </div>
                 </Form.Group>
               </Form>
+
+              <div className={`d-block d-md-flex pt-4 ${GstStyle.rangefield} `}>
+                <div className={`ps-0 ps-md-3 ${GstStyle.totalGst}`}>
+                  <p>Total GST</p>
+                  <span>₹ 2,40,000</span>
+                </div>
+                <div className="px-0 px-md-5 mt-4 mt-md-0">
+                  <p>Post-GST amount</p>
+                  <span>₹ 2,40,000</span>
+                </div>
+              </div>
             </Col>
           </Row>
         </Card>
@@ -84,7 +127,10 @@ const GstCal = () => {
       <div className={`${GstStyle.qaContent} container`}>
         <section>
           <div className={GstStyle.subHeading}>
-            <h1 className="text-center"> Lumpsum Calculator</h1>
+            <h1 className="text-center">
+              {" "}
+              Good and Services Tax Calculator - GST Calculator
+            </h1>
           </div>
           <Row>
             <Col xs={12} md={4} lg={3}>

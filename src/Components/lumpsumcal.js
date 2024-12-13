@@ -19,8 +19,10 @@ import Image from "next/image";
 import Link from "next/link";
 import Accordion from "react-bootstrap/Accordion";
 import lumpsumStyle from "@/app/styles/lumpsumcal.module.css";
-import { CircularProgressbar } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+// import "../../src/app/globals.css";
+
 
 const LumpsumCal = () => {
   const [investmentType, setInvestmentType] = useState("Lumpsum");
@@ -31,7 +33,7 @@ const LumpsumCal = () => {
   return (
     <>
       <div className={` ${lumpsumStyle.lumpsumContainer}`}>
-        <div className="container">
+        <div className="container py-5">
           <div className={lumpsumStyle.preHeading}>
             <h1 className="text-align-left pt-3">Lumpsum Calculator</h1>
             <p className="pt-2 pb-4">
@@ -45,10 +47,10 @@ const LumpsumCal = () => {
           </div>
 
           <div>
-            <Card className="p-4 border-0 shadow">
+            <Card className="p-5 border-0 shadow">
               <Row>
-                <Col xs={12} md={6} lg={6} className="mb-4">
-                  <ToggleButtonGroup
+              <div>
+              <ToggleButtonGroup
                     type="radio"
                     name="investmentType"
                     value={investmentType}
@@ -70,12 +72,16 @@ const LumpsumCal = () => {
                       Lumpsum
                     </ToggleButton>
                   </ToggleButtonGroup>
+                  </div>
 
-                  <div className="ps-3 mt-5">
-                    <div className="calc-img d-flex">
+                <Col xs={12} md={12} lg={6} className="mb-4">
+                <div className={lumpsumStyle.lumpsumCard}>
+                 
+                  <div className="mt-5">
+                    <div className="calc-img d-flex mb-4">
                       <Image src={LumpCalImg} alt="cal-img" />
                       <div className={lumpsumStyle.returnEstimation}>
-                        <h6 className="ps-2">Return Estimator</h6>
+                        <h6 className="ps-2 mb-1">Return Estimator</h6>
                         <p className="ps-2">
                           Estimation is based on the past performance
                         </p>
@@ -84,9 +90,11 @@ const LumpsumCal = () => {
                   </div>
 
                   <Form>
-                    <div className={`${lumpsumStyle.customformgroup } m-3`}>
+                    <div className={`${lumpsumStyle.customformgroup} `}>
                       <div className={lumpsumStyle.custominputwrapper}>
-                        <label className={lumpsumStyle.customlabel}>Enter Amount</label>
+                        <label className={lumpsumStyle.customlabel}>
+                          Enter Amount
+                        </label>
                         <input
                           type="number"
                           className={lumpsumStyle.custominput}
@@ -95,64 +103,72 @@ const LumpsumCal = () => {
                       </div>
                     </div>
 
-                    <Form.Group className="m-3 pt-4">
-                      <div className="d-flex justify-content-between">
+                    <Form.Group className="pt-5">
+                      <div className={`d-flex justify-content-between ${lumpsumStyle.rangefield}`}>
                         <Form.Label>Select Duration</Form.Label>
                         <span>10 Yr</span>
                       </div>
+
                       <Form.Range min={1} max={40} defaultValue={10} />
-                      <div className="d-flex justify-content-between">
+                      <div className={`d-flex justify-content-between ${lumpsumStyle.belowrangefield}`}>
                         <span>1 Yr</span>
                         <span>30 Yr</span>
                       </div>
                     </Form.Group>
 
-                    <Form.Group className="m-3 pt-4">
-                      <div className="d-flex justify-content-between">
+                    <Form.Group className="pt-5">
+                      <div className={`d-flex justify-content-between ${lumpsumStyle.rangefield}`}>
                         <Form.Label>Expected Rate of Return</Form.Label>
                         <span> 12%</span>
                       </div>
                       <Form.Range min={1} max={40} defaultValue={10} />
-                      <div className="d-flex justify-content-between">
-                        <span>1 Yr</span>
-                        <span>30 Yr</span>
+                      <div className={`d-flex justify-content-between ${lumpsumStyle.belowrangefield}`}>
+                        <span>8%</span>
+                        <span>30 %</span>
                       </div>
                     </Form.Group>
                   </Form>
+                  </div>
                 </Col>
 
                 <Col
                   xs={12}
-                  md={6}
+                  md={12}
                   lg={6}
                   className={`d-flex align-items-center `}
                 >
-                  <div className={`d-flex align-items-center flex-column ${lumpsumStyle.verticalLine} `}>
-                    <div className={`${lumpsumStyle.totalInvest} ps-5`}>
+                <div className={lumpsumStyle.lumpsumCard}>
+                  <div
+                    className={`d-flex align-items-center flex-column ${lumpsumStyle.verticalLine} `}
+                  >
+                    <div className={`${lumpsumStyle.totalInvest} ps-5 mt-2`}>
                       <p>
-                        The total value of your investment after 10 Years will
+                        The total value of your investment after <strong>10 Years </strong>will
                         be
                       </p>
                       <h2>₹ 4,09,174</h2>
                     </div>
-                    <div className="d-flex pt-5">
+                    <div className="d-flex pt-4">
                       <div className="d-flex flex-column">
                         <Image src={InvestImg} alt="investImg" />
-                        <Button className="mt-5">Invest Now</Button>
+                        <div className={`${lumpsumStyle.Investbtn} text-center`}>
+                        <button className="mt-4" type="button">Invest Now</button>
+                        </div>
                       </div>
 
-                      <div className={`ps-5 mt-3 ${lumpsumStyle.investedAmount}`}>
-                        <div>
+                      <div className={`ps-5 mt-3`}>
+                        <div className={`ps-2 ${lumpsumStyle.investedAmount}`}>
                           <p>Invested Amount</p>
                           <h6>₹ 2,40,000</h6>
                         </div>
-                        <div className="mt-4">
+                        <div className={`mt-4 ps-2 ${lumpsumStyle.investedAmount}`}>
                           <p>Est. Returns</p>
                           <h6>₹ 69,174</h6>
                         </div>
                       </div>
                     </div>
                   </div>
+                </div> 
                 </Col>
               </Row>
             </Card>
@@ -386,143 +402,3 @@ const LumpsumCal = () => {
 
 export default LumpsumCal;
 
-
-
-//---------------------------------------------------------------------------------------------------------------------------------
-
-// const LumpsumCal = () => {
-//   const [investmentType, setInvestmentType] = useState("Lumpsum");
-//   const [amount, setAmount] = useState(5000);
-//   const [duration, setDuration] = useState(10);
-//   const [rateOfReturn, setRateOfReturn] = useState(12);
-
-//   // Function to calculate lumpsum values
-//   const calculateLumpsum = () => {
-//     const rate = rateOfReturn / 100;
-//     const totalValue = amount * Math.pow(1 + rate, duration);
-//     const investedAmount = amount;
-//     const estimatedReturns = totalValue - investedAmount;
-
-//     return {
-//       totalValue: totalValue.toFixed(2),
-//       investedAmount: investedAmount.toFixed(2),
-//       estimatedReturns: estimatedReturns.toFixed(2),
-//     };
-//   };
-
-//   const { totalValue, investedAmount, estimatedReturns } = calculateLumpsum();
-//   const percentage = (estimatedReturns / totalValue) * 100;
-
-//   const handleInvestmentTypeChange = (value) => {
-//     setInvestmentType(value);
-//   };
-
-//   return (
-//     <div className="lumpsumContainer">
-//       <div className="container">
-//         <div className="preHeading">
-//           <h1 className="text-align-left pt-3">Lumpsum Calculator</h1>
-//           <p className="pt-2 pb-4">
-//             Investments in Mutual Funds can be broadly classified into two
-//             types: lumpsum and SIP. A lumpsum investment is when the depositor
-//             invests a significant sum of money on a particular mutual fund
-//             scheme. SIP or Systematic Investment Plan, on the other hand,
-//             entails the investment of smaller amounts on a monthly basis.
-//           </p>
-//         </div>
-//         <Card className="p-4 border-0 shadow">
-//           <Row>
-//             <Col xs={12} md={6}>
-//               <ToggleButtonGroup
-//                 type="radio"
-//                 name="investmentType"
-//                 value={investmentType}
-//                 onChange={handleInvestmentTypeChange}
-//                 className="togglbgrp"
-//               >
-//                 <ToggleButton id="sip-toggle" value="SIP" variant="outline-primary">
-//                   Monthly SIP
-//                 </ToggleButton>
-//                 <ToggleButton
-//                   id="lumpsum-toggle"
-//                   value="Lumpsum"
-//                   variant="outline-primary"
-//                 >
-//                   Lumpsum
-//                 </ToggleButton>
-//               </ToggleButtonGroup>
-//               <Form>
-//                 <Form.Group className="m-3">
-//                   <label>Enter Amount</label>
-//                   <input
-//                     type="number"
-//                     className="custominput"
-//                     placeholder="₹ 5,000"
-//                     value={amount}
-//                     onChange={(e) => setAmount(Number(e.target.value))}
-//                   />
-//                 </Form.Group>
-//                 <Form.Group className="m-3">
-//                   <Form.Label>Select Duration</Form.Label>
-//                   <Form.Range
-//                     min={1}
-//                     max={30}
-//                     value={duration}
-//                     onChange={(e) => setDuration(Number(e.target.value))}
-//                   />
-//                   <div className="d-flex justify-content-between">
-//                     <span>1 Yr</span>
-//                     <span>30 Yr</span>
-//                   </div>
-//                 </Form.Group>
-//                 <Form.Group className="m-3">
-//                   <Form.Label>Expected Rate of Return</Form.Label>
-//                   <Form.Range
-//                     min={1}
-//                     max={40}
-//                     value={rateOfReturn}
-//                     onChange={(e) => setRateOfReturn(Number(e.target.value))}
-//                   />
-//                   <div className="d-flex justify-content-between">
-//                     <span>1%</span>
-//                     <span>40%</span>
-//                   </div>
-//                 </Form.Group>
-//               </Form>
-//             </Col>
-//             <Col xs={12} md={6} className="d-flex align-items-center">
-//               <div className="d-flex align-items-center flex-column">
-//                 <p>The total value of your investment after {duration} years will be:</p>
-//                 <h2>₹ {totalValue}</h2>
-//                 <div style={{ width: 200, height: 200 }}>
-//                   <CircularProgressbar
-//                     value={percentage}
-//                     text={`${percentage.toFixed(0)}%`}
-//                   />
-//                 </div>
-//                 <div className="d-flex pt-5">
-//                   <div className="d-flex flex-column">
-//                     <Image src="/path/to/investImg.png" alt="investImg" width={100} height={100} />
-//                     <Button className="mt-5">Invest Now</Button>
-//                   </div>
-//                   <div className="ps-5 mt-3 investedAmount">
-//                     <div>
-//                       <p>Invested Amount</p>
-//                       <h6>₹ {investedAmount}</h6>
-//                     </div>
-//                     <div className="mt-4">
-//                       <p>Est. Returns</p>
-//                       <h6>₹ {estimatedReturns}</h6>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </div>
-//             </Col>
-//           </Row>
-//         </Card>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default LumpsumCal;

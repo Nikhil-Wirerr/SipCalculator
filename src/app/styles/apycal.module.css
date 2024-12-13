@@ -1,16 +1,16 @@
-.gstBackground{
+.apyBackground{
     background: transparent linear-gradient(0deg, #E3EDFE00 0%, #E3EDFE 100%) ;
-
+/* background-image:url(/src//app/assets/cal-bg.svg) !important; */
 }
 
-.gstpreHeading h1{
+.apypreHeading h1{
     font-family: "Poppins-SemiBold";
     font-size: 42px;
     color: #1F1A17;
     text-align: left;
 }
 
-.gstpreHeading p{
+.apypreHeading p{
     font-family: "Poppins-Regular";
     color: #1F1A17;
     font-size: 16px;
@@ -32,35 +32,6 @@
 outline: none;
 border: 1px solid #DBDFE5;
 border-radius: 50px;
-}
-
-.rangefield {
-  font-size: 18px;
-  font-family: "Poppins-Regular";
-  color: #1F1A17;
-}
-
-.rangefield input{
-  font-size: 24px;
-  font-family: "Poppins-SemiBold";
-  color: #1F1A17;
-}
-
-.rangefield p{
-  font-size: 18px;
-  font-family: "Poppins-Regular";
-  color: #1F1A17;
-}
-
-.rangefield span{
-  color: #272D34;
-  font-size: 24px;
-  font-family: "Poppins-SemiBold";
-}
-
-.totalGst{
-  max-width: 300px;
-  width: 100%;
 }
 
 /* .togglebtn{
@@ -120,5 +91,22 @@ border-radius: 50px;
     font-size: 16px;
   }
   
-  
-  
+  .rangefield{
+    font-size: 18px;
+    font-family: "Poppins-Regular";
+    color: #1F1A17;
+  }
+
+  .rangefield input{
+    color: #1f1a17;
+    font-family: "Poppins-SemiBold";
+    font-size: 24px;
+    width: 50px; 
+    text-align: right;
+  }
+
+  .rangefield span{
+    color: #1f1a17;
+    font-family: "Poppins-SemiBold";
+    font-size: 24px;
+  }

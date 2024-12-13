@@ -3,7 +3,11 @@
 .lumpsumContainer {
   background: transparent linear-gradient(0deg, #e3edfe00 0%, #e3edfe 100%) 0%
     0% no-repeat padding-box;
-  /* width: 100%; */
+}
+
+.lumpsumCard {
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .preHeading h1 {
@@ -23,6 +27,7 @@
   border-radius: 20px;
   /* border: 1px solid #DBDFE5; */
   outline: none;
+  padding-left: 20px;
 }
 
 .returnEstimation h6 {
@@ -67,7 +72,7 @@
 
 .custominput {
   text-align: center;
-  width: 94%;
+  width: 100%;
   padding-top: 30px;
   height: 80px;
   border: 2px solid #4279f4;
@@ -82,27 +87,48 @@
   color: #14406d;
 }
 
+.rangefield {
+  font-size: 18px;
+  font-family: "Poppins-Regular";
+  color: #1F1A17;
+}
+
+.rangefield span{
+  color: #272D34;
+  font-size: 30px;
+  font-family: "Poppins-SemiBold";
+}
+
+.belowrangefield{
+  font-size: 16px;
+  font-family: "Poppins-Regular";
+  color: #272D34;
+}
+
 .verticalLine {
   border-left: 1px solid;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
-.totalInvest p{
-    color: #1f1a17;
-    font-size: 18px;
-    font-family: "Poppins-Regular";
-    text-align: left;
+.totalInvest p {
+  color: #1f1a17;
+  font-size: 16px;
+  font-family: "Poppins-Regular";
+  text-align: left;
 }
 
-.totalInvest h2{
-    font-size: 42px;
-    font-family: "Poppins-SemiBold";
-    text-align: left;
-    color: #1f1a17;
-
+.totalInvest h2 {
+  font-size: 42px;
+  font-family: "Poppins-SemiBold";
+  text-align: left;
+  color: #1f1a17;
 }
 
-.investedAmount p {
-  border-left: 2px solid #93c9fc;
+
+
+.investedAmount {
+  border-left: 6px solid #93c9fc;
   color: #1f1a17;
   font-size: 18px;
   font-family: "Poppins-Regular";
@@ -114,11 +140,21 @@
   font-size: 24px;
 }
 
+.Investbtn button {
+  width: 173px;
+  height: 54px;
+  background: #4279f4;
+  background: #4279f4 0% 0% no-repeat padding-box;
+  border-radius: 8px;
+  color: #ffffff;
+  border: none;
+}
+
 .subHeading h1 {
   font-size: 42px;
   font-family: "Poppins-SemiBold";
   color: #383e42;
-  padding: 7%;
+  padding: 50px 0;
 }
 
 .sidebar {
@@ -129,12 +165,12 @@
   border-right: 1px solid;
 }
 .sidebarItem {
-  padding: 10px 0px;
+  padding: 0px 0px 10px;
   cursor: pointer;
   margin-bottom: 10px;
   /* border-right: 1px solid; */
   font-family: "Poppins-SemiBold";
-  font-size: 18px;
+  font-size: 20px;
   text-align: left;
 }
 
@@ -148,7 +184,7 @@
 
 .quesAnsSection h3 {
   font-family: "Poppins-SemiBold";
-  font-size: 30px;
+  font-size: 24px;
   text-align: left;
   margin-bottom: 10px;
 }
@@ -162,7 +198,7 @@
 .accordionHeader {
   color: #1f1a17;
   font-family: "Poppins-SemiBold";
-  font-size: 30px;
+  font-size: 24px;
   text-align: left;
   font-weight: 600;
   border: none !important;

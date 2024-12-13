@@ -83,7 +83,10 @@ const calculators = {
   sip: dynamic(() => import("@/Components/sipcal")),
   lumpsum: dynamic(() => import("@/Components/lumpsumcal")),
   swp: dynamic(() => import("@/Components/swpcal")),
-  gst: dynamic(() => import("@/Components/gstcal"))
+  gst: dynamic(() => import("@/Components/gstcal")),
+  apy: dynamic(() => import("@/Components/apycal")),
+  homeloanemi: dynamic(() => import("@/Components/homeloancal")),
+  hra: dynamic(() => import("@/Components/houserentallowance"))
   // swp: (() => import ('@/Components/swpcal'))
 };
 console.log("Calculators Object:", calculators);

@@ -100,7 +100,7 @@ export default function HeaderNav() {
           <div className="custom-hamburger-menu">
             <Dropdown>
               <Dropdown.Toggle variant="outline-secondary" className="english-btn d-flex align-items-center">
-              <Image src={TranslateLogo} alt="Translate"/> 
+              <Image src={TranslateLogo} className="me-3" alt="Translate"/> 
                 English
               </Dropdown.Toggle>
               <Dropdown.Menu>

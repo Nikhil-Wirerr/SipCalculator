@@ -71,7 +71,7 @@
   .cardPrefix {
     font-style: italic;
     color: #383E42;
-    font-size: 1.5rem;
+    font-size: 2rem;
     /* font-size: 24px; */
     text-align: left;
     font-family: 'alex-brush-regular';
@@ -89,12 +89,16 @@
 }
   
   .cardDescription {
-    font-size: 1.1rem;
-    /* font-size: 18px; */
+    /* font-size: 1.1rem; */
+    font-size: 18px;
     color: #383E42;
     margin-bottom: 15px;
     text-align: left;
     margin: 15px 0 20px;
+    color: #383E42;
+    font-family: "Poppins-Regular";
+
+
 
   }
   

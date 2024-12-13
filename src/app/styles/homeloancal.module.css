@@ -1,0 +1,214 @@
+.lumpsumContainer {
+    background: transparent linear-gradient(0deg, #e3edfe00 0%, #e3edfe 100%) 0%
+      0% no-repeat padding-box !important;
+  }
+/* 
+  .homeloanbgcontainer{
+    background-image: url('../assets/cal-bg.svg') !important;
+  } */
+  
+  .lumpsumCard {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
+  .preHeading h1 {
+    font-family: "Poppins-SemiBold";
+    font-size: 42px;
+    color: #1f1a17;
+    text-align: left;
+  }
+  
+  .preHeading p {
+    font-family: "Poppins-Regular";
+    color: #1f1a17;
+    font-size: 16px;
+  }
+  
+  .togglbgrp {
+    border-radius: 20px;
+    /* border: 1px solid #DBDFE5; */
+    outline: none;
+    padding-left: 20px;
+  }
+  
+  .returnEstimation h6 {
+    color: #1f1a17;
+    font-size: 18px;
+    text-align: left;
+    font-family: "Poppins-Medium";
+  }
+  
+  .returnEstimation p {
+    color: #262733;
+    font-family: "Poppins-Regular";
+    font-size: 14px;
+  }
+  
+  .customformgroup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .custominputwrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .customlabel {
+    position: absolute;
+    top: 13px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    /* padding: 0 5px;  */
+    font-size: 14px;
+    color: #272d34;
+    font-family: "Poppins-Regular";
+  }
+  
+  .custominput {
+    text-align: center;
+    width: 100%;
+    padding-top: 30px;
+    height: 80px;
+    border: 2px solid #4279f4;
+    border-radius: 4px;
+    font-size: 30px;
+    font-family: "Poppins-SemiBold";
+    color: #14406d;
+    font-weight: 600;
+  }
+  
+  .custominput::placeholder {
+    color: #14406d;
+  }
+  
+  .rangefield {
+    font-size: 18px;
+    font-family: "Poppins-Regular";
+    color: #1F1A17;
+  }
+  
+  .rangefield span{
+    color: #272D34;
+    font-size: 30px;
+    font-family: "Poppins-SemiBold";
+  }
+  
+  .belowrangefield{
+    font-size: 16px;
+    font-family: "Poppins-Regular";
+    color: #272D34;
+  }
+  
+  .verticalLine {
+    border-left: 1px solid;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
+  .totalInvest p {
+    color: #1f1a17;
+    font-size: 16px;
+    font-family: "Poppins-Regular";
+    text-align: left;
+  }
+  
+  .totalInvest h2 {
+    font-size: 42px;
+    font-family: "Poppins-SemiBold";
+    text-align: left;
+    color: #1f1a17;
+  }
+  
+  
+  
+  .investedAmount {
+    border-left: 6px solid #93c9fc;
+    color: #1f1a17;
+    font-size: 18px;
+    font-family: "Poppins-Regular";
+  }
+  
+  .investedAmount h6 {
+    font-family: "Poppins-SemiBold";
+    color: #1f1a17;
+    font-size: 24px;
+  }
+  
+  .Investbtn button {
+    width: 173px;
+    height: 54px;
+    background: #4279f4;
+    background: #4279f4 0% 0% no-repeat padding-box;
+    border-radius: 8px;
+    color: #ffffff;
+    border: none;
+  }
+  
+  .subHeading h1 {
+    font-size: 42px;
+    font-family: "Poppins-SemiBold";
+    color: #383e42;
+    padding: 50px 0;
+  }
+  
+  .sidebar {
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    /* padding: 20px; */
+    border-right: 1px solid;
+  }
+  .sidebarItem {
+    padding: 0px 0px 10px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    /* border-right: 1px solid; */
+    font-family: "Poppins-SemiBold";
+    font-size: 20px;
+    text-align: left;
+  }
+  
+  /* .qaContent{
+      margin-top: -420px;
+  } */
+  
+  .qandA {
+    padding: 0px 20px;
+  }
+  
+  .quesAnsSection h3 {
+    font-family: "Poppins-SemiBold";
+    font-size: 24px;
+    text-align: left;
+    margin-bottom: 10px;
+  }
+  
+  .quesAnsSection p {
+    font-family: "Poppins-Regular";
+    color: #707070;
+    font-size: 16px;
+  }
+  
+  .accordionHeader {
+    color: #1f1a17;
+    font-family: "Poppins-SemiBold";
+    font-size: 24px;
+    text-align: left;
+    font-weight: 600;
+    border: none !important;
+  }
+  
+  .accordionbody {
+    font-family: "Poppins-Regular";
+    color: #707070;
+    font-size: 16px;
+  }
+  

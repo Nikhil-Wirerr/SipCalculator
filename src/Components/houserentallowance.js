@@ -1,24 +1,21 @@
 "use client";
 
-import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
-import sipStyle from "@/app/styles/sipcal.module.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import HouseRentStyle from "@/app/styles/houserentallownce.module.css";
 import {
+  Accordion,
   Card,
   Col,
+  Form,
   Row,
   ToggleButton,
   ToggleButtonGroup,
-  Form,
-  Button,
-  Accordion,
 } from "react-bootstrap";
-import LumpCalImg from "../app/assets/lumpsumcal.svg";
-import InvestImg from "../app/assets/invest-circle.svg";
-import Image from "next/image";
 
-const SipCal = () => {
+const HouseRentAllowanceaCal = () => {
   const [investmentType, setInvestmentType] = useState("Lumpsum");
+  const [totalAmount, setTotalAmount] = useState(100);
 
   const handleInvestmentTypeChange = (value) => {
     setInvestmentType(value);
@@ -26,198 +23,208 @@ const SipCal = () => {
 
   return (
     <>
-      <div className={` ${sipStyle.lumpsumContainer}`}>
-        <div className="container py-5">
-          <div className={sipStyle.preHeading}>
-            <h1 className="text-align-left pt-3">SIP Calculator</h1>
-            <p className="pt-2 pb-4">
-              {" "}
-              The SIP calculator helps estimate the potential growth of your
-              Systematic Investment Plan (SIP) investment over your chosen time
-              frame. SIP is a convenient method to save for your long-term
-              financial goals.
-            </p>
-          </div>
-
-          <div>
-            <Card className="p-5 border-0 shadow">
-              <Row>
-                <div>
-                  <ToggleButtonGroup
-                    type="radio"
-                    name="investmentType"
-                    value={investmentType}
-                    onChange={handleInvestmentTypeChange}
-                    className={sipStyle.togglbgrp}
-                  >
-                    <ToggleButton
-                      id="sip-toggle"
-                      value="SIP"
-                      variant="outline-primary"
-                    >
-                      Monthly SIP
-                    </ToggleButton>
-                    <ToggleButton
-                      id="lumpsum-toggle"
-                      value="Lumpsum"
-                      variant="outline-primary"
-                    >
-                      Lumpsum
-                    </ToggleButton>
-                  </ToggleButtonGroup>
-                </div>
-
-                <Col xs={12} md={12} lg={6} className="mb-4">
-                  <div className={sipStyle.lumpsumCard}>
-                    <div className="mt-5">
-                      <div className="calc-img d-flex mb-4">
-                        <Image src={LumpCalImg} alt="cal-img" />
-                        <div className={sipStyle.returnEstimation}>
-                          <h6 className="ps-2 mb-1">Return Estimator</h6>
-                          <p className="ps-2">
-                            Estimation is based on the past performance
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <Form>
-                      <div className={`${sipStyle.customformgroup} `}>
-                        <div className={sipStyle.custominputwrapper}>
-                          <label className={sipStyle.customlabel}>
-                            Enter Amount
-                          </label>
-                          <input
-                            type="number"
-                            className={sipStyle.custominput}
-                            placeholder="₹ 5,000"
-                          />
-                        </div>
-                      </div>
-
-                      <Form.Group className="pt-5">
-                        <div
-                          className={`d-flex justify-content-between ${sipStyle.rangefield}`}
-                        >
-                          <Form.Label>Select Duration</Form.Label>
-                          <span>10 Yr</span>
-                        </div>
-
-                        <Form.Range min={1} max={40} defaultValue={10} />
-                        <div
-                          className={`d-flex justify-content-between ${sipStyle.belowrangefield}`}
-                        >
-                          <span>1 Yr</span>
-                          <span>30 Yr</span>
-                        </div>
-                      </Form.Group>
-
-                      <Form.Group className="pt-5">
-                        <div
-                          className={`d-flex justify-content-between ${sipStyle.rangefield}`}
-                        >
-                          <Form.Label>Expected Rate of Return</Form.Label>
-                          <span> 12%</span>
-                        </div>
-                        <Form.Range min={1} max={40} defaultValue={10} />
-                        <div
-                          className={`d-flex justify-content-between ${sipStyle.belowrangefield}`}
-                        >
-                          <span>8%</span>
-                          <span>30 %</span>
-                        </div>
-                      </Form.Group>
-                    </Form>
-                  </div>
-                </Col>
-
-                <Col
-                  xs={12}
-                  md={12}
-                  lg={6}
-                  className={`d-flex align-items-center `}
-                >
-                  <div className={sipStyle.lumpsumCard}>
-                    <div
-                      className={`d-flex align-items-center flex-column ${sipStyle.verticalLine} `}
-                    >
-                      <div className={`${sipStyle.totalInvest} ps-5 mt-2`}>
-                        <p>
-                          The total value of your investment after{" "}
-                          <strong>10 Years </strong>will be
-                        </p>
-                        <h2>₹ 4,09,174</h2>
-                      </div>
-                      <div className="d-flex pt-4">
-                        <div className="d-flex flex-column">
-                          <Image src={InvestImg} alt="investImg" />
-                          <div className={`${sipStyle.Investbtn} text-center`}>
-                            <button className="mt-4" type="button">
-                              Invest Now
-                            </button>
-                          </div>
-                        </div>
-
-                        <div className={`ps-5 mt-3`}>
-                          <div className={`ps-2 ${sipStyle.investedAmount}`}>
-                            <p>Invested Amount</p>
-                            <h6>₹ 2,40,000</h6>
-                          </div>
-                          <div
-                            className={`mt-4 ps-2 ${sipStyle.investedAmount}`}
-                          >
-                            <p>Est. Returns</p>
-                            <h6>₹ 69,174</h6>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Col>
-              </Row>
-            </Card>
-          </div>
+      <div className={HouseRentStyle.gstBackground}>
+        <div className={`${HouseRentStyle.gstpreHeading} container py-5`}>
+          <h1 className="text-left pt-3">HRA Calculator</h1>
+          <p className="pt-2 pb-4">
+            The HRA calculator helps estimate the potential growth of your House
+            rent allowance investment over your chosen time frame. GST is a
+            convenient method to save for your long-term financial goals.
+          </p>
         </div>
       </div>
-      <div className={`${sipStyle.qaContent} container`}>
+
+      <div className="container">
+        <Card className="p-4 border-0 shadow">
+          <Row>
+            <Col className="mb-4">
+              <Form>
+                <Form.Group className="m-3 pt-4">
+                  <div
+                    className={`${HouseRentStyle.rangefield} d-flex justify-content-between`}
+                  >
+                    <Form.Label>Basic salary (p.a)</Form.Label>
+                    <span>₹ 69,174</span>
+                  </div>
+                </Form.Group>
+
+                <Form.Group className="m-3 pt-4">
+                  <div
+                    className={`${HouseRentStyle.rangefield} d-flex justify-content-between`}
+                  >
+                    <Form.Label>Dearness allowance (p.a)</Form.Label>
+                    <span>₹ 0</span>
+                  </div>
+                </Form.Group>
+
+                <Form.Group className="m-3 pt-4">
+                  <div
+                    className={`${HouseRentStyle.rangefield} d-flex justify-content-between`}
+                  >
+                    <Form.Label>HRA received (p.a)</Form.Label>
+                    <span>₹ 10,174</span>
+                  </div>
+                </Form.Group>
+
+                <Form.Group className="m-3 pt-4">
+                  <div
+                    className={`${HouseRentStyle.rangefield} d-flex justify-content-between`}
+                  >
+                    <Form.Label>Total rent paid (p.a)</Form.Label>
+                    <span>₹ 19,174</span>
+                  </div>
+                </Form.Group>
+
+                <Form.Group className="m-3 pt-4">
+                  <div
+                    className={`${HouseRentStyle.rangefield} d-flex justify-content-between align-items-center`}
+                  >
+                    <Form.Label>Is the property self-occupied?</Form.Label>
+                    <div className="d-flex">
+                      <Form.Check
+                        type="radio"
+                        id="selfOccupiedYes"
+                        name="selfOccupied"
+                        label="Yes"
+                        className="me-3"
+                      />
+                      <Form.Check
+                        type="radio"
+                        id="selfOccupiedNo"
+                        name="selfOccupied"
+                        label="No"
+                      />
+                    </div>
+                  </div>
+                </Form.Group>
+
+                {/* <Form.Group className="m-3">
+                  <div
+                    className={`d-flex justify-content-between ${HouseRentStyle.rangefield}`}
+                  >
+                    <Form.Label>Basic salary (p.a)</Form.Label>
+                    <div className={HouseRentStyle.rangefield}>
+                      <span className="pe-2 text-end">₹</span>
+                      <input
+                        type="number"
+                        value={totalAmount}
+                        onChange={(e) => setTotalAmount(Number(e.target.value))}
+                        className="border-0 text-end"
+                        style={{ width: "70px", textAlign: "right" }}
+                      />
+                    </div>
+                  </div>
+                </Form.Group>
+
+                <Form.Group className="m-3">
+                  <div
+                    className={`d-flex justify-content-between ${HouseRentStyle.rangefield}`}
+                  >
+                    <Form.Label>Dearness allowance (p.a)</Form.Label>
+                    <div className={HouseRentStyle.rangefield}>
+                      <span className="pe-2 text-end">₹</span>
+                      <input
+                        type="number"
+                        value={totalAmount}
+                        onChange={(e) => setTotalAmount(Number(e.target.value))}
+                        className="border-0 text-end"
+                        style={{ width: "70px", textAlign: "right" }}
+                      />
+                    </div>
+                  </div>
+                </Form.Group>
+
+                <Form.Group className="m-3">
+                  <div
+                    className={`d-flex justify-content-between ${HouseRentStyle.rangefield}`}
+                  >
+                    <Form.Label>HRA received (p.a)</Form.Label>
+                    <div className={HouseRentStyle.rangefield}>
+                      <span className="pe-2 text-end">₹</span>
+                      <input
+                        type="number"
+                        value={totalAmount}
+                        onChange={(e) => setTotalAmount(Number(e.target.value))}
+                        className="border-0 text-end"
+                        style={{ width: "70px", textAlign: "right" }}
+                      />
+                    </div>
+                  </div>
+                </Form.Group>
+
+                <Form.Group className="m-3">
+                  <div
+                    className={`d-flex justify-content-between ${HouseRentStyle.rangefield}`}
+                  >
+                    <Form.Label>Total rent paid (p.a)</Form.Label>
+                    <div className={HouseRentStyle.rangefield}>
+                      <span className="pe-2 text-end">₹</span>
+                      <input
+                        type="number"
+                        value={totalAmount}
+                        onChange={(e) => setTotalAmount(Number(e.target.value))}
+                        className="border-0 text-end"
+                        style={{ width: "70px", textAlign: "right" }}
+                      />
+                    </div>
+                  </div>
+                </Form.Group> */}
+              </Form>
+            </Col>
+          </Row>
+        </Card>
+
+        {/* <div className={`d-block d-md-flex pt-4 ${HouseRentStyle.rangefield} `}>
+          <div className={`ps-0 ps-md-3 ${HouseRentStyle.totalGst}`}>
+            <p>Total GST</p>
+            <span>₹ 2,40,000</span>
+          </div>
+          <div className="px-0 px-md-5 mt-4 mt-md-0">
+            <p>Post-GST amount</p>
+            <span>₹ 2,40,000</span>
+          </div>
+        </div> */}
+      </div>
+
+      <div className={`${HouseRentStyle.qaContent} container`}>
         <section>
-          <div className={sipStyle.subHeading}>
+          <div className={HouseRentStyle.subHeading}>
             <h1 className="text-center">
               {" "}
-              Systematic Investment Plan Calculator - SIP Calculator
+              House rent allowance- HRA Calculator
             </h1>
           </div>
           <Row>
             <Col xs={12} md={4} lg={3}>
-              <div className={sipStyle.sidebar}>
+              <div className={HouseRentStyle.sidebar}>
                 <ul className="list-unstyled">
-                  <li className={sipStyle.sidebarItem}>
+                  <li className={HouseRentStyle.sidebarItem}>
                     What is a SIP Calculator?
                   </li>
-                  <li className={sipStyle.sidebarItem}>
+                  <li className={HouseRentStyle.sidebarItem}>
                     How can a SIP Calculator Help You?
                   </li>
-                  <li className={sipStyle.sidebarItem}>
+                  <li className={HouseRentStyle.sidebarItem}>
                     Advantages of SIP Calculator
                   </li>
-                  <li className={sipStyle.sidebarItem}>
+                  <li className={HouseRentStyle.sidebarItem}>
                     How to use ET Money's SIP Calculator?
                   </li>
-                  <li className={sipStyle.sidebarItem}>
+                  <li className={HouseRentStyle.sidebarItem}>
                     Related Mutual Fund SIP Calculators ?
                   </li>
-                  <li className={sipStyle.sidebarItem}>
+                  <li className={HouseRentStyle.sidebarItem}>
                     Advantages of SIP Calculator
                   </li>
-                  <li className={sipStyle.sidebarItem}>
+                  <li className={HouseRentStyle.sidebarItem}>
                     Related Mutual Fund SIP Calculators ?
                   </li>
                 </ul>
               </div>
             </Col>
 
-            <Col xs={12} md={8} lg={9} className={sipStyle.qandA}>
-              <div className={sipStyle.quesAnsSection}>
+            <Col xs={12} md={8} lg={9} className={HouseRentStyle.qandA}>
+              <div className={HouseRentStyle.quesAnsSection}>
                 <h3>What is a SIP Calculator?</h3>
                 <p>
                   A SIP (Systematic Investment Plan) Calculator is an online or
@@ -228,7 +235,7 @@ const SipCal = () => {
                   duration, and expected rate of return.
                 </p>
               </div>
-              <div className={sipStyle.quesAnsSection}>
+              <div className={HouseRentStyle.quesAnsSection}>
                 <h3>How can a SIP Calculator Help You?</h3>
                 <p>
                   The Systematic investment Plan calculator essentially gives
@@ -249,7 +256,7 @@ const SipCal = () => {
                   calculator can help you.
                 </p>
               </div>
-              <div className={sipStyle.quesAnsSection}>
+              <div className={HouseRentStyle.quesAnsSection}>
                 <h3>Advantages of SIP Calculator</h3>
                 <p>
                   Investments made into market-linked instruments such as Mutual
@@ -280,7 +287,7 @@ const SipCal = () => {
                   lacking in most SIP calculators
                 </p>
               </div>
-              <div className={sipStyle.quesAnsSection}>
+              <div className={HouseRentStyle.quesAnsSection}>
                 <h3>How to use ET Money's SIP Calculator?</h3>
                 <p>
                   If you know how much you want to invest in Mutual Funds every
@@ -318,7 +325,7 @@ const SipCal = () => {
                   investment goal within the specified investment tenure.
                 </p>
               </div>
-              <div className={sipStyle.quesAnsSection}>
+              <div className={HouseRentStyle.quesAnsSection}>
                 <h3>Related Mutual Fund SIP Calculators ?</h3>
                 <p>
                   The Systematic investment Plan calculator essentially gives
@@ -343,7 +350,7 @@ const SipCal = () => {
           </Row>
         </section>
         <section className="pb-5 mt-5">
-          <div className={`${sipStyle.preHeading} py-5`}>
+          <div className={`${HouseRentStyle.preHeading} py-5`}>
             <h1 className="text-align-left pt-5">
               FAQs (Frequently Asked Questions)
             </h1>
@@ -351,50 +358,50 @@ const SipCal = () => {
           <div>
             <Accordion defaultActiveKey={["1"]} alwaysOpen>
               <Accordion.Item eventKey="0">
-                <Accordion.Header className={sipStyle.accordionHeader}>
+                <Accordion.Header className={HouseRentStyle.accordionHeader}>
                   How can a SIP Calculator Help You?
                 </Accordion.Header>
-                <Accordion.Body className={sipStyle.accordionbody}>
+                <Accordion.Body className={HouseRentStyle.accordionbody}>
                   There is no maximum tenure of a SIP. You can invest as long as
                   you can. The minimum tenure you can go for is 3 years.
                 </Accordion.Body>
               </Accordion.Item>
 
               <Accordion.Item eventKey="1">
-                <Accordion.Header className={sipStyle.accordionHeader}>
+                <Accordion.Header className={HouseRentStyle.accordionHeader}>
                   Can I modify my SIP amount?
                 </Accordion.Header>
-                <Accordion.Body className={sipStyle.accordionbody}>
+                <Accordion.Body className={HouseRentStyle.accordionbody}>
                   There is no maximum tenure of a SIP. You can invest as long as
                   you can. The minimum tenure you can go for is 3 years.
                 </Accordion.Body>
               </Accordion.Item>
 
               <Accordion.Item eventKey="2">
-                <Accordion.Header className={sipStyle.accordionHeader}>
+                <Accordion.Header className={HouseRentStyle.accordionHeader}>
                   Can I modify my SIP amount?
                 </Accordion.Header>
-                <Accordion.Body className={sipStyle.accordionbody}>
+                <Accordion.Body className={HouseRentStyle.accordionbody}>
                   There is no maximum tenure of a SIP. You can invest as long as
                   you can. The minimum tenure you can go for is 3 years.
                 </Accordion.Body>
               </Accordion.Item>
 
               <Accordion.Item eventKey="3">
-                <Accordion.Header className={sipStyle.accordionHeader}>
+                <Accordion.Header className={HouseRentStyle.accordionHeader}>
                   Can I modify my SIP amount?
                 </Accordion.Header>
-                <Accordion.Body className={sipStyle.accordionbody}>
+                <Accordion.Body className={HouseRentStyle.accordionbody}>
                   There is no maximum tenure of a SIP. You can invest as long as
                   you can. The minimum tenure you can go for is 3 years.
                 </Accordion.Body>
               </Accordion.Item>
 
               <Accordion.Item eventKey="4">
-                <Accordion.Header className={sipStyle.accordionHeader}>
+                <Accordion.Header className={HouseRentStyle.accordionHeader}>
                   Can I modify my SIP amount?
                 </Accordion.Header>
-                <Accordion.Body className={sipStyle.accordionbody}>
+                <Accordion.Body className={HouseRentStyle.accordionbody}>
                   There is no maximum tenure of a SIP. You can invest as long as
                   you can. The minimum tenure you can go for is 3 years.
                 </Accordion.Body>
@@ -407,4 +414,4 @@ const SipCal = () => {
   );
 };
 
-export default SipCal;
+export default HouseRentAllowanceaCal;

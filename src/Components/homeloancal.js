@@ -1,41 +1,43 @@
 "use client";
 
-import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
-import sipStyle from "@/app/styles/sipcal.module.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import {
-  Card,
   Col,
+  Container,
   Row,
   ToggleButton,
   ToggleButtonGroup,
+  Card,
   Form,
   Button,
-  Accordion,
+  InputGroup,
 } from "react-bootstrap";
 import LumpCalImg from "../app/assets/lumpsumcal.svg";
 import InvestImg from "../app/assets/invest-circle.svg";
 import Image from "next/image";
+import Accordion from "react-bootstrap/Accordion";
+import homeloanStyle from "@/app/styles/homeloancal.module.css";
+import "react-circular-progressbar/dist/styles.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
-const SipCal = () => {
-  const [investmentType, setInvestmentType] = useState("Lumpsum");
-
+const HomeloanCal = () => {
+  const [investmentType, setInvestmentType] = useState("homeloan");
+  const [showAccordion, setShowaccordion] = useState(false);
   const handleInvestmentTypeChange = (value) => {
     setInvestmentType(value);
   };
 
   return (
     <>
-      <div className={` ${sipStyle.lumpsumContainer}`}>
-        <div className="container py-5">
-          <div className={sipStyle.preHeading}>
-            <h1 className="text-align-left pt-3">SIP Calculator</h1>
+      <div className={` ${homeloanStyle.lumpsumContainer}`}>
+        <div className={`container py-5  ${homeloanStyle.homeloanbgcontainer}`} >
+          <div className={homeloanStyle.preHeading}>
+            <h1 className="text-align-left pt-3">Home Loan EMI Calculator</h1>
             <p className="pt-2 pb-4">
               {" "}
-              The SIP calculator helps estimate the potential growth of your
-              Systematic Investment Plan (SIP) investment over your chosen time
-              frame. SIP is a convenient method to save for your long-term
-              financial goals.
+              The primary responsibility of a potential borrower is to have an exact estimate of the EMI amount they are liable to pay. One can take advantage of a home loan EMI calculator to arrive at the precise number.
             </p>
           </div>
 
@@ -48,7 +50,7 @@ const SipCal = () => {
                     name="investmentType"
                     value={investmentType}
                     onChange={handleInvestmentTypeChange}
-                    className={sipStyle.togglbgrp}
+                    className={homeloanStyle.togglbgrp}
                   >
                     <ToggleButton
                       id="sip-toggle"
@@ -68,11 +70,11 @@ const SipCal = () => {
                 </div>
 
                 <Col xs={12} md={12} lg={6} className="mb-4">
-                  <div className={sipStyle.lumpsumCard}>
+                  <div className={homeloanStyle.lumpsumCard}>
                     <div className="mt-5">
                       <div className="calc-img d-flex mb-4">
                         <Image src={LumpCalImg} alt="cal-img" />
-                        <div className={sipStyle.returnEstimation}>
+                        <div className={homeloanStyle.returnEstimation}>
                           <h6 className="ps-2 mb-1">Return Estimator</h6>
                           <p className="ps-2">
                             Estimation is based on the past performance
@@ -82,14 +84,14 @@ const SipCal = () => {
                     </div>
 
                     <Form>
-                      <div className={`${sipStyle.customformgroup} `}>
-                        <div className={sipStyle.custominputwrapper}>
-                          <label className={sipStyle.customlabel}>
+                      <div className={`${homeloanStyle.customformgroup} `}>
+                        <div className={homeloanStyle.custominputwrapper}>
+                          <label className={homeloanStyle.customlabel}>
                             Enter Amount
                           </label>
                           <input
                             type="number"
-                            className={sipStyle.custominput}
+                            className={homeloanStyle.custominput}
                             placeholder="₹ 5,000"
                           />
                         </div>
@@ -97,7 +99,7 @@ const SipCal = () => {
 
                       <Form.Group className="pt-5">
                         <div
-                          className={`d-flex justify-content-between ${sipStyle.rangefield}`}
+                          className={`d-flex justify-content-between ${homeloanStyle.rangefield}`}
                         >
                           <Form.Label>Select Duration</Form.Label>
                           <span>10 Yr</span>
@@ -105,7 +107,7 @@ const SipCal = () => {
 
                         <Form.Range min={1} max={40} defaultValue={10} />
                         <div
-                          className={`d-flex justify-content-between ${sipStyle.belowrangefield}`}
+                          className={`d-flex justify-content-between ${homeloanStyle.belowrangefield}`}
                         >
                           <span>1 Yr</span>
                           <span>30 Yr</span>
@@ -114,14 +116,14 @@ const SipCal = () => {
 
                       <Form.Group className="pt-5">
                         <div
-                          className={`d-flex justify-content-between ${sipStyle.rangefield}`}
+                          className={`d-flex justify-content-between ${homeloanStyle.rangefield}`}
                         >
                           <Form.Label>Expected Rate of Return</Form.Label>
                           <span> 12%</span>
                         </div>
                         <Form.Range min={1} max={40} defaultValue={10} />
                         <div
-                          className={`d-flex justify-content-between ${sipStyle.belowrangefield}`}
+                          className={`d-flex justify-content-between ${homeloanStyle.belowrangefield}`}
                         >
                           <span>8%</span>
                           <span>30 %</span>
@@ -137,11 +139,11 @@ const SipCal = () => {
                   lg={6}
                   className={`d-flex align-items-center `}
                 >
-                  <div className={sipStyle.lumpsumCard}>
+                  <div className={homeloanStyle.lumpsumCard}>
                     <div
-                      className={`d-flex align-items-center flex-column ${sipStyle.verticalLine} `}
+                      className={`d-flex align-items-center flex-column ${homeloanStyle.verticalLine} `}
                     >
-                      <div className={`${sipStyle.totalInvest} ps-5 mt-2`}>
+                      <div className={`${homeloanStyle.totalInvest} ps-5 mt-2`}>
                         <p>
                           The total value of your investment after{" "}
                           <strong>10 Years </strong>will be
@@ -151,7 +153,9 @@ const SipCal = () => {
                       <div className="d-flex pt-4">
                         <div className="d-flex flex-column">
                           <Image src={InvestImg} alt="investImg" />
-                          <div className={`${sipStyle.Investbtn} text-center`}>
+                          <div
+                            className={`${homeloanStyle.Investbtn} text-center`}
+                          >
                             <button className="mt-4" type="button">
                               Invest Now
                             </button>
@@ -159,12 +163,14 @@ const SipCal = () => {
                         </div>
 
                         <div className={`ps-5 mt-3`}>
-                          <div className={`ps-2 ${sipStyle.investedAmount}`}>
+                          <div
+                            className={`ps-2 ${homeloanStyle.investedAmount}`}
+                          >
                             <p>Invested Amount</p>
                             <h6>₹ 2,40,000</h6>
                           </div>
                           <div
-                            className={`mt-4 ps-2 ${sipStyle.investedAmount}`}
+                            className={`mt-4 ps-2 ${homeloanStyle.investedAmount}`}
                           >
                             <p>Est. Returns</p>
                             <h6>₹ 69,174</h6>
@@ -174,50 +180,205 @@ const SipCal = () => {
                     </div>
                   </div>
                 </Col>
+
+                <div className="text-center my-3">
+                    <button className="btn btn-primary"
+                    onClick={() => setShowaccordion(!showAccordion)}
+                    >
+                        {showAccordion ? "Amortization Details(Yearly/Monthly)" : "Amortization Details(Yearly/Monthly)"}
+                        {/* <FontAwesomeIcon icon=" fa-angle-down"  /> */}
+                    </button>
+                </div>
+
+                {showAccordion && (
+                <div className="mt-4">
+                <Accordion defaultActiveKey="4">
+                  <Accordion.Item eventKey="0">
+                    <Accordion.Header>2024</Accordion.Header>
+                    <Accordion.Body>
+                      <table className="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Column 1</th>
+                            <th>Column 2</th>
+                            <th>Column 3</th>
+                            <th>Column 4</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {Array.from({ length: 12 }, (_, index) => (
+                            <tr key={index}>
+                              <td>{index + 1}</td>
+                              <td>Data {index + 1}.1</td>
+                              <td>Data {index + 1}.2</td>
+                              <td>Data {index + 1}.3</td>
+                              <td>Data {index + 1}.4</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                  <Accordion.Item eventKey="1">
+                    <Accordion.Header>2025</Accordion.Header>
+                    <Accordion.Body>
+                      <table className="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Column 1</th>
+                            <th>Column 2</th>
+                            <th>Column 3</th>
+                            <th>Column 4</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {Array.from({ length: 12 }, (_, index) => (
+                            <tr key={index}>
+                              <td>{index + 1}</td>
+                              <td>Data {index + 1}.1</td>
+                              <td>Data {index + 1}.2</td>
+                              <td>Data {index + 1}.3</td>
+                              <td>Data {index + 1}.4</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                  <Accordion.Item eventKey="2">
+                    <Accordion.Header>2026</Accordion.Header>
+                    <Accordion.Body>
+                      <table className="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Column 1</th>
+                            <th>Column 2</th>
+                            <th>Column 3</th>
+                            <th>Column 4</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {Array.from({ length: 12 }, (_, index) => (
+                            <tr key={index}>
+                              <td>{index + 1}</td>
+                              <td>Data {index + 1}.1</td>
+                              <td>Data {index + 1}.2</td>
+                              <td>Data {index + 1}.3</td>
+                              <td>Data {index + 1}.4</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                  <Accordion.Item eventKey="3">
+                    <Accordion.Header>2027</Accordion.Header>
+                    <Accordion.Body>
+                      <table className="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>Month</th>
+                            <th>Principal paid</th>
+                            <th>Interest Chargesd</th>
+                            <th>CTotal Payment</th>
+                            <th>Balance </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"] . map(
+                            (month, index) => (
+                                <tr key={index}>
+                                    <td>{month}</td>
+                                    <td>Data {index +1}.1</td>
+                                    <td>Data {index +1}.2</td>
+                                    <td>Data {index +1}.3</td>
+                                    <td>Data {index +1}.4</td>
+                                </tr>
+                            )
+                          )}
+                        </tbody>
+                      </table>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                  <Accordion.Item eventKey="4">
+                    <Accordion.Header>2028</Accordion.Header>
+                    <Accordion.Body>
+                      <table className="table table-striped text-center">
+                        <thead>
+                          <tr>
+                            <th>Month</th>
+                            <th>Principal paid</th>
+                            <th>Interest Chargesd</th>
+                            <th>Total Payment</th>
+                            <th> Balance</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {/* {Array.from({ length: 12 }, (_, index) => ( */}
+                          {["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"] .map(
+                            (month, index) =>(
+                            <tr key={index}>
+                              <td>{month}</td>
+                              <td>Data {index + 1}.1</td>
+                              <td>Data {index + 1}.2</td>
+                              <td>Data {index + 1}.3</td>
+                              <td>Data {index + 1}.4</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                </Accordion>
+                </div>
+                )}
               </Row>
             </Card>
           </div>
         </div>
       </div>
-      <div className={`${sipStyle.qaContent} container`}>
+      <div className={`${homeloanStyle.qaContent} container`}>
         <section>
-          <div className={sipStyle.subHeading}>
+          <div className={homeloanStyle.subHeading}>
             <h1 className="text-center">
               {" "}
-              Systematic Investment Plan Calculator - SIP Calculator
+              Home Loan EMI Calculator – Calculate Your Housing Loan EMI Online
             </h1>
           </div>
           <Row>
             <Col xs={12} md={4} lg={3}>
-              <div className={sipStyle.sidebar}>
+              <div className={homeloanStyle.sidebar}>
                 <ul className="list-unstyled">
-                  <li className={sipStyle.sidebarItem}>
+                  <li className={homeloanStyle.sidebarItem}>
                     What is a SIP Calculator?
                   </li>
-                  <li className={sipStyle.sidebarItem}>
+                  <li className={homeloanStyle.sidebarItem}>
                     How can a SIP Calculator Help You?
                   </li>
-                  <li className={sipStyle.sidebarItem}>
+                  <li className={homeloanStyle.sidebarItem}>
                     Advantages of SIP Calculator
                   </li>
-                  <li className={sipStyle.sidebarItem}>
+                  <li className={homeloanStyle.sidebarItem}>
                     How to use ET Money's SIP Calculator?
                   </li>
-                  <li className={sipStyle.sidebarItem}>
+                  <li className={homeloanStyle.sidebarItem}>
                     Related Mutual Fund SIP Calculators ?
                   </li>
-                  <li className={sipStyle.sidebarItem}>
+                  <li className={homeloanStyle.sidebarItem}>
                     Advantages of SIP Calculator
                   </li>
-                  <li className={sipStyle.sidebarItem}>
+                  <li className={homeloanStyle.sidebarItem}>
                     Related Mutual Fund SIP Calculators ?
                   </li>
                 </ul>
               </div>
             </Col>
 
-            <Col xs={12} md={8} lg={9} className={sipStyle.qandA}>
-              <div className={sipStyle.quesAnsSection}>
+            <Col xs={12} md={8} lg={9} className={homeloanStyle.qandA}>
+              <div className={homeloanStyle.quesAnsSection}>
                 <h3>What is a SIP Calculator?</h3>
                 <p>
                   A SIP (Systematic Investment Plan) Calculator is an online or
@@ -228,7 +389,7 @@ const SipCal = () => {
                   duration, and expected rate of return.
                 </p>
               </div>
-              <div className={sipStyle.quesAnsSection}>
+              <div className={homeloanStyle.quesAnsSection}>
                 <h3>How can a SIP Calculator Help You?</h3>
                 <p>
                   The Systematic investment Plan calculator essentially gives
@@ -249,7 +410,7 @@ const SipCal = () => {
                   calculator can help you.
                 </p>
               </div>
-              <div className={sipStyle.quesAnsSection}>
+              <div className={homeloanStyle.quesAnsSection}>
                 <h3>Advantages of SIP Calculator</h3>
                 <p>
                   Investments made into market-linked instruments such as Mutual
@@ -280,7 +441,7 @@ const SipCal = () => {
                   lacking in most SIP calculators
                 </p>
               </div>
-              <div className={sipStyle.quesAnsSection}>
+              <div className={homeloanStyle.quesAnsSection}>
                 <h3>How to use ET Money's SIP Calculator?</h3>
                 <p>
                   If you know how much you want to invest in Mutual Funds every
@@ -318,7 +479,7 @@ const SipCal = () => {
                   investment goal within the specified investment tenure.
                 </p>
               </div>
-              <div className={sipStyle.quesAnsSection}>
+              <div className={homeloanStyle.quesAnsSection}>
                 <h3>Related Mutual Fund SIP Calculators ?</h3>
                 <p>
                   The Systematic investment Plan calculator essentially gives
@@ -343,7 +504,7 @@ const SipCal = () => {
           </Row>
         </section>
         <section className="pb-5 mt-5">
-          <div className={`${sipStyle.preHeading} py-5`}>
+          <div className={`${homeloanStyle.preHeading} py-5`}>
             <h1 className="text-align-left pt-5">
               FAQs (Frequently Asked Questions)
             </h1>
@@ -351,50 +512,50 @@ const SipCal = () => {
           <div>
             <Accordion defaultActiveKey={["1"]} alwaysOpen>
               <Accordion.Item eventKey="0">
-                <Accordion.Header className={sipStyle.accordionHeader}>
+                <Accordion.Header className={homeloanStyle.accordionHeader}>
                   How can a SIP Calculator Help You?
                 </Accordion.Header>
-                <Accordion.Body className={sipStyle.accordionbody}>
+                <Accordion.Body className={homeloanStyle.accordionbody}>
                   There is no maximum tenure of a SIP. You can invest as long as
                   you can. The minimum tenure you can go for is 3 years.
                 </Accordion.Body>
               </Accordion.Item>
 
               <Accordion.Item eventKey="1">
-                <Accordion.Header className={sipStyle.accordionHeader}>
+                <Accordion.Header className={homeloanStyle.accordionHeader}>
                   Can I modify my SIP amount?
                 </Accordion.Header>
-                <Accordion.Body className={sipStyle.accordionbody}>
+                <Accordion.Body className={homeloanStyle.accordionbody}>
                   There is no maximum tenure of a SIP. You can invest as long as
                   you can. The minimum tenure you can go for is 3 years.
                 </Accordion.Body>
               </Accordion.Item>
 
               <Accordion.Item eventKey="2">
-                <Accordion.Header className={sipStyle.accordionHeader}>
+                <Accordion.Header className={homeloanStyle.accordionHeader}>
                   Can I modify my SIP amount?
                 </Accordion.Header>
-                <Accordion.Body className={sipStyle.accordionbody}>
+                <Accordion.Body className={homeloanStyle.accordionbody}>
                   There is no maximum tenure of a SIP. You can invest as long as
                   you can. The minimum tenure you can go for is 3 years.
                 </Accordion.Body>
               </Accordion.Item>
 
               <Accordion.Item eventKey="3">
-                <Accordion.Header className={sipStyle.accordionHeader}>
+                <Accordion.Header className={homeloanStyle.accordionHeader}>
                   Can I modify my SIP amount?
                 </Accordion.Header>
-                <Accordion.Body className={sipStyle.accordionbody}>
+                <Accordion.Body className={homeloanStyle.accordionbody}>
                   There is no maximum tenure of a SIP. You can invest as long as
                   you can. The minimum tenure you can go for is 3 years.
                 </Accordion.Body>
               </Accordion.Item>
 
               <Accordion.Item eventKey="4">
-                <Accordion.Header className={sipStyle.accordionHeader}>
+                <Accordion.Header className={homeloanStyle.accordionHeader}>
                   Can I modify my SIP amount?
                 </Accordion.Header>
-                <Accordion.Body className={sipStyle.accordionbody}>
+                <Accordion.Body className={homeloanStyle.accordionbody}>
                   There is no maximum tenure of a SIP. You can invest as long as
                   you can. The minimum tenure you can go for is 3 years.
                 </Accordion.Body>
@@ -407,4 +568,4 @@ const SipCal = () => {
   );
 };
 
-export default SipCal;
+export default HomeloanCal;
