@@ -18,17 +18,67 @@ import InvestImg from "../app/assets/invest-circle.svg";
 import Image from "next/image";
 import Link from "next/link";
 import Accordion from "react-bootstrap/Accordion";
-import lumpsumStyle from "@/app/styles/lumpsumcal.module.css";
-import { CircularProgressbar } from "react-circular-progressbar";
+import lumpsumStyle from "@/styles/lumpsumcal.module.css";
 import "react-circular-progressbar/dist/styles.css";
 // import "../../src/app/globals.css";
-
+import {
+  PieChart,
+  Pie,
+  Legend,
+  Tooltip,
+  Cell,
+  ResponsiveContainer,
+} from "recharts";
 
 const LumpsumCal = () => {
   const [investmentType, setInvestmentType] = useState("Lumpsum");
+  const [amount, setAmount] = useState(5000);
+  const [durationYear, setDurationYear] = useState(30);
+  const [expectedReturn, setExpectedReturn] = useState("8%");
+
   const handleInvestmentTypeChange = (value) => {
     setInvestmentType(value);
   };
+
+  const handleExpectedReturnChange = (e) => {
+    let value = e.target.value.replace("%", "");
+    value = Math.min(Math.max(Number(value), 8), 30);
+    setExpectedReturn(`${value}%`);
+  };
+
+  const handleWheel = (e) => e.target.blur();
+
+  const calculateTotalValue = (amount, years, rate) => {
+    const annualRate = rate / 100;
+    return Math.round(amount * Math.pow(1 + annualRate, years));
+  };
+
+  const calculateEstReturn = (totalValue, amount) => totalValue - amount;
+
+  const colorStyles = {
+    investedAmount: "#93C9FC",
+    estReturns: "#D3EAFE",
+  };
+
+  const data02 = [
+    {
+      name: "Invested Amount",
+      value: parseFloat(amount) || 0,
+      color: colorStyles.investedAmount,
+    },
+    {
+      name: "Est. Returns",
+      value: calculateEstReturn(
+        calculateTotalValue(
+          parseFloat(amount) || 0,
+          durationYear,
+          parseFloat(expectedReturn) || 0
+        ),
+        parseFloat(amount) || 0
+      ),
+      color: colorStyles.estReturns,
+    },
+  ];
 
   return (
     <>
@@ -49,8 +99,8 @@ const LumpsumCal = () => {
           <div>
             <Card className="p-5 border-0 shadow">
               <Row>
-              <div>
-              <ToggleButtonGroup
+                <div>
+                  <ToggleButtonGroup
                     type="radio"
                     name="investmentType"
                     value={investmentType}
@@ -72,62 +122,107 @@ const LumpsumCal = () => {
                       Lumpsum
                     </ToggleButton>
                   </ToggleButtonGroup>
-                  </div>
+                </div>
 
                 <Col xs={12} md={12} lg={6} className="mb-4">
-                <div className={lumpsumStyle.lumpsumCard}>
-                 
-                  <div className="mt-5">
-                    <div className="calc-img d-flex mb-4">
-                      <Image src={LumpCalImg} alt="cal-img" />
-                      <div className={lumpsumStyle.returnEstimation}>
-                        <h6 className="ps-2 mb-1">Return Estimator</h6>
-                        <p className="ps-2">
-                          Estimation is based on the past performance
-                        </p>
+                  <div className={lumpsumStyle.lumpsumCard}>
+                    <div className="mt-5">
+                      <div className="calc-img d-flex mb-4">
+                        <Image src={LumpCalImg} alt="cal-img" />
+                        <div className={lumpsumStyle.returnEstimation}>
+                          <h6 className="ps-2 mb-1">Return Estimator</h6>
+                          <p className="ps-2">
+                            Estimation is based on the past performance
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <Form>
-                    <div className={`${lumpsumStyle.customformgroup} `}>
-                      <div className={lumpsumStyle.custominputwrapper}>
-                        <label className={lumpsumStyle.customlabel}>
-                          Enter Amount
-                        </label>
-                        <input
-                          type="number"
-                          className={lumpsumStyle.custominput}
-                          placeholder="₹ 5,000"
+                    <Form>
+                      <div className={`${lumpsumStyle.customformgroup} `}>
+                        <div className={lumpsumStyle.custominputwrapper}>
+                          <label className={lumpsumStyle.customlabel}>
+                            Enter Amount
+                          </label>
+                          <input
+                            type="number"
+                            value={amount}
+                            className={lumpsumStyle.custominput}
+                            placeholder="₹ 5,000"
+                            onWheel={handleWheel}
+                            onChange={(e) => setAmount(Number(e.target.value))}
+                          />
+                        </div>
+                      </div>
+
+                      <Form.Group className="pt-5">
+                        <div
+                          className={`d-flex justify-content-between ${lumpsumStyle.rangefield}`}
+                        >
+                          <Form.Label>Select Duration</Form.Label>
+                          <div className={lumpsumStyle.rangecustominput}>
+                            <input
+                              type="number"
+                              value={durationYear}
+                              onChange={(e) =>
+                                setDurationYear(Number(e.target.value))
+                              }
+                              className="border-0 w-100"
+                              onWheel={handleWheel}
+                            />
+                            <span>Yrs</span>
+                          </div>
+                        </div>
+                        <Form.Range
+                          min={2}
+                          max={30}
+                          value={durationYear}
+                          onChange={(e) =>
+                            setDurationYear(Number(e.target.value))
+                          }
                         />
-                      </div>
-                    </div>
+                        <div
+                          className={`d-flex justify-content-between ${lumpsumStyle.belowrangefield}`}
+                        >
+                          <span>1 Yr</span>
+                          <span>30 Yr</span>
+                        </div>
+                      </Form.Group>
 
-                    <Form.Group className="pt-5">
-                      <div className={`d-flex justify-content-between ${lumpsumStyle.rangefield}`}>
-                        <Form.Label>Select Duration</Form.Label>
-                        <span>10 Yr</span>
-                      </div>
-
-                      <Form.Range min={1} max={40} defaultValue={10} />
-                      <div className={`d-flex justify-content-between ${lumpsumStyle.belowrangefield}`}>
-                        <span>1 Yr</span>
-                        <span>30 Yr</span>
-                      </div>
-                    </Form.Group>
-
-                    <Form.Group className="pt-5">
-                      <div className={`d-flex justify-content-between ${lumpsumStyle.rangefield}`}>
-                        <Form.Label>Expected Rate of Return</Form.Label>
-                        <span> 12%</span>
-                      </div>
-                      <Form.Range min={1} max={40} defaultValue={10} />
-                      <div className={`d-flex justify-content-between ${lumpsumStyle.belowrangefield}`}>
-                        <span>8%</span>
-                        <span>30 %</span>
-                      </div>
-                    </Form.Group>
-                  </Form>
+                      <Form.Group className="pt-5">
+                        <div
+                          className={`d-flex justify-content-between ${lumpsumStyle.rangefield}`}
+                        >
+                          <Form.Label>Expected Rate of Return</Form.Label>
+                          <div className={lumpsumStyle.rangecustominput}>
+                            <input
+                              type="text"
+                              value={expectedReturn}
+                              // onChange={(e) =>
+                              //   setExpectedReturn(Number(e.target.value))
+                              // }
+                              onChange={handleExpectedReturnChange}
+                              className="border-0 w-100"
+                              onWheel={(e) => e.target.blur()}
+                            />
+                          </div>
+                        </div>
+                        <Form.Range
+                          min={8}
+                          max={40}
+                          value={parseInt(expectedReturn)}
+                          onChange={(e) =>
+                            setExpectedReturn(`${e.target.value}%`)
+                          }
+                        />
+                        <div
+                          className={`d-flex justify-content-between ${lumpsumStyle.belowrangefield}`}
+                        >
+                          <span>8%</span>
+                          <span>30 %</span>
+                        </div>
+                      </Form.Group>
+                    </Form>
                   </div>
                 </Col>
 
@@ -137,48 +232,122 @@ const LumpsumCal = () => {
                   lg={6}
                   className={`d-flex align-items-center `}
                 >
-                <div className={lumpsumStyle.lumpsumCard}>
-                  <div
-                    className={`d-flex align-items-center flex-column ${lumpsumStyle.verticalLine} `}
-                  >
-                    <div className={`${lumpsumStyle.totalInvest} ps-5 mt-2`}>
-                      <p>
-                        The total value of your investment after <strong>10 Years </strong>will
-                        be
-                      </p>
-                      <h2>₹ 4,09,174</h2>
-                    </div>
-                    <div className="d-flex pt-4">
-                      <div className="d-flex flex-column">
-                        <Image src={InvestImg} alt="investImg" />
-                        <div className={`${lumpsumStyle.Investbtn} text-center`}>
-                        <button className="mt-4" type="button">Invest Now</button>
-                        </div>
+                  <div className={lumpsumStyle.lumpsumCard}>
+                    <div
+                      className={`d-flex align-items-center flex-column ${lumpsumStyle.verticalLine} `}
+                    >
+                      <div className={`${lumpsumStyle.totalInvest} ps-5 mt-2`}>
+                        <p>
+                          The total value of your investment after{" "}
+                          <strong>{durationYear} Years</strong> will be
+                        </p>
+                        {/* <h2>₹ 4,09,174</h2> */}
+                        <h2>
+                          ₹{" "}
+                          {calculateTotalValue(
+                            parseFloat(amount) || 0,
+                            durationYear,
+                            parseFloat(expectedReturn) || 0
+                          ).toLocaleString()}
+                        </h2>
                       </div>
-
-                      <div className={`ps-5 mt-3`}>
-                        <div className={`ps-2 ${lumpsumStyle.investedAmount}`}>
-                          <p>Invested Amount</p>
-                          <h6>₹ 2,40,000</h6>
+                      <div className="d-flex pt-4">
+                        <div className="d-flex flex-column">
+                          {/* Responsive PieChart */}
+                          <div className={lumpsumStyle.piechart_div}>
+                            <ResponsiveContainer>
+                              <PieChart>
+                                <Pie
+                                  dataKey="value"
+                                  data={data02}
+                                  cx="50%"
+                                  cy="50%"
+                                  innerRadius={40}
+                                  outerRadius={80}
+                                  className={lumpsumStyle.chart_no_outline}
+                                >
+                                  {data02.map((entry, index) => (
+                                    <Cell
+                                      key={`cell-${index}`}
+                                      fill={entry.color}
+                                    />
+                                  ))}
+                                </Pie>
+                                <Tooltip />
+                              </PieChart>
+                            </ResponsiveContainer>
+                          </div>
+                          <div
+                            className={`${lumpsumStyle.Investbtn} text-center`}
+                          >
+                            <button className="mt-4" type="button">
+                              Invest Now
+                            </button>
+                          </div>
                         </div>
-                        <div className={`mt-4 ps-2 ${lumpsumStyle.investedAmount}`}>
-                          <p>Est. Returns</p>
-                          <h6>₹ 69,174</h6>
+
+                        {/* <div className={`ps-5 mt-3`}>
+                          <div
+                            className={`ps-2 ${lumpsumStyle.investedAmount}`}
+                          >
+                            <p>Invested Amount</p>
+                            <h6>₹ 2,40,000</h6>
+                          </div>
+                          <div
+                            className={`mt-4 ps-2 ${lumpsumStyle.investedAmount}`}
+                          >
+                            <p>Est. Returns</p>
+                            <h6>₹ 69,174</h6>
+                          </div>
+                        </div> */}
+
+                        <div className="ps-5 mt-3">
+                          {/* Invested Amount Section */}
+                          <div
+                            className={`ps-2 ${lumpsumStyle.investedAmount} `}
+                            style={{
+                              borderLeft: `6px solid ${colorStyles.investedAmount}`,
+                            }}
+                          >
+                            <p>Invested Amount</p>
+                            <h6>₹ {parseFloat(amount).toLocaleString()}</h6>
+                          </div>
+
+                          {/* Estimated Returns Section */}
+                          <div
+                            className={`ps-2 mt-4 ${lumpsumStyle.investedAmount} `}
+                            style={{
+                              borderLeft: `6px solid ${colorStyles.estReturns}`,
+                            }}
+                          >
+                            <p>Est. Returns</p>
+                            <h6>
+                              ₹{" "}
+                              {calculateEstReturn(
+                                calculateTotalValue(
+                                  parseFloat(amount) || 0,
+                                  durationYear,
+                                  parseFloat(expectedReturn) || 0
+                                ),
+                                parseFloat(amount) || 0
+                              ).toLocaleString()}
+                            </h6>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div> 
                 </Col>
               </Row>
             </Card>
           </div>
         </div>
       </div>
+
       <div className={`${lumpsumStyle.qaContent} container`}>
         <section>
           <div className={lumpsumStyle.subHeading}>
-            <h1 className="text-center"> Lumpsum Calculator</h1>
+            <h1 className="text-center"> Lumpsum Calculator - polkjnbvghkmn</h1>
           </div>
           <Row>
             <Col xs={12} md={4} lg={3}>
@@ -335,7 +504,7 @@ const LumpsumCal = () => {
             </Col>
           </Row>
         </section>
-        <section className="pb-5 mt-5">
+        {/* <section className="pb-5 mt-5">
           <div className={`${lumpsumStyle.preHeading} py-5`}>
             <h1 className="text-align-left pt-5">
               FAQs (Frequently Asked Questions)
@@ -394,6 +563,95 @@ const LumpsumCal = () => {
               </Accordion.Item>
             </Accordion>
           </div>
+        </section> */}
+
+        <section className="pb-5 mt-5">
+          <div className={`${lumpsumStyle.preHeading} py-5`}>
+            <h1 className="text-align-left pt-5">
+              FAQs (Frequently Asked Questions)
+            </h1>
+          </div>
+          <div>
+            {/* <Accordion defaultActiveKey="0" alwaysOpen className={lumpsumStyle.custom_accordion_Header}>
+      <Accordion.Item eventKey="0">
+        <Accordion.Header className={lumpsumStyle.custom_accordion_Header2}>
+          How can a SIP Calculator Help You?
+        </Accordion.Header>
+        <Accordion.Body className={lumpsumStyle.accordionBody}>
+          There is no maximum tenure of a SIP. You can invest as long as you can. The minimum tenure you can go for is 3 years.
+        </Accordion.Body>
+      </Accordion.Item>
+
+      <Accordion.Item eventKey="1">
+        <Accordion.Header className={lumpsumStyle.accordionHeader}>
+          Can I modify my SIP amount?
+        </Accordion.Header>
+        <Accordion.Body className={lumpsumStyle.accordionBody}>
+          Yes, you can modify your SIP amount at any point during your tenure by contacting your fund manager or using the online portal.
+        </Accordion.Body>
+      </Accordion.Item>
+
+      <Accordion.Item eventKey="2">
+        <Accordion.Header className={lumpsumStyle.accordionHeader}>
+          What is the minimum tenure for SIP?
+        </Accordion.Header>
+        <Accordion.Body className={lumpsumStyle.accordionBody}>
+          The minimum tenure for a SIP is usually 6 months, but it can vary depending on the mutual fund you select.
+        </Accordion.Body>
+      </Accordion.Item>
+
+      <Accordion.Item eventKey="3">
+        <Accordion.Header className={lumpsumStyle.accordionHeader}>
+          What happens if I miss a SIP payment?
+        </Accordion.Header>
+        <Accordion.Body className={lumpsumStyle.accordionBody}>
+          If you miss a SIP payment, your account will not be penalized. However, consistent payments are encouraged for better returns.
+        </Accordion.Body>
+      </Accordion.Item>
+               </Accordion> */}
+
+            <Accordion defaultActiveKey="0" alwaysOpen >
+              <Accordion.Item eventKey="0">
+                <Accordion.Header className={lumpsumStyle.custom_acco_header}>
+                  How can a SIP Calculator Help You?
+                </Accordion.Header>
+                <Accordion.Body>
+                  There is no maximum tenure of a SIP. You can invest as long as
+                  you can. The minimum tenure you can go for is 3 years.
+                </Accordion.Body>
+              </Accordion.Item>
+
+              <Accordion.Item eventKey="1">
+                <Accordion.Header>Can I modify my SIP amount?</Accordion.Header>
+                <Accordion.Body>
+                  Yes, you can modify your SIP amount at any point during your
+                  tenure by contacting your fund manager or using the online
+                  portal.
+                </Accordion.Body>
+              </Accordion.Item>
+
+              <Accordion.Item eventKey="2">
+                <Accordion.Header>
+                  What is the minimum tenure for SIP?
+                </Accordion.Header>
+                <Accordion.Body>
+                  The minimum tenure for a SIP is usually 6 months, but it can
+                  vary depending on the mutual fund you select.
+                </Accordion.Body>
+              </Accordion.Item>
+
+              <Accordion.Item eventKey="3">
+                <Accordion.Header>
+                  What happens if I miss a SIP payment?
+                </Accordion.Header>
+                <Accordion.Body>
+                  If you miss a SIP payment, your account will not be penalized.
+                  However, consistent payments are encouraged for better
+                  returns.
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
+          </div>
         </section>
       </div>
     </>
@@ -401,4 +659,3 @@ const LumpsumCal = () => {
 };
 
 export default LumpsumCal;
-

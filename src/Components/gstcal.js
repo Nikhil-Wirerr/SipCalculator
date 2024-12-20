@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import GstStyle from "@/app/styles/gstcal.module.css";
+import GstStyle from "@/styles/gstcal.module.css";
 
 import {
   Accordion,
@@ -22,6 +22,9 @@ const GstCal = () => {
   const handleInvestmentTypeChange = (value) => {
     setInvestmentType(value);
   };
+
+  const handleWheel = (e) => e.target.blur();
+
 
   return (
     <>
@@ -86,8 +89,10 @@ const GstCal = () => {
                         type="number"
                         value={totalAmount}
                         onChange={(e) => setTotalAmount(Number(e.target.value))}
-                        className="border-0 text-end"
+                        className={`border-0 text-end ${GstStyle.custominput}`}
+                        onWheel={handleWheel}
                         style={{ width: "70px", textAlign: "right" }}
+                        
                       />
                     </div>
                   </div>

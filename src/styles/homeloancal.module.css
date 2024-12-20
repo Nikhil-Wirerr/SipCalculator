@@ -1,7 +1,11 @@
 .lumpsumContainer {
     background: transparent linear-gradient(0deg, #e3edfe00 0%, #e3edfe 100%) 0%
-      0% no-repeat padding-box;
+      0% no-repeat padding-box !important;
   }
+/* 
+  .homeloanbgcontainer{
+    background-image: url('../assets/cal-bg.svg') !important;
+  } */
   
   .lumpsumCard {
     padding-left: 20px;
@@ -68,6 +72,40 @@
     font-family: "Poppins-Regular";
   }
   
+.custominput::-webkit-outer-spin-button,
+.custominput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.rangecustominput input[type="number"]::-webkit-outer-spin-button,
+.rangecustominput input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.rangecustominput{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.rangecustominput input{
+  text-align: right;
+  /* width:90%;
+  padding-top: 30px;
+  height: 80px; */
+  border: 2px solid #4279f4;
+  border-radius: 4px;
+  font-size: 30px;
+  font-family: "Poppins-SemiBold";
+  color: #14406d;
+  font-weight: 600;
+  outline: none;
+}
+
+
   .custominput {
     text-align: center;
     width: 100%;
@@ -93,8 +131,10 @@
   
   .rangefield span{
     color: #272D34;
-    font-size: 30px;
+    font-size: 16px;
     font-family: "Poppins-SemiBold";
+    align-items: center;
+    display: flex;
   }
   
   .belowrangefield{
@@ -126,7 +166,6 @@
   
   
   .investedAmount {
-    border-left: 6px solid #93c9fc;
     color: #1f1a17;
     font-size: 18px;
     font-family: "Poppins-Regular";
@@ -137,6 +176,20 @@
     color: #1f1a17;
     font-size: 24px;
   }
+
+  .piechart_div{
+    width: 200px;
+    height: 200px;
+  }
+  
+  .chart_no_outline{
+    outline: none !important; 
+  }
+  
+  .chart-no-outline:focus {
+    outline: none !important; 
+  }
+  
   
   .Investbtn button {
     width: 173px;
@@ -179,6 +232,11 @@
   .qandA {
     padding: 0px 20px;
   }
+
+ .accordion_header button:not(.collapsed) {
+    /* background-color: var(--bs-accordion-active-bg); */
+    background-color: #f8f9fa !important;
+  }
   
   .quesAnsSection h3 {
     font-family: "Poppins-SemiBold";
@@ -193,6 +251,7 @@
     font-size: 16px;
   }
   
+
   .accordionHeader {
     color: #1f1a17;
     font-family: "Poppins-SemiBold";
@@ -200,11 +259,21 @@
     text-align: left;
     font-weight: 600;
     border: none !important;
+    padding: 20px;
+    border: 1px solid #ddd;
   }
   
+  .accordionHeader:active{
+    background-color: #010c17; /* Light gray background */
+    padding: 20px;
+    border: 1px solid #ddd;
+  }
   .accordionbody {
     font-family: "Poppins-Regular";
     color: #707070;
     font-size: 16px;
+    background-color: #f8f9fa; /* Light gray background */
+    padding: 20px;
+    border: 1px solid #ddd;
   }
   

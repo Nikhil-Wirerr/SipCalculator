@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import HouseRentStyle from "@/app/styles/houserentallownce.module.css";
+import HouseRentStyle from "@/styles/houserentallownce.module.css";
 import {
   Accordion,
   Card,
@@ -14,8 +14,14 @@ import {
 } from "react-bootstrap";
 
 const HouseRentAllowanceaCal = () => {
-  const [investmentType, setInvestmentType] = useState("Lumpsum");
+  const [investmentType, setInvestmentType] = useState("Hra");
   const [totalAmount, setTotalAmount] = useState(100);
+
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleOptionChange = (e) => {
+    setSelectedOption(e.target.value);
+  };
 
   const handleInvestmentTypeChange = (value) => {
     setInvestmentType(value);
@@ -23,7 +29,7 @@ const HouseRentAllowanceaCal = () => {
 
   return (
     <>
-      <div className={HouseRentStyle.gstBackground}>
+      <div className={HouseRentStyle.hraBackground}>
         <div className={`${HouseRentStyle.gstpreHeading} container py-5`}>
           <h1 className="text-left pt-3">HRA Calculator</h1>
           <p className="pt-2 pb-4">
@@ -79,20 +85,27 @@ const HouseRentAllowanceaCal = () => {
                   <div
                     className={`${HouseRentStyle.rangefield} d-flex justify-content-between align-items-center`}
                   >
-                    <Form.Label>Is the property self-occupied?</Form.Label>
-                    <div className="d-flex">
+                    <Form.Label>Are you working in a metro city?</Form.Label>
+                    <div className="d-flex justify-content-center align-items-center">
                       <Form.Check
+                        inline
                         type="radio"
-                        id="selfOccupiedYes"
-                        name="selfOccupied"
+                        id="metroCityYes"
+                        name="metroCity"
                         label="Yes"
-                        className="me-3"
+                        value="yes"
+                        checked={selectedOption === "yes"}
+                        onChange={handleOptionChange}
                       />
                       <Form.Check
+                        inline
                         type="radio"
-                        id="selfOccupiedNo"
-                        name="selfOccupied"
+                        id="metroCityNo"
+                        name="metrocity"
                         label="No"
+                        value="no"
+                        checked={selectedOption === "no"}
+                        onChange={handleOptionChange}
                       />
                     </div>
                   </div>
@@ -174,16 +187,23 @@ const HouseRentAllowanceaCal = () => {
           </Row>
         </Card>
 
-        {/* <div className={`d-block d-md-flex pt-4 ${HouseRentStyle.rangefield} `}>
-          <div className={`ps-0 ps-md-3 ${HouseRentStyle.totalGst}`}>
-            <p>Total GST</p>
-            <span>₹ 2,40,000</span>
+        <div
+          className={`d-flex justify-content-around pt-5 ${HouseRentStyle.cardbottom} `}
+        >
+          <div className={HouseRentStyle.cardbottom}>
+            <h6>Exempted HRA</h6>
+            <p> ₹ 3,09,174</p>
           </div>
-          <div className="px-0 px-md-5 mt-4 mt-md-0">
-            <p>Post-GST amount</p>
-            <span>₹ 2,40,000</span>
+          <div>
+            <h6> Exempted HRA</h6>
+            <p>₹ 0</p>
           </div>
-        </div> */}
+        </div>
+        <div className={HouseRentStyle.cardbottom}>
+          <p className="text-center py-5">
+            Invest in ELSS Mutual funds and save tax Under 80c as per old regime
+          </p>
+        </div>
       </div>
 
       <div className={`${HouseRentStyle.qaContent} container`}>

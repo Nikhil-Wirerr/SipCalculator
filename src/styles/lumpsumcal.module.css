@@ -83,6 +83,43 @@
   font-weight: 600;
 }
 
+.custominput::-webkit-outer-spin-button,
+.custominput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.rangecustominput input[type="number"]::-webkit-outer-spin-button,
+.rangecustominput input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.rangecustominput{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rangecustominput input{
+  text-align: right;
+  /* width:90%;
+  padding-top: 30px;
+  height: 80px; */
+  border: 2px solid #4279f4;
+  border-radius: 4px;
+  font-size: 30px;
+  font-family: "Poppins-SemiBold";
+  color: #14406d;
+  font-weight: 600;
+  outline: none;
+}
+
+/* .rangecustominput input span{
+  font-size: 20px;
+padding-top: 10px ;
+} */
+
 .custominput::placeholder {
   color: #14406d;
 }
@@ -95,8 +132,10 @@
 
 .rangefield span{
   color: #272D34;
-  font-size: 30px;
+  font-size: 16px;
   font-family: "Poppins-SemiBold";
+  align-items: center;
+  display: flex;
 }
 
 .belowrangefield{
@@ -138,6 +177,19 @@
   font-family: "Poppins-SemiBold";
   color: #1f1a17;
   font-size: 24px;
+}
+
+.piechart_div{
+  width: 200px;
+  height: 200px;
+}
+
+.chart_no_outline{
+  outline: none !important; /* Remove focus outline */
+}
+
+.chart-no-outline:focus {
+  outline: none !important; /* Ensure outline stays removed even when focused */
 }
 
 .Investbtn button {
@@ -195,17 +247,60 @@
   font-size: 16px;
 }
 
-.accordionHeader {
+/* .accordionHeader {
   color: #1f1a17;
   font-family: "Poppins-SemiBold";
   font-size: 24px;
   text-align: left;
   font-weight: 600;
   border: none !important;
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+.accordionHeader.accordion-button{
+  background-color: transparent !important;
+  background: transparent !important;
 }
 
 .accordionbody {
   font-family: "Poppins-Regular";
   color: #707070;
   font-size: 16px;
+} */
+
+
+
+.custom_acco_header .accordion-button:not(.collapsed) {
+position: relative;
+  display: flex
+;
+  align-items: center;
+  width: 100%;
+  padding: var(--bs-accordion-btn-padding-y) var(--bs-accordion-btn-padding-x);
+  font-size: 1rem;
+  color: var(--bs-accordion-btn-color);
+  text-align: left;
+  background-color: var(--bs-accordion-btn-bg) !important;
+  border: 0;
+  border-radius: 0;
+  overflow-anchor: none;
+  transition: var(--bs-accordion-transition);
+}
+
+.custom_acco_header .accordion-button {
+  position: relative;
+  display: flex
+;
+  align-items: center;
+  width: 100%;
+  padding: var(--bs-accordion-btn-padding-y) var(--bs-accordion-btn-padding-x);
+  font-size: 1rem;
+  color: var(--bs-accordion-btn-color);
+  text-align: left;
+  background-color: var(--bs-accordion-btn-bg) !important;
+  border: 0;
+  border-radius: 0;
+  overflow-anchor: none;
+  transition: var(--bs-accordion-transition);
 }

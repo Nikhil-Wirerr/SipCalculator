@@ -7,7 +7,8 @@ import Link from "next/link";
 // import ImgSip from "../../assets/sip-1.svg";
 // import ImgSip2 from "../../assets/sip-2.svg";
 // import ImgSip3 from "../../assets/sip-3.svg";
-import styles from "../../styles/homepage.module.css";
+// import styles from "../../styles/homepage.module.css";
+import styles from "@/styles/homepage.module.css"
 import "../../globals.css";
 // import calculators from "@/app/Components/calculatorsDataJson";
 import calculators from "@/Data/calculatorsData";

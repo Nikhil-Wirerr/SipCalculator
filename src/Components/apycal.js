@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import apyCalStyle from "@/app/styles/apycal.module.css";
+import apyCalStyle from "@/styles/apycal.module.css";
 import {
   Accordion,
   Card,
@@ -17,6 +17,9 @@ import {
 const ApyCal = () => {
   const [joiningAge, setJoiningAge] = useState(26);
   const [totalAmount, setTotalAmount] = useState(1000);
+
+  const handleWheel = (e) => e.target.blur();
+
 
   return (
     <>
@@ -45,7 +48,8 @@ const ApyCal = () => {
                       type="number"
                       value={joiningAge}
                       onChange={(e) => setJoiningAge(Number(e.target.value))}
-                      className="border-0 text-end"
+                      className={`border-0 text-end ${apyCalStyle.custominput}`}
+                      onWheel={handleWheel}
                     /> 
                     <span>Yrs</span>
                     </div>
@@ -67,7 +71,8 @@ const ApyCal = () => {
                       type="number"
                       value={totalAmount}
                       onChange={(e) => setTotalAmount(Number(e.target.value))}
-                      className="border-0 text-end"
+                      className={`border-0 text-end ${apyCalStyle.custominput}`}
+                      onWheel={handleWheel}
                       style={{ width: "70px", textAlign: "right" }}
                     />
                     </div>

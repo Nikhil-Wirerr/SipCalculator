@@ -1,11 +1,7 @@
 .lumpsumContainer {
     background: transparent linear-gradient(0deg, #e3edfe00 0%, #e3edfe 100%) 0%
-      0% no-repeat padding-box !important;
+      0% no-repeat padding-box;
   }
-/* 
-  .homeloanbgcontainer{
-    background-image: url('../assets/cal-bg.svg') !important;
-  } */
   
   .lumpsumCard {
     padding-left: 20px;
@@ -71,6 +67,40 @@
     color: #272d34;
     font-family: "Poppins-Regular";
   }
+
+.custominput::-webkit-outer-spin-button,
+.custominput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+.rangecustominput input[type="number"]::-webkit-outer-spin-button,
+.rangecustominput input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.rangecustominput{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rangecustominput input{
+  text-align: right;
+  /* width:90%;
+  padding-top: 30px;
+  height: 80px; */
+  border: 2px solid #4279f4;
+  border-radius: 4px;
+  font-size: 30px;
+  font-family: "Poppins-SemiBold";
+  color: #14406d;
+  font-weight: 600;
+  outline: none;
+}
+
   
   .custominput {
     text-align: center;
@@ -97,8 +127,10 @@
   
   .rangefield span{
     color: #272D34;
-    font-size: 30px;
+    font-size: 16px;
     font-family: "Poppins-SemiBold";
+    align-items: center;
+    display: flex;
   }
   
   .belowrangefield{
@@ -141,6 +173,20 @@
     color: #1f1a17;
     font-size: 24px;
   }
+
+  .piechart_div{
+    width: 200px;
+    height: 200px;
+  }
+  
+  .chart_no_outline{
+    outline: none !important; 
+  }
+  
+  .chart-no-outline:focus {
+    outline: none !important; 
+  }
+  
   
   .Investbtn button {
     width: 173px;

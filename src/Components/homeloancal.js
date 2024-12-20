@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
   Col,
@@ -12,32 +12,138 @@ import {
   Form,
   Button,
   InputGroup,
+  Tooltip,
 } from "react-bootstrap";
 import LumpCalImg from "../app/assets/lumpsumcal.svg";
 import InvestImg from "../app/assets/invest-circle.svg";
 import Image from "next/image";
 import Accordion from "react-bootstrap/Accordion";
-import homeloanStyle from "@/app/styles/homeloancal.module.css";
-import "react-circular-progressbar/dist/styles.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import homeloanStyle from "@/styles/homeloancal.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import { PieChart, Pie, Legend, Cell, ResponsiveContainer } from "recharts";
 
 const HomeloanCal = () => {
-  const [investmentType, setInvestmentType] = useState("homeloan");
-  const [showAccordion, setShowaccordion] = useState(false);
+  const [investmentType, setInvestmentType] = useState("Lumpsum");
+  const [amount, setAmount] = useState(5000);
+  const [durationYear, setDurationYear] = useState(50);
+  const [expectedReturn, setExpectedReturn] = useState("8%");
+  const [showAccordion, setShowaccordion] = useState(true);
+  const [emiData, setEmiData] = useState([]);
+
   const handleInvestmentTypeChange = (value) => {
     setInvestmentType(value);
   };
 
+  const handleExpectedReturnChange = (e) => {
+    let value = e.target.value.replace("%", "");
+    value = Math.min(Math.max(Number(value), 8), 30);
+    setExpectedReturn(`${value}%`);
+  };
+
+  const handleWheel = (e) => e.target.blur();
+
+  const calculateTotalValue = (amount, years, rate) => {
+    console.log(
+      `Calculating Total Value: Amount=${amount}, Years=${years}, Rate=${rate}`
+    );
+
+    const annualRate = rate / 100;
+    return Math.round(amount * Math.pow(1 + annualRate, years));
+  };
+
+  const calculateEstReturn = (totalvalue, amount) => totalvalue - amount;
+
+  const calculateEMI = (principal, annualRate, years) => {
+    const monthlyRate = annualRate / 12 / 100;
+    const months = years * 12;
+    return (
+      (principal * monthlyRate * Math.pow(1 + monthlyRate, months)) /
+      (Math.pow(1 + monthlyRate, months) - 1)
+    );
+  };
+
+  const generateEMIData = (loanAmount, annualRate, loanTenur) => {
+    const monthlyRate = annualRate / 12 / 100;
+    const totalMonths = loanTenur * 12;
+    const emi = calculateEMI(loanAmount, annualRate, loanTenur);
+
+    let balance = loanAmount;
+    const emiData = [];
+
+    for (let month = 1; month <= totalMonths; month++) {
+      const interest = balance * monthlyRate;
+      const principal = emi - interest;
+      balance -= principal;
+
+      emiData.push({
+        month,
+        principal: Math.max(principal, 0),
+        interest: Math.max(interest, 0),
+        totalPayment: emi,
+        balance: Math.max(balance, 0),
+      });
+
+      if (balance <= 0) break;
+    }
+
+    return emiData;
+  };
+
+  useEffect(() => {
+    const annualRate = parseFloat(expectedReturn.replace("%", "")) || 0;
+    const data = generateEMIData(amount, annualRate, durationYear);
+    setEmiData(data);
+  }, [amount, durationYear, expectedReturn]);
+
+  const getYearlyEMIData = (emiData) => {
+    const yearlyData = {};
+    emiData.forEach((item) => {
+      const year = Math.floor((item.month - 1) / 12) + 1;
+      if (!yearlyData[year]) yearlyData[year] = [];
+      yearlyData[year].push(item);
+    });
+    return yearlyData;
+  };
+
+  const colorStyles = {
+    investedAmount: "#93C9FC",
+    estReturns: "#D3EAFE",
+  };
+
+  const data02 = [
+    {
+      name: "Invested AMount",
+      value: parseFloat(amount) || 0,
+      color: colorStyles.investedAmount,
+    },
+    {
+      name: "Est. Returns",
+      value:
+        calculateEstReturn(
+          calculateTotalValue(
+            parseFloat(amount) || 0,
+            durationYear,
+            parseFloat(expectedReturn) || 0
+          ),
+          parseFloat(amount) || 0
+        ) || 0,
+      color: colorStyles.estReturns,
+    },
+  ];
+
   return (
     <>
       <div className={` ${homeloanStyle.lumpsumContainer}`}>
-        <div className={`container py-5  ${homeloanStyle.homeloanbgcontainer}`} >
+        <div className={`container py-5  ${homeloanStyle.homeloanbgcontainer}`}>
           <div className={homeloanStyle.preHeading}>
             <h1 className="text-align-left pt-3">Home Loan EMI Calculator</h1>
             <p className="pt-2 pb-4">
               {" "}
-              The primary responsibility of a potential borrower is to have an exact estimate of the EMI amount they are liable to pay. One can take advantage of a home loan EMI calculator to arrive at the precise number.
+              The primary responsibility of a potential borrower is to have an
+              exact estimate of the EMI amount they are liable to pay. One can
+              take advantage of a home loan EMI calculator to arrive at the
+              precise number.
             </p>
           </div>
 
@@ -56,6 +162,7 @@ const HomeloanCal = () => {
                       id="sip-toggle"
                       value="SIP"
                       variant="outline-primary"
+                      active={investmentType === "SIP"}
                     >
                       Monthly SIP
                     </ToggleButton>
@@ -63,6 +170,7 @@ const HomeloanCal = () => {
                       id="lumpsum-toggle"
                       value="Lumpsum"
                       variant="outline-primary"
+                      active={investmentType === "Lumpsum"}
                     >
                       Lumpsum
                     </ToggleButton>
@@ -91,8 +199,11 @@ const HomeloanCal = () => {
                           </label>
                           <input
                             type="number"
+                            value={amount}
                             className={homeloanStyle.custominput}
                             placeholder="₹ 5,000"
+                            onWheel={handleWheel}
+                            onChange={(e) => setAmount(Number(e.target.value))}
                           />
                         </div>
                       </div>
@@ -102,10 +213,29 @@ const HomeloanCal = () => {
                           className={`d-flex justify-content-between ${homeloanStyle.rangefield}`}
                         >
                           <Form.Label>Select Duration</Form.Label>
-                          <span>10 Yr</span>
+                          <div className={homeloanStyle.rangecustominput}>
+                            <input
+                              type="number"
+                              value={durationYear}
+                              onChange={(e) =>
+                                setDurationYear(Number(e.target.value))
+                              }
+                              className="border-0 w-100"
+                              onWheel={handleWheel}
+                            />
+                            <span>Yrs</span>
+                          </div>
                         </div>
 
-                        <Form.Range min={1} max={40} defaultValue={10} />
+                        {/* <Form.Range min={1} max={40} defaultValue={10} /> */}
+                        <Form.Range
+                          min={1}
+                          max={40}
+                          value={durationYear}
+                          onChange={(e) =>
+                            setDurationYear(Number(e.target.value))
+                          }
+                        />
                         <div
                           className={`d-flex justify-content-between ${homeloanStyle.belowrangefield}`}
                         >
@@ -119,9 +249,27 @@ const HomeloanCal = () => {
                           className={`d-flex justify-content-between ${homeloanStyle.rangefield}`}
                         >
                           <Form.Label>Expected Rate of Return</Form.Label>
-                          <span> 12%</span>
+                          <div className={homeloanStyle.rangecustominput}>
+                            <input
+                              type="text"
+                              value={expectedReturn}
+                              onChange={handleExpectedReturnChange}
+                              className="border-0 w-100"
+                              onWheel={(e) => e.target.blur()}
+                            />
+                          </div>
+                          {/* <span> 12%</span> */}
                         </div>
-                        <Form.Range min={1} max={40} defaultValue={10} />
+                        {/* <Form.Range min={1} max={40} defaultValue={10} /> */}
+                        <Form.Range
+                          min={8}
+                          max={40}
+                          // defaultValue={10}
+                          value={parseInt(expectedReturn)}
+                          onChange={(e) =>
+                            setExpectedReturn(`${e.target.value}%`)
+                          }
+                        />
                         <div
                           className={`d-flex justify-content-between ${homeloanStyle.belowrangefield}`}
                         >
@@ -141,18 +289,48 @@ const HomeloanCal = () => {
                 >
                   <div className={homeloanStyle.lumpsumCard}>
                     <div
-                      className={`d-flex align-items-center flex-column ${homeloanStyle.verticalLine} `}
+                      className={`d-flex  flex-column ${homeloanStyle.verticalLine} `}
                     >
                       <div className={`${homeloanStyle.totalInvest} ps-5 mt-2`}>
-                        <p>
-                          The total value of your investment after{" "}
-                          <strong>10 Years </strong>will be
-                        </p>
-                        <h2>₹ 4,09,174</h2>
+                        <p>The total amount will be</p>
+                        {/* <h2>₹ 4,09,174</h2> */}
+                        <h2>
+                          ₹{" "}
+                          {calculateTotalValue(
+                            parseFloat(amount) || 0,
+                            durationYear,
+                            parseFloat(expectedReturn) || 0
+                          ).toLocaleString()}
+                        </h2>
                       </div>
                       <div className="d-flex pt-4">
                         <div className="d-flex flex-column">
-                          <Image src={InvestImg} alt="investImg" />
+                          {/* <Image src={InvestImg} alt="investImg" /> */}
+
+                          <div className={homeloanStyle.piechart_div}>
+                            <ResponsiveContainer>
+                              <PieChart>
+                                <Pie
+                                  dataKey="value"
+                                  data={data02}
+                                  cx="50%"
+                                  cy="50%"
+                                  innerRadius={40}
+                                  outerRadius={80}
+                                  className={homeloanStyle.chart_no_outline}
+                                >
+                                  {data02.map((entry, index) => (
+                                    <Cell
+                                      key={`cell-${index}`}
+                                      fill={entry.color}
+                                    />
+                                  ))}
+                                </Pie>
+                              </PieChart>
+                              <Tooltip />
+                            </ResponsiveContainer>
+                          </div>
+
                           <div
                             className={`${homeloanStyle.Investbtn} text-center`}
                           >
@@ -162,18 +340,63 @@ const HomeloanCal = () => {
                           </div>
                         </div>
 
-                        <div className={`ps-5 mt-3`}>
+                        <div className="ps-5 mt-3">
                           <div
-                            className={`ps-2 ${homeloanStyle.investedAmount}`}
+                            className={`ps-2 pb-2 ${homeloanStyle.investedAmount}`}
                           >
-                            <p>Invested Amount</p>
-                            <h6>₹ 2,40,000</h6>
+                            <p>Monthly EMI</p>
+                            {/* <h6>₹ 19,566</h6> */}
+                            {/* <h6>
+                              ₹{" "}
+                              {calculateEMI(
+                                parseFloat(amount) || 0,
+                                parseFloat(expectedReturn) || 0,
+                                durationYear || 0
+                              ).toLocaleString(undefined, {
+                                maximumFractionDigits: 2,
+                              })}
+                            </h6> */}
+                            <h6>
+                              ₹{" "}
+                              {amount > 0 && durationYear > 0
+                                ? calculateEMI(
+                                    amount,
+                                    parseFloat(expectedReturn),
+                                    durationYear
+                                  ).toLocaleString(undefined, {
+                                    maximumFractionDigits: 2,
+                                  })
+                                : "0"}
+                            </h6>
                           </div>
                           <div
-                            className={`mt-4 ps-2 ${homeloanStyle.investedAmount}`}
+                            className={`ps-2 ${homeloanStyle.investedAmount}`}
+                            style={{
+                              borderLeft: `6px solid ${colorStyles.investedAmount}`,
+                            }}
+                          >
+                            <p>Invested Amount</p>
+                            <h6>₹ {parseFloat(amount).toLocaleString()}</h6>
+                          </div>
+
+                          <div
+                            className={`ps-2 ${homeloanStyle.investedAmount}`}
+                            style={{
+                              borderLeft: `6px solid ${colorStyles.estReturns}`,
+                            }}
                           >
                             <p>Est. Returns</p>
-                            <h6>₹ 69,174</h6>
+                            <h6>
+                              ₹{" "}
+                              {calculateEstReturn(
+                                calculateTotalValue(
+                                  parseFloat(amount) || 0,
+                                  durationYear,
+                                  parseFloat(expectedReturn) || 0
+                                ),
+                                parseFloat(amount) || 0
+                              ).toLocaleString()}
+                            </h6>
                           </div>
                         </div>
                       </div>
@@ -182,158 +405,243 @@ const HomeloanCal = () => {
                 </Col>
 
                 <div className="text-center my-3">
-                    <button className="btn btn-primary"
+                  <button
+                    className="btn btn-primary"
                     onClick={() => setShowaccordion(!showAccordion)}
-                    >
-                        {showAccordion ? "Amortization Details(Yearly/Monthly)" : "Amortization Details(Yearly/Monthly)"}
-                        {/* <FontAwesomeIcon icon=" fa-angle-down"  /> */}
-                    </button>
+                  >
+                    {showAccordion
+                      ? "Amortization Details(Yearly/Monthly)"
+                      : "Amortization Details(Yearly/Monthly)"}
+                    {/* <FontAwesomeIcon icon=" fa-angle-down"  /> */}
+                  </button>
                 </div>
 
-                {showAccordion && (
-                <div className="mt-4">
-                <Accordion defaultActiveKey="4">
-                  <Accordion.Item eventKey="0">
-                    <Accordion.Header>2024</Accordion.Header>
-                    <Accordion.Body>
-                      <table className="table table-striped">
-                        <thead>
-                          <tr>
-                            <th>#</th>
-                            <th>Column 1</th>
-                            <th>Column 2</th>
-                            <th>Column 3</th>
-                            <th>Column 4</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {Array.from({ length: 12 }, (_, index) => (
-                            <tr key={index}>
-                              <td>{index + 1}</td>
-                              <td>Data {index + 1}.1</td>
-                              <td>Data {index + 1}.2</td>
-                              <td>Data {index + 1}.3</td>
-                              <td>Data {index + 1}.4</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </Accordion.Body>
-                  </Accordion.Item>
-                  <Accordion.Item eventKey="1">
-                    <Accordion.Header>2025</Accordion.Header>
-                    <Accordion.Body>
-                      <table className="table table-striped">
-                        <thead>
-                          <tr>
-                            <th>#</th>
-                            <th>Column 1</th>
-                            <th>Column 2</th>
-                            <th>Column 3</th>
-                            <th>Column 4</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {Array.from({ length: 12 }, (_, index) => (
-                            <tr key={index}>
-                              <td>{index + 1}</td>
-                              <td>Data {index + 1}.1</td>
-                              <td>Data {index + 1}.2</td>
-                              <td>Data {index + 1}.3</td>
-                              <td>Data {index + 1}.4</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </Accordion.Body>
-                  </Accordion.Item>
-                  <Accordion.Item eventKey="2">
-                    <Accordion.Header>2026</Accordion.Header>
-                    <Accordion.Body>
-                      <table className="table table-striped">
-                        <thead>
-                          <tr>
-                            <th>#</th>
-                            <th>Column 1</th>
-                            <th>Column 2</th>
-                            <th>Column 3</th>
-                            <th>Column 4</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {Array.from({ length: 12 }, (_, index) => (
-                            <tr key={index}>
-                              <td>{index + 1}</td>
-                              <td>Data {index + 1}.1</td>
-                              <td>Data {index + 1}.2</td>
-                              <td>Data {index + 1}.3</td>
-                              <td>Data {index + 1}.4</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </Accordion.Body>
-                  </Accordion.Item>
-                  <Accordion.Item eventKey="3">
-                    <Accordion.Header>2027</Accordion.Header>
-                    <Accordion.Body>
-                      <table className="table table-striped">
-                        <thead>
-                          <tr>
-                            <th>Month</th>
-                            <th>Principal paid</th>
-                            <th>Interest Chargesd</th>
-                            <th>CTotal Payment</th>
-                            <th>Balance </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"] . map(
-                            (month, index) => (
-                                <tr key={index}>
-                                    <td>{month}</td>
-                                    <td>Data {index +1}.1</td>
-                                    <td>Data {index +1}.2</td>
-                                    <td>Data {index +1}.3</td>
-                                    <td>Data {index +1}.4</td>
+                {/* {showAccordion && (
+                  <Accordion
+                    defaultActiveKey="0"
+                    className={homeloanStyle.accordionMain}
+                  >
+                    {Object.entries(getYearlyEMIData(emiData)).map(
+                      ([year, months], index) => (
+                        <Accordion.Item eventKey={index.toString()} key={index}>
+                          <Accordion.Header>
+                            {2024 + parseInt(year) - 1}
+                          </Accordion.Header>
+                          <Accordion.Body>
+                            <table
+                              className={`table table-striped ${homeloanStyle.customTable}`}
+                            >
+                              <thead>
+                                <tr>
+                                  <th>Month</th>
+                                  <th>Principal Paid</th>
+                                  <th>Interest Charged</th>
+                                  <th>Total Payment</th>
+                                  <th>Remaining Balance</th>
                                 </tr>
-                            )
-                          )}
-                        </tbody>
-                      </table>
-                    </Accordion.Body>
-                  </Accordion.Item>
-                  <Accordion.Item eventKey="4">
-                    <Accordion.Header>2028</Accordion.Header>
-                    <Accordion.Body>
-                      <table className="table table-striped text-center">
-                        <thead>
-                          <tr>
-                            <th>Month</th>
-                            <th>Principal paid</th>
-                            <th>Interest Chargesd</th>
-                            <th>Total Payment</th>
-                            <th> Balance</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {/* {Array.from({ length: 12 }, (_, index) => ( */}
-                          {["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"] .map(
-                            (month, index) =>(
-                            <tr key={index}>
-                              <td>{month}</td>
-                              <td>Data {index + 1}.1</td>
-                              <td>Data {index + 1}.2</td>
-                              <td>Data {index + 1}.3</td>
-                              <td>Data {index + 1}.4</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </Accordion.Body>
-                  </Accordion.Item>
-                </Accordion>
-                </div>
+                              </thead>
+                              <tbody>
+                                {months.map((data, monthIndex) => (
+                                  <tr key={monthIndex}>
+                                    <td>
+                                      {
+                                        [
+                                          "Jan",
+                                          "Feb",
+                                          "Mar",
+                                          "Apr",
+                                          "May",
+                                          "Jun",
+                                          "Jul",
+                                          "Aug",
+                                          "Sep",
+                                          "Oct",
+                                          "Nov",
+                                          "Dec",
+                                        ][(data.month - 1) % 12]
+                                      }
+                                    </td>
+                                    <td>₹ {data.principal.toFixed(2)}</td>
+                                    <td>₹ {data.interest.toFixed(2)}</td>
+                                    <td>₹ {data.totalPayment.toFixed(2)}</td>
+                                    <td>₹ {data.balance.toFixed(2)}</td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </Accordion.Body>
+                        </Accordion.Item>
+                      )
+                    )}
+                  </Accordion>
+                )} */}
+
+                {showAccordion && (
+                  <div className="mt-4">
+                    <Accordion defaultActiveKey="4">
+                      <Accordion.Item eventKey="0">
+                        <Accordion.Header>2024</Accordion.Header>
+                        <Accordion.Body>
+                          <table className="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Column 1</th>
+                                <th>Column 2</th>
+                                <th>Column 3</th>
+                                <th>Column 4</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {Array.from({ length: 12 }, (_, index) => (
+                                <tr key={index}>
+                                  <td>{index + 1}</td>
+                                  <td>Data {index + 1}.1</td>
+                                  <td>Data {index + 1}.2</td>
+                                  <td>Data {index + 1}.3</td>
+                                  <td>Data {index + 1}.4</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </Accordion.Body>
+                      </Accordion.Item>
+                      <Accordion.Item eventKey="1">
+                        <Accordion.Header>2025</Accordion.Header>
+                        <Accordion.Body>
+                          <table className="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Column 1</th>
+                                <th>Column 2</th>
+                                <th>Column 3</th>
+                                <th>Column 4</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {Array.from({ length: 12 }, (_, index) => (
+                                <tr key={index}>
+                                  <td>{index + 1}</td>
+                                  <td>Data {index + 1}.1</td>
+                                  <td>Data {index + 1}.2</td>
+                                  <td>Data {index + 1}.3</td>
+                                  <td>Data {index + 1}.4</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </Accordion.Body>
+                      </Accordion.Item>
+                      <Accordion.Item eventKey="2">
+                        <Accordion.Header>2026</Accordion.Header>
+                        <Accordion.Body>
+                          <table className="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Column 1</th>
+                                <th>Column 2</th>
+                                <th>Column 3</th>
+                                <th>Column 4</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {Array.from({ length: 12 }, (_, index) => (
+                                <tr key={index}>
+                                  <td>{index + 1}</td>
+                                  <td>Data {index + 1}.1</td>
+                                  <td>Data {index + 1}.2</td>
+                                  <td>Data {index + 1}.3</td>
+                                  <td>Data {index + 1}.4</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </Accordion.Body>
+                      </Accordion.Item>
+                      <Accordion.Item eventKey="3">
+                        <Accordion.Header>2027</Accordion.Header>
+                        <Accordion.Body>
+                          <table className="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>Month</th>
+                                <th>Principal paid</th>
+                                <th>Interest Chargesd</th>
+                                <th>CTotal Payment</th>
+                                <th>Balance </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {[
+                                "Jan",
+                                "Feb",
+                                "Mar",
+                                "Apr",
+                                "May",
+                                "Jun",
+                                "Jul",
+                                "Aug",
+                                "Sep",
+                                "Oct",
+                                "Nov",
+                                "Dec",
+                              ].map((month, index) => (
+                                <tr key={index}>
+                                  <td>{month}</td>
+                                  <td>Data {index + 1}.1</td>
+                                  <td>Data {index + 1}.2</td>
+                                  <td>Data {index + 1}.3</td>
+                                  <td>Data {index + 1}.4</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </Accordion.Body>
+                      </Accordion.Item>
+                      <Accordion.Item eventKey="4">
+                        <Accordion.Header>2028</Accordion.Header>
+                        <Accordion.Body>
+                          <table className="table table-striped text-center">
+                            <thead>
+                              <tr>
+                                <th>Month</th>
+                                <th>Principal paid</th>
+                                <th>Interest Chargesd</th>
+                                <th>Total Payment</th>
+                                <th> Balance</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {[
+                                "Jan",
+                                "Feb",
+                                "Mar",
+                                "Apr",
+                                "May",
+                                "Jun",
+                                "Jul",
+                                "Aug",
+                                "Sep",
+                                "Oct",
+                                "Nov",
+                                "Dec",
+                              ].map((month, index) => (
+                                <tr key={index}>
+                                  <td>{month}</td>
+                                  <td>Data {index + 1}.1</td>
+                                  <td>Data {index + 1}.2</td>
+                                  <td>Data {index + 1}.3</td>
+                                  <td>Data {index + 1}.4</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </Accordion.Body>
+                      </Accordion.Item>
+                    </Accordion>
+                  </div>
                 )}
               </Row>
             </Card>

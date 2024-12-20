@@ -2,7 +2,7 @@
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
-import sipStyle from "@/app/styles/sipcal.module.css";
+import sipStyle from "@/styles/sipcal.module.css";
 import {
   Card,
   Col,
@@ -12,17 +12,67 @@ import {
   Form,
   Button,
   Accordion,
+  Tooltip,
 } from "react-bootstrap";
 import LumpCalImg from "../app/assets/lumpsumcal.svg";
 import InvestImg from "../app/assets/invest-circle.svg";
 import Image from "next/image";
+import { PieChart, Pie, Legend, Cell, ResponsiveContainer } from "recharts";
 
 const SipCal = () => {
   const [investmentType, setInvestmentType] = useState("Lumpsum");
+  const [amount, setAmount] = useState(3000);
+  const [durationYear, setDurationYear] = useState(50);
+  const [expectedReturn, setExpectedReturn] = useState("8%");
 
   const handleInvestmentTypeChange = (value) => {
     setInvestmentType(value);
   };
+
+  const handleExpectedReturnChange = (e) => {
+    let value = e.target.value.replace("%", "");
+    value = Math.min(Math.max(Number(value), 8), 30);
+    setExpectedReturn(`${value}%`);
+  };
+
+  const handleWheel = (e) => e.target.blur();
+
+  const calculateTotalValue = (amount, years, rate) => {
+    console.log(
+      `Calculating Total Value: Amount=${amount}, Years=${years}, Rate=${rate}`
+    );
+
+    const annualRate = rate / 100;
+    return Math.round(amount * Math.pow(1 + annualRate, years));
+  };
+
+  const calculateEstReturn = (totalvalue, amount) => totalvalue - amount;
+
+  const colorStyles = {
+    investedAmount: "#93C9FC",
+    estReturns: "#D3EAFE",
+  };
+
+  const data02 = [
+    {
+      name: "Invested AMount",
+      value: parseFloat(amount) || 0,
+      color: colorStyles.investedAmount,
+    },
+    {
+      name: "Est. Returns",
+      value:
+        calculateEstReturn(
+          calculateTotalValue(
+            parseFloat(amount) || 0,
+            durationYear,
+            parseFloat(expectedReturn) || 0
+          ),
+          parseFloat(amount) || 0
+        ) || 0,
+      color: colorStyles.estReturns,
+    },
+  ];
 
   return (
     <>
@@ -54,6 +104,8 @@ const SipCal = () => {
                       id="sip-toggle"
                       value="SIP"
                       variant="outline-primary"
+                      // active={investmentType === "SIP" ? true : undefined}
+                      active={investmentType === "SIP"}
                     >
                       Monthly SIP
                     </ToggleButton>
@@ -61,6 +113,8 @@ const SipCal = () => {
                       id="lumpsum-toggle"
                       value="Lumpsum"
                       variant="outline-primary"
+                      // active={investmentType === "Lumpsum" ? true : undefined}
+                      active={investmentType === "Lumpsum"}
                     >
                       Lumpsum
                     </ToggleButton>
@@ -89,8 +143,11 @@ const SipCal = () => {
                           </label>
                           <input
                             type="number"
+                            value={amount}
                             className={sipStyle.custominput}
-                            placeholder="₹ 5,000"
+                            placeholder="₹ 3,000"
+                            onWheel={handleWheel}
+                            onChange={(e) => setAmount(Number(e.target.value))}
                           />
                         </div>
                       </div>
@@ -100,10 +157,30 @@ const SipCal = () => {
                           className={`d-flex justify-content-between ${sipStyle.rangefield}`}
                         >
                           <Form.Label>Select Duration</Form.Label>
-                          <span>10 Yr</span>
+                          <div className={sipStyle.rangecustominput}>
+                            <input
+                              type="number"
+                              value={durationYear}
+                              onChange={(e) =>
+                                setDurationYear(Number(e.target.value))
+                              }
+                              className="border-0 w-100"
+                              onWheel={handleWheel}
+                            />
+                            <span>Yrs</span>
+                          </div>
                         </div>
 
-                        <Form.Range min={1} max={40} defaultValue={10} />
+                        {/* <Form.Range min={1} max={40} defaultValue={10} /> */}
+
+                        <Form.Range
+                          min={1}
+                          max={40}
+                          value={durationYear}
+                          onChange={(e) =>
+                            setDurationYear(Number(e.target.value))
+                          }
+                        />
                         <div
                           className={`d-flex justify-content-between ${sipStyle.belowrangefield}`}
                         >
@@ -117,9 +194,27 @@ const SipCal = () => {
                           className={`d-flex justify-content-between ${sipStyle.rangefield}`}
                         >
                           <Form.Label>Expected Rate of Return</Form.Label>
-                          <span> 12%</span>
+                          <div className={sipStyle.rangecustominput}>
+                            <input
+                              type="text"
+                              value={expectedReturn}
+                              onChange={handleExpectedReturnChange}
+                              className="border-0 w-100"
+                              onWheel={(e) => e.target.blur()}
+                            />
+                          </div>
+                          {/* <span> 12%</span> */}
                         </div>
-                        <Form.Range min={1} max={40} defaultValue={10} />
+                        {/* <Form.Range min={1} max={40} defaultValue={10} /> */}
+                        <Form.Range
+                          min={8}
+                          max={40}
+                          // defaultValue={10}
+                          value={parseInt(expectedReturn)}
+                          onChange={(e) =>
+                            setExpectedReturn(`${e.target.value}%`)
+                          }
+                        />
                         <div
                           className={`d-flex justify-content-between ${sipStyle.belowrangefield}`}
                         >
@@ -144,13 +239,44 @@ const SipCal = () => {
                       <div className={`${sipStyle.totalInvest} ps-5 mt-2`}>
                         <p>
                           The total value of your investment after{" "}
-                          <strong>10 Years </strong>will be
+                          <strong>{durationYear} Years</strong> will be
                         </p>
-                        <h2>₹ 4,09,174</h2>
+                        {/* <h2>₹ 4,09,174</h2> */}
+                        <h2>
+                          ₹{" "}
+                          {calculateTotalValue(
+                            parseFloat(amount) || 0,
+                            durationYear,
+                            parseFloat(expectedReturn) || 0
+                          ).toLocaleString()}
+                        </h2>
                       </div>
                       <div className="d-flex pt-4">
                         <div className="d-flex flex-column">
-                          <Image src={InvestImg} alt="investImg" />
+                          {/* <Image src={InvestImg} alt="investImg" /> */}
+                          <div className={sipStyle.piechart_div}>
+                            <ResponsiveContainer>
+                              <PieChart>
+                                <Pie
+                                  dataKey="value"
+                                  data={data02}
+                                  cx="50%"
+                                  cy="50%"
+                                  innerRadius={40}
+                                  outerRadius={80}
+                                  className={sipStyle.chart_no_outline}
+                                >
+                                  {data02.map((entry, index) => (
+                                    <Cell
+                                      key={`cell-${index}`}
+                                      fill={entry.color}
+                                    />
+                                  ))}
+                                </Pie>
+                              </PieChart>
+                              <Tooltip />
+                            </ResponsiveContainer>
+                          </div>
                           <div className={`${sipStyle.Investbtn} text-center`}>
                             <button className="mt-4" type="button">
                               Invest Now
@@ -158,7 +284,7 @@ const SipCal = () => {
                           </div>
                         </div>
 
-                        <div className={`ps-5 mt-3`}>
+                        {/* <div className={`ps-5 mt-3`}>
                           <div className={`ps-2 ${sipStyle.investedAmount}`}>
                             <p>Invested Amount</p>
                             <h6>₹ 2,40,000</h6>
@@ -169,7 +295,39 @@ const SipCal = () => {
                             <p>Est. Returns</p>
                             <h6>₹ 69,174</h6>
                           </div>
-                        </div>
+                        </div> */}
+
+                          <div className="ps-5 mt-3">
+                            <div
+                              className={`ps-2 ${sipStyle.investedAmount}`}
+                              style={{
+                                borderLeft: `6px solid ${colorStyles.investedAmount}`,
+                              }}
+                            >
+                              <p>Invested Amount</p>
+                              <h6>₹ {parseFloat(amount).toLocaleString()}</h6>
+                            </div>
+
+                            <div
+                              className={`ps-2 ${sipStyle.investedAmount}`}
+                              style={{
+                                borderLeft: `6px solid ${colorStyles.estReturns}`,
+                              }}
+                            >
+                              <p>Est. Returns</p>
+                              <h6>
+                                ₹{" "}
+                                {calculateEstReturn(
+                                  calculateTotalValue(
+                                    parseFloat(amount) || 0,
+                                    durationYear,
+                                    parseFloat(expectedReturn) || 0
+                                  ),
+                                  parseFloat(amount) || 0
+                                ).toLocaleString()}
+                              </h6>
+                            </div>
+                          </div>
                       </div>
                     </div>
                   </div>

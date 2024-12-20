@@ -1,16 +1,16 @@
-.apyBackground{
-    background: transparent linear-gradient(0deg, #E3EDFE00 0%, #E3EDFE 100%) ;
-/* background-image:url(/src//app/assets/cal-bg.svg) !important; */
+.hraBackground{
+    /* background: transparent linear-gradient(0deg, #E3EDFE00 0%, #E3EDFE 100%) ; */
+    background: transparent linear-gradient(0deg, #E3EDFE00 0%, #E3EDFE 100%) 0% 0% no-repeat padding-box;
 }
 
-.apypreHeading h1{
+.gstpreHeading h1{
     font-family: "Poppins-SemiBold";
     font-size: 42px;
     color: #1F1A17;
     text-align: left;
 }
 
-.apypreHeading p{
+.gstpreHeading p{
     font-family: "Poppins-Regular";
     color: #1F1A17;
     font-size: 16px;
@@ -34,10 +34,51 @@ border: 1px solid #DBDFE5;
 border-radius: 50px;
 }
 
-/* .togglebtn{
-  color: #1F1A17 !important;
+.rangefield {
+  font-size: 18px;
+  font-family: "Poppins-Regular";
+  color: #1F1A17;
 }
-*/
+
+
+.rangefield span{
+  color: #272D34;
+  font-size: 24px;
+  color: #4279F4;
+  font-family: "Poppins-SemiBold";
+  background: #D3EAFE 0% 0% no-repeat padding-box;
+
+}
+
+.rangefield input{
+    background: #D3EAFE 0% 0% no-repeat padding-box;
+    font-size: 24px;
+    font-family: "Poppins-SemiBold";
+  color: #4279F4;
+
+}
+
+/* .totalGst{
+  max-width: 300px;
+  width: 100%;
+} */
+
+.cardbottom{
+  background: #F0F6FF;
+}
+
+.cardbottom h6{
+color: #1F1A17;
+font-family: "Poppins-SemiBold";
+font-size: 18px
+}
+
+
+.cardbottom p{
+  color: #1F1A17;
+  font-family: "Poppins-Regular";
+  font-size: 18px
+  }
   
   
   .sidebar {
@@ -91,22 +132,5 @@ border-radius: 50px;
     font-size: 16px;
   }
   
-  .rangefield{
-    font-size: 18px;
-    font-family: "Poppins-Regular";
-    color: #1F1A17;
-  }
-
-  .rangefield input{
-    color: #1f1a17;
-    font-family: "Poppins-SemiBold";
-    font-size: 24px;
-    width: 50px; 
-    text-align: right;
-  }
-
-  .rangefield span{
-    color: #1f1a17;
-    font-family: "Poppins-SemiBold";
-    font-size: 24px;
-  }
+  
+  
