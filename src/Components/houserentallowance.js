@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HouseRentStyle from "@/styles/houserentallownce.module.css";
 import {
@@ -14,23 +14,50 @@ import {
 } from "react-bootstrap";
 
 const HouseRentAllowanceaCal = () => {
-  const [investmentType, setInvestmentType] = useState("Hra");
   const [totalAmount, setTotalAmount] = useState(100);
-
   const [selectedOption, setSelectedOption] = useState("");
 
-  const handleOptionChange = (e) => {
-    setSelectedOption(e.target.value);
-  };
+  const [basicSalary, setBasicSalary] = useState(0);
+  const [dearnessAllowance, setDearnessAllowance] = useState(0);
+  const [hraReceived, setHraReceived] = useState(0);
+  const [ rentpaid , setRentPaid] = useState(0);
+  const [isMetro, setIsMetro] = useState(false);
+  const [exemptedHRA, setExemptedHRA] = useState(0);
 
-  const handleInvestmentTypeChange = (value) => {
-    setInvestmentType(value);
-  };
+  const calculateHRA = ()=>{
+    const salaryComponent = basicSalary + dearnessAllowance;
+    const rentExcess = rentpaid - 0.1 * salaryComponent; //rent minus 10% of salary
+    const metroLimit = isMetro ? 0.5 : 0.4; // 50% for metro, 40% for non-metro
+    const maxExemption = metroLimit * salaryComponent;
+
+    const exempted = Math.min(hraReceived, rentExcess, maxExemption);
+
+    // console.log({
+    //   salaryComponent,
+    //   rentExcess,
+    //   maxExemption,
+    //   exempted,
+    // });
+    
+    setExemptedHRA(Math.max(exempted , 0));
+  }
+
+  //recalculate hra when input change
+  useEffect(() => {
+    calculateHRA();
+  }, [basicSalary, dearnessAllowance, hraReceived, rentpaid, isMetro])
+
+  const handleWheel = (e) => e.target.blur();
+
+
+  // const handleOptionChange = (e) => {
+  //   setSelectedOption(e.target.value);
+  // };
 
   return (
     <>
       <div className={HouseRentStyle.hraBackground}>
-        <div className={`${HouseRentStyle.gstpreHeading} container py-5`}>
+        <div className={`${HouseRentStyle.gstpreHeading} container pt-5`}>
           <h1 className="text-left pt-3">HRA Calculator</h1>
           <p className="pt-2 pb-4">
             The HRA calculator helps estimate the potential growth of your House
@@ -45,45 +72,81 @@ const HouseRentAllowanceaCal = () => {
           <Row>
             <Col className="mb-4">
               <Form>
-                <Form.Group className="m-3 pt-4">
+                <Form.Group className="m-3">
                   <div
-                    className={`${HouseRentStyle.rangefield} d-flex justify-content-between`}
+                    className={`d-flex justify-content-between ${HouseRentStyle.rangefield}`}
                   >
-                    <Form.Label>Basic salary (p.a)</Form.Label>
-                    <span>₹ 69,174</span>
+                    <Form.Label>Basic salary  (p.a)</Form.Label>
+                    <div className={HouseRentStyle.rangefield}>
+                      <span className="pe-2  text-end">₹</span>
+                      <input
+                        type="number"
+                        value={basicSalary}
+                        onChange={(e) => setBasicSalary(Number(e.target.value))}
+                        className={ `border-0 text-end ${HouseRentStyle.custominput}`}
+                        onWheel={handleWheel}
+                      />
+                    </div>
                   </div>
                 </Form.Group>
 
-                <Form.Group className="m-3 pt-4">
+                <Form.Group className="m-3">
                   <div
-                    className={`${HouseRentStyle.rangefield} d-flex justify-content-between`}
+                    className={`d-flex justify-content-between ${HouseRentStyle.rangefield}`}
                   >
                     <Form.Label>Dearness allowance (p.a)</Form.Label>
-                    <span>₹ 0</span>
+                    <div className={HouseRentStyle.rangefield}>
+                      <span className="pe-2 text-end">₹</span>
+                      <input
+                        type="number"
+                        value={dearnessAllowance}
+                        onChange={(e) => setDearnessAllowance(Number(e.target.value))}
+                        className={ `border-0 text-end ${HouseRentStyle.custominput}`}
+                        onWheel={handleWheel}
+                      />
+                    </div>
                   </div>
                 </Form.Group>
 
-                <Form.Group className="m-3 pt-4">
+                <Form.Group className="m-3">
                   <div
-                    className={`${HouseRentStyle.rangefield} d-flex justify-content-between`}
+                    className={`d-flex justify-content-between ${HouseRentStyle.rangefield}`}
                   >
                     <Form.Label>HRA received (p.a)</Form.Label>
-                    <span>₹ 10,174</span>
+                    <div className={HouseRentStyle.rangefield}>
+                      <span className="pe-2 text-end">₹</span>
+                      <input
+                        type="number"
+                        value={hraReceived}
+                        onChange={(e) => setHraReceived(Number(e.target.value))}
+                        className={ `border-0 text-end ${HouseRentStyle.custominput}`}
+                        onWheel={handleWheel}
+                      />
+                    </div>
                   </div>
                 </Form.Group>
 
-                <Form.Group className="m-3 pt-4">
+                <Form.Group className="m-3">
                   <div
-                    className={`${HouseRentStyle.rangefield} d-flex justify-content-between`}
+                    className={`d-flex justify-content-between ${HouseRentStyle.rangefield}`}
                   >
                     <Form.Label>Total rent paid (p.a)</Form.Label>
-                    <span>₹ 19,174</span>
+                    <div className={HouseRentStyle.rangefield}>
+                      <span className="pe-2 text-end">₹</span>
+                      <input
+                        type="number"
+                        value={rentpaid}
+                        onChange={(e) => setRentPaid(Number(e.target.value))}
+                        className={ `border-0 text-end ${HouseRentStyle.custominput}`}
+                        onWheel={handleWheel}
+                      />
+                    </div>
                   </div>
                 </Form.Group>
 
                 <Form.Group className="m-3 pt-4">
                   <div
-                    className={`${HouseRentStyle.rangefield} d-flex justify-content-between align-items-center`}
+                    className={`${HouseRentStyle.hra_radio_button} d-flex justify-content-between align-items-center`}
                   >
                     <Form.Label>Are you working in a metro city?</Form.Label>
                     <div className="d-flex justify-content-center align-items-center">
@@ -94,8 +157,8 @@ const HouseRentAllowanceaCal = () => {
                         name="metroCity"
                         label="Yes"
                         value="yes"
-                        checked={selectedOption === "yes"}
-                        onChange={handleOptionChange}
+                        checked={isMetro === true}
+                        onChange={ () => setIsMetro(true)}
                       />
                       <Form.Check
                         inline
@@ -104,84 +167,12 @@ const HouseRentAllowanceaCal = () => {
                         name="metrocity"
                         label="No"
                         value="no"
-                        checked={selectedOption === "no"}
-                        onChange={handleOptionChange}
+                        checked={isMetro === false}
+                        onChange={() => setIsMetro(false)}
                       />
                     </div>
                   </div>
-                </Form.Group>
-
-                {/* <Form.Group className="m-3">
-                  <div
-                    className={`d-flex justify-content-between ${HouseRentStyle.rangefield}`}
-                  >
-                    <Form.Label>Basic salary (p.a)</Form.Label>
-                    <div className={HouseRentStyle.rangefield}>
-                      <span className="pe-2 text-end">₹</span>
-                      <input
-                        type="number"
-                        value={totalAmount}
-                        onChange={(e) => setTotalAmount(Number(e.target.value))}
-                        className="border-0 text-end"
-                        style={{ width: "70px", textAlign: "right" }}
-                      />
-                    </div>
-                  </div>
-                </Form.Group>
-
-                <Form.Group className="m-3">
-                  <div
-                    className={`d-flex justify-content-between ${HouseRentStyle.rangefield}`}
-                  >
-                    <Form.Label>Dearness allowance (p.a)</Form.Label>
-                    <div className={HouseRentStyle.rangefield}>
-                      <span className="pe-2 text-end">₹</span>
-                      <input
-                        type="number"
-                        value={totalAmount}
-                        onChange={(e) => setTotalAmount(Number(e.target.value))}
-                        className="border-0 text-end"
-                        style={{ width: "70px", textAlign: "right" }}
-                      />
-                    </div>
-                  </div>
-                </Form.Group>
-
-                <Form.Group className="m-3">
-                  <div
-                    className={`d-flex justify-content-between ${HouseRentStyle.rangefield}`}
-                  >
-                    <Form.Label>HRA received (p.a)</Form.Label>
-                    <div className={HouseRentStyle.rangefield}>
-                      <span className="pe-2 text-end">₹</span>
-                      <input
-                        type="number"
-                        value={totalAmount}
-                        onChange={(e) => setTotalAmount(Number(e.target.value))}
-                        className="border-0 text-end"
-                        style={{ width: "70px", textAlign: "right" }}
-                      />
-                    </div>
-                  </div>
-                </Form.Group>
-
-                <Form.Group className="m-3">
-                  <div
-                    className={`d-flex justify-content-between ${HouseRentStyle.rangefield}`}
-                  >
-                    <Form.Label>Total rent paid (p.a)</Form.Label>
-                    <div className={HouseRentStyle.rangefield}>
-                      <span className="pe-2 text-end">₹</span>
-                      <input
-                        type="number"
-                        value={totalAmount}
-                        onChange={(e) => setTotalAmount(Number(e.target.value))}
-                        className="border-0 text-end"
-                        style={{ width: "70px", textAlign: "right" }}
-                      />
-                    </div>
-                  </div>
-                </Form.Group> */}
+                </Form.Group> 
               </Form>
             </Col>
           </Row>
@@ -192,11 +183,14 @@ const HouseRentAllowanceaCal = () => {
         >
           <div className={HouseRentStyle.cardbottom}>
             <h6>Exempted HRA</h6>
-            <p> ₹ 3,09,174</p>
+            {/* <p> ₹ 3,09,174</p> */}
+            <p> ₹ {exemptedHRA.toLocaleString()}</p>
+
           </div>
           <div>
-            <h6> Exempted HRA</h6>
-            <p>₹ 0</p>
+            <h6> Taxable HRA</h6>
+            {/* <p>₹ 0</p> */}
+            <p> ₹ {(hraReceived - exemptedHRA).toLocaleString()}</p>
           </div>
         </div>
         <div className={HouseRentStyle.cardbottom}>
@@ -435,3 +429,70 @@ const HouseRentAllowanceaCal = () => {
 };
 
 export default HouseRentAllowanceaCal;
+
+
+ {/* <Form.Group className="m-3 pt-4">
+                  <div
+                    className={`${HouseRentStyle.rangefield} d-flex justify-content-between`}
+                  >
+                    <Form.Label>Basic salary (p.a)</Form.Label>
+                    <span>₹{" "}69,174</span>
+                  </div>
+                </Form.Group>
+
+                <Form.Group className="m-3 pt-4">
+                  <div
+                    className={`${HouseRentStyle.rangefield} d-flex justify-content-between`}
+                  >
+                    <Form.Label>Dearness allowance (p.a)</Form.Label>
+                    <span>₹ 0</span>
+                  </div>
+                </Form.Group>
+
+                <Form.Group className="m-3 pt-4">
+                  <div
+                    className={`${HouseRentStyle.rangefield} d-flex justify-content-between`}
+                  >
+                    <Form.Label>HRA received (p.a)</Form.Label>
+                    <span>₹ 10,174</span>
+                  </div>
+                </Form.Group>
+
+                <Form.Group className="m-3 pt-4">
+                  <div
+                    className={`${HouseRentStyle.rangefield} d-flex justify-content-between`}
+                  >
+                    <Form.Label>Total rent paid (p.a)</Form.Label>
+                    <span>₹ 19,174</span>
+                  </div>
+                </Form.Group>
+
+                <Form.Group className="m-3 pt-4">
+                  <div
+                    className={`${HouseRentStyle.rangefield} d-flex justify-content-between align-items-center`}
+                  >
+                    <Form.Label>Are you working in a metro city?</Form.Label>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <Form.Check
+                        inline
+                        type="radio"
+                        id="metroCityYes"
+                        name="metroCity"
+                        label="Yes"
+                        value="yes"
+                        checked={selectedOption === "yes"}
+                        onChange={handleOptionChange}
+                      />
+                      <Form.Check
+                        inline
+                        type="radio"
+                        id="metroCityNo"
+                        name="metrocity"
+                        label="No"
+                        value="no"
+                        checked={selectedOption === "no"}
+                        onChange={handleOptionChange}
+                      />
+                    </div>
+                  </div>
+                </Form.Group> */}

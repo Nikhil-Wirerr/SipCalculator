@@ -1,136 +1,153 @@
-.hraBackground{
-    /* background: transparent linear-gradient(0deg, #E3EDFE00 0%, #E3EDFE 100%) ; */
-    background: transparent linear-gradient(0deg, #E3EDFE00 0%, #E3EDFE 100%) 0% 0% no-repeat padding-box;
+.hraBackground {
+  /* background: transparent linear-gradient(0deg, #E3EDFE00 0%, #E3EDFE 100%) ; */
+  background: transparent linear-gradient(0deg, #e3edfe00 0%, #e3edfe 100%) 0%
+    0% no-repeat padding-box;
 }
 
-.gstpreHeading h1{
-    font-family: "Poppins-SemiBold";
-    font-size: 42px;
-    color: #1F1A17;
-    text-align: left;
+.gstpreHeading h1 {
+  font-family: "Poppins-SemiBold";
+  font-size: 42px;
+  color: #1f1a17;
+  text-align: left;
 }
 
-.gstpreHeading p{
-    font-family: "Poppins-Regular";
-    color: #1F1A17;
-    font-size: 16px;
+.gstpreHeading p {
+  font-family: "Poppins-Regular";
+  color: #1f1a17;
+  font-size: 16px;
 }
 
 .subHeading h1 {
-    font-size: 42px;
-    font-family: "Poppins-SemiBold";
-    color: #383e42;
-    padding: 50px 0;
-  }
-
-.togglebtngroup{
-  border-radius: 2px solid white Im !important;
-  outline: none !important;
+  font-size: 42px;
+  font-family: "Poppins-SemiBold";
+  color: #383e42;
+  padding: 50px 0;
 }
 
-.togglebtngroup .ToggleButton{
-outline: none;
-border: 1px solid #DBDFE5;
-border-radius: 50px;
+.custominput::-webkit-outer-spin-button,
+.custominput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* .rangecustominput input[type="number"]::-webkit-outer-spin-button,
+.rangecustominput input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+} */
+
+.custominput {
+  width: 70px;
+  text-align: right;
+  outline: none;
 }
 
 .rangefield {
   font-size: 18px;
   font-family: "Poppins-Regular";
-  color: #1F1A17;
+  color: #1f1a17;
+  display: flex;
+  align-items: center;
 }
 
-
-.rangefield span{
-  color: #272D34;
+.rangefield span {
+  color: #272d34;
   font-size: 24px;
-  color: #4279F4;
+  color: #4279f4;
   font-family: "Poppins-SemiBold";
-  background: #D3EAFE 0% 0% no-repeat padding-box;
+  background: #d3eafe 0% 0% no-repeat padding-box;
+  text-align: end;
+  line-height: 1.5;
+  display: inline-block;
+}
+
+.rangefield input {
+  background: #d3eafe 0% 0% no-repeat padding-box;
+  font-size: 24px;
+  font-family: "Poppins-SemiBold";
+  color: #4279f4;
+  width: 90px;
+  outline: none;
+  text-align: right;
+  line-height: 1.5;
 
 }
 
-.rangefield input{
-    background: #D3EAFE 0% 0% no-repeat padding-box;
-    font-size: 24px;
-    font-family: "Poppins-SemiBold";
-  color: #4279F4;
-
+.hra_radio_button label{
+color: #1F1A17;
+font-family: "Poppins-Regular";
+font-size: 18px;
 }
+
+
 
 /* .totalGst{
   max-width: 300px;
   width: 100%;
 } */
 
-.cardbottom{
-  background: #F0F6FF;
+.cardbottom {
+  background: #f0f6ff;
 }
 
-.cardbottom h6{
-color: #1F1A17;
-font-family: "Poppins-SemiBold";
-font-size: 18px
+.cardbottom h6 {
+  color: #1f1a17;
+  font-family: "Poppins-SemiBold";
+  font-size: 18px;
 }
 
-
-.cardbottom p{
-  color: #1F1A17;
+.cardbottom p {
+  color: #1f1a17;
   font-family: "Poppins-Regular";
-  font-size: 18px
-  }
-  
-  
-  .sidebar {
-    height: 100vh;
-    position: sticky;
-    top: 0;
-    /* padding: 20px; */
-    border-right: 1px solid;
-  }
-  .sidebarItem {
-    padding: 0px 0px 10px;
-    cursor: pointer;
-    margin-bottom: 10px;
-    /* border-right: 1px solid; */
-    font-family: "Poppins-SemiBold";
-    font-size: 18px;
-    text-align: left;
-  }
+  font-size: 18px;
+}
 
-  
+.sidebar {
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  /* padding: 20px; */
+  border-right: 4px solid #EAEFF5;
+}
+.sidebarItem {
+  padding: 0px 0px 10px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  /* border-right: 1px solid; */
+  font-family: "Poppins-SemiBold";
+  font-size: 18px;
+  text-align: left;
+}
+
 .qandA {
-    padding: 0px 20px;
-  }
-  
-  .quesAnsSection h3 {
-    font-family: "Poppins-SemiBold";
-    font-size: 24px;
-    text-align: left;
-    margin-bottom: 10px;
-  }
-  
-  .quesAnsSection p {
-    font-family: "Poppins-Regular";
-    color: #707070;
-    font-size: 16px;
-  }
-  
-  .accordionHeader {
-    color: #1f1a17;
-    font-family: "Poppins-SemiBold";
-    font-size: 30px;
-    text-align: left;
-    font-weight: 600;
-    border: none !important;
-    background-color: transparent;
-  }
-  
-  .accordionbody {
-    font-family: "Poppins-Regular";
-    color: #707070;
-    font-size: 16px;
-  }
-  
-  
-  
+  padding: 0px 20px;
+}
+
+.quesAnsSection h3 {
+  font-family: "Poppins-SemiBold";
+  font-size: 24px;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.quesAnsSection p {
+  font-family: "Poppins-Regular";
+  color: #707070;
+  font-size: 16px;
+}
+
+.accordionHeader {
+  color: #1f1a17;
+  font-family: "Poppins-SemiBold";
+  font-size: 30px;
+  text-align: left;
+  font-weight: 600;
+  border: none !important;
+  background-color: transparent;
+}
+
+.accordionbody {
+  font-family: "Poppins-Regular";
+  color: #707070;
+  font-size: 16px;
+}

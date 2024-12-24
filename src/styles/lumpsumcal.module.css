@@ -192,6 +192,14 @@ padding-top: 10px ;
   outline: none !important; /* Ensure outline stays removed even when focused */
 }
 
+/* .pie_chart_d_block */
+
+@media (max-width: 492px){
+  .pie_chart_d_block{
+    display: block !important;
+  }
+}
+
 .Investbtn button {
   width: 173px;
   height: 54px;
@@ -214,8 +222,10 @@ padding-top: 10px ;
   position: sticky;
   top: 0;
   /* padding: 20px; */
-  border-right: 1px solid;
+  border-right: 4px solid #EAEFF5;
+  overflow: hidden;
 }
+
 .sidebarItem {
   padding: 0px 0px 10px;
   cursor: pointer;
@@ -225,6 +235,7 @@ padding-top: 10px ;
   font-size: 20px;
   text-align: left;
 }
+
 
 /* .qaContent{
     margin-top: -420px;

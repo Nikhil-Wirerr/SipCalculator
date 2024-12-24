@@ -12,7 +12,7 @@ import {
   Form,
   Button,
   InputGroup,
-  Tooltip,
+  
 } from "react-bootstrap";
 import LumpCalImg from "../app/assets/lumpsumcal.svg";
 import InvestImg from "../app/assets/invest-circle.svg";
@@ -21,12 +21,12 @@ import Accordion from "react-bootstrap/Accordion";
 import homeloanStyle from "@/styles/homeloancal.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
-import { PieChart, Pie, Legend, Cell, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Legend, Cell,Tooltip, ResponsiveContainer } from "recharts";
 
 const HomeloanCal = () => {
   const [investmentType, setInvestmentType] = useState("Lumpsum");
   const [amount, setAmount] = useState(5000);
-  const [durationYear, setDurationYear] = useState(50);
+  const [durationYear, setDurationYear] = useState(15);
   const [expectedReturn, setExpectedReturn] = useState("8%");
   const [showAccordion, setShowaccordion] = useState(true);
   const [emiData, setEmiData] = useState([]);
@@ -230,7 +230,7 @@ const HomeloanCal = () => {
                         {/* <Form.Range min={1} max={40} defaultValue={10} /> */}
                         <Form.Range
                           min={1}
-                          max={40}
+                          max={100}
                           value={durationYear}
                           onChange={(e) =>
                             setDurationYear(Number(e.target.value))
@@ -240,7 +240,7 @@ const HomeloanCal = () => {
                           className={`d-flex justify-content-between ${homeloanStyle.belowrangefield}`}
                         >
                           <span>1 Yr</span>
-                          <span>30 Yr</span>
+                          <span>100 Yr</span>
                         </div>
                       </Form.Group>
 
@@ -248,7 +248,7 @@ const HomeloanCal = () => {
                         <div
                           className={`d-flex justify-content-between ${homeloanStyle.rangefield}`}
                         >
-                          <Form.Label>Expected Rate of Return</Form.Label>
+                          <Form.Label>Expected Rate of Interest</Form.Label>
                           <div className={homeloanStyle.rangecustominput}>
                             <input
                               type="text"
@@ -262,8 +262,8 @@ const HomeloanCal = () => {
                         </div>
                         {/* <Form.Range min={1} max={40} defaultValue={10} /> */}
                         <Form.Range
-                          min={8}
-                          max={40}
+                          min={0}
+                          max={100}
                           // defaultValue={10}
                           value={parseInt(expectedReturn)}
                           onChange={(e) =>
@@ -273,8 +273,8 @@ const HomeloanCal = () => {
                         <div
                           className={`d-flex justify-content-between ${homeloanStyle.belowrangefield}`}
                         >
-                          <span>8%</span>
-                          <span>30 %</span>
+                          <span>0%</span>
+                          <span>100 %</span>
                         </div>
                       </Form.Group>
                     </Form>
@@ -303,7 +303,7 @@ const HomeloanCal = () => {
                           ).toLocaleString()}
                         </h2>
                       </div>
-                      <div className="d-flex pt-4">
+                      <div className={` d-flex pt-4 ${homeloanStyle.pie_chart_d_block} `}>
                         <div className="d-flex flex-column">
                           {/* <Image src={InvestImg} alt="investImg" /> */}
 
@@ -326,8 +326,8 @@ const HomeloanCal = () => {
                                     />
                                   ))}
                                 </Pie>
-                              </PieChart>
                               <Tooltip />
+                              </PieChart>
                             </ResponsiveContainer>
                           </div>
 
@@ -340,7 +340,7 @@ const HomeloanCal = () => {
                           </div>
                         </div>
 
-                        <div className="ps-5 mt-3">
+                        <div className="ps-lg-5 ps-sm-0 mt-3">
                           <div
                             className={`ps-2 pb-2 ${homeloanStyle.investedAmount}`}
                           >
@@ -416,7 +416,7 @@ const HomeloanCal = () => {
                   </button>
                 </div>
 
-                {/* {showAccordion && (
+                {showAccordion && (
                   <Accordion
                     defaultActiveKey="0"
                     className={homeloanStyle.accordionMain}
@@ -474,174 +474,6 @@ const HomeloanCal = () => {
                       )
                     )}
                   </Accordion>
-                )} */}
-
-                {showAccordion && (
-                  <div className="mt-4">
-                    <Accordion defaultActiveKey="4">
-                      <Accordion.Item eventKey="0">
-                        <Accordion.Header>2024</Accordion.Header>
-                        <Accordion.Body>
-                          <table className="table table-striped">
-                            <thead>
-                              <tr>
-                                <th>#</th>
-                                <th>Column 1</th>
-                                <th>Column 2</th>
-                                <th>Column 3</th>
-                                <th>Column 4</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {Array.from({ length: 12 }, (_, index) => (
-                                <tr key={index}>
-                                  <td>{index + 1}</td>
-                                  <td>Data {index + 1}.1</td>
-                                  <td>Data {index + 1}.2</td>
-                                  <td>Data {index + 1}.3</td>
-                                  <td>Data {index + 1}.4</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </Accordion.Body>
-                      </Accordion.Item>
-                      <Accordion.Item eventKey="1">
-                        <Accordion.Header>2025</Accordion.Header>
-                        <Accordion.Body>
-                          <table className="table table-striped">
-                            <thead>
-                              <tr>
-                                <th>#</th>
-                                <th>Column 1</th>
-                                <th>Column 2</th>
-                                <th>Column 3</th>
-                                <th>Column 4</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {Array.from({ length: 12 }, (_, index) => (
-                                <tr key={index}>
-                                  <td>{index + 1}</td>
-                                  <td>Data {index + 1}.1</td>
-                                  <td>Data {index + 1}.2</td>
-                                  <td>Data {index + 1}.3</td>
-                                  <td>Data {index + 1}.4</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </Accordion.Body>
-                      </Accordion.Item>
-                      <Accordion.Item eventKey="2">
-                        <Accordion.Header>2026</Accordion.Header>
-                        <Accordion.Body>
-                          <table className="table table-striped">
-                            <thead>
-                              <tr>
-                                <th>#</th>
-                                <th>Column 1</th>
-                                <th>Column 2</th>
-                                <th>Column 3</th>
-                                <th>Column 4</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {Array.from({ length: 12 }, (_, index) => (
-                                <tr key={index}>
-                                  <td>{index + 1}</td>
-                                  <td>Data {index + 1}.1</td>
-                                  <td>Data {index + 1}.2</td>
-                                  <td>Data {index + 1}.3</td>
-                                  <td>Data {index + 1}.4</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </Accordion.Body>
-                      </Accordion.Item>
-                      <Accordion.Item eventKey="3">
-                        <Accordion.Header>2027</Accordion.Header>
-                        <Accordion.Body>
-                          <table className="table table-striped">
-                            <thead>
-                              <tr>
-                                <th>Month</th>
-                                <th>Principal paid</th>
-                                <th>Interest Chargesd</th>
-                                <th>CTotal Payment</th>
-                                <th>Balance </th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {[
-                                "Jan",
-                                "Feb",
-                                "Mar",
-                                "Apr",
-                                "May",
-                                "Jun",
-                                "Jul",
-                                "Aug",
-                                "Sep",
-                                "Oct",
-                                "Nov",
-                                "Dec",
-                              ].map((month, index) => (
-                                <tr key={index}>
-                                  <td>{month}</td>
-                                  <td>Data {index + 1}.1</td>
-                                  <td>Data {index + 1}.2</td>
-                                  <td>Data {index + 1}.3</td>
-                                  <td>Data {index + 1}.4</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </Accordion.Body>
-                      </Accordion.Item>
-                      <Accordion.Item eventKey="4">
-                        <Accordion.Header>2028</Accordion.Header>
-                        <Accordion.Body>
-                          <table className="table table-striped text-center">
-                            <thead>
-                              <tr>
-                                <th>Month</th>
-                                <th>Principal paid</th>
-                                <th>Interest Chargesd</th>
-                                <th>Total Payment</th>
-                                <th> Balance</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {[
-                                "Jan",
-                                "Feb",
-                                "Mar",
-                                "Apr",
-                                "May",
-                                "Jun",
-                                "Jul",
-                                "Aug",
-                                "Sep",
-                                "Oct",
-                                "Nov",
-                                "Dec",
-                              ].map((month, index) => (
-                                <tr key={index}>
-                                  <td>{month}</td>
-                                  <td>Data {index + 1}.1</td>
-                                  <td>Data {index + 1}.2</td>
-                                  <td>Data {index + 1}.3</td>
-                                  <td>Data {index + 1}.4</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </Accordion.Body>
-                      </Accordion.Item>
-                    </Accordion>
-                  </div>
                 )}
               </Row>
             </Card>
@@ -877,3 +709,173 @@ const HomeloanCal = () => {
 };
 
 export default HomeloanCal;
+
+
+
+  {/* {showAccordion && (
+                  <div className="mt-4">
+                    <Accordion defaultActiveKey="4">
+                      <Accordion.Item eventKey="0">
+                        <Accordion.Header>2024</Accordion.Header>
+                        <Accordion.Body>
+                          <table className="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Column 1</th>
+                                <th>Column 2</th>
+                                <th>Column 3</th>
+                                <th>Column 4</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {Array.from({ length: 12 }, (_, index) => (
+                                <tr key={index}>
+                                  <td>{index + 1}</td>
+                                  <td>Data {index + 1}.1</td>
+                                  <td>Data {index + 1}.2</td>
+                                  <td>Data {index + 1}.3</td>
+                                  <td>Data {index + 1}.4</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </Accordion.Body>
+                      </Accordion.Item>
+                      <Accordion.Item eventKey="1">
+                        <Accordion.Header>2025</Accordion.Header>
+                        <Accordion.Body>
+                          <table className="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Column 1</th>
+                                <th>Column 2</th>
+                                <th>Column 3</th>
+                                <th>Column 4</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {Array.from({ length: 12 }, (_, index) => (
+                                <tr key={index}>
+                                  <td>{index + 1}</td>
+                                  <td>Data {index + 1}.1</td>
+                                  <td>Data {index + 1}.2</td>
+                                  <td>Data {index + 1}.3</td>
+                                  <td>Data {index + 1}.4</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </Accordion.Body>
+                      </Accordion.Item>
+                      <Accordion.Item eventKey="2">
+                        <Accordion.Header>2026</Accordion.Header>
+                        <Accordion.Body>
+                          <table className="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Column 1</th>
+                                <th>Column 2</th>
+                                <th>Column 3</th>
+                                <th>Column 4</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {Array.from({ length: 12 }, (_, index) => (
+                                <tr key={index}>
+                                  <td>{index + 1}</td>
+                                  <td>Data {index + 1}.1</td>
+                                  <td>Data {index + 1}.2</td>
+                                  <td>Data {index + 1}.3</td>
+                                  <td>Data {index + 1}.4</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </Accordion.Body>
+                      </Accordion.Item>
+                      <Accordion.Item eventKey="3">
+                        <Accordion.Header>2027</Accordion.Header>
+                        <Accordion.Body>
+                          <table className="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>Month</th>
+                                <th>Principal paid</th>
+                                <th>Interest Chargesd</th>
+                                <th>CTotal Payment</th>
+                                <th>Balance </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {[
+                                "Jan",
+                                "Feb",
+                                "Mar",
+                                "Apr",
+                                "May",
+                                "Jun",
+                                "Jul",
+                                "Aug",
+                                "Sep",
+                                "Oct",
+                                "Nov",
+                                "Dec",
+                              ].map((month, index) => (
+                                <tr key={index}>
+                                  <td>{month}</td>
+                                  <td>Data {index + 1}.1</td>
+                                  <td>Data {index + 1}.2</td>
+                                  <td>Data {index + 1}.3</td>
+                                  <td>Data {index + 1}.4</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </Accordion.Body>
+                      </Accordion.Item>
+                      <Accordion.Item eventKey="4">
+                        <Accordion.Header>2028</Accordion.Header>
+                        <Accordion.Body>
+                          <table className="table table-striped text-center">
+                            <thead>
+                              <tr>
+                                <th>Month</th>
+                                <th>Principal paid</th>
+                                <th>Interest Chargesd</th>
+                                <th>Total Payment</th>
+                                <th> Balance</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {[
+                                "Jan",
+                                "Feb",
+                                "Mar",
+                                "Apr",
+                                "May",
+                                "Jun",
+                                "Jul",
+                                "Aug",
+                                "Sep",
+                                "Oct",
+                                "Nov",
+                                "Dec",
+                              ].map((month, index) => (
+                                <tr key={index}>
+                                  <td>{month}</td>
+                                  <td>Data {index + 1}.1</td>
+                                  <td>Data {index + 1}.2</td>
+                                  <td>Data {index + 1}.3</td>
+                                  <td>Data {index + 1}.4</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </Accordion.Body>
+                      </Accordion.Item>
+                    </Accordion>
+                  </div>
+                )} */}

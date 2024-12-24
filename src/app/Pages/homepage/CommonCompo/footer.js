@@ -12,6 +12,9 @@ import FooterLinkdenLogo from '@/app/assets/footer-linkedin.svg';
 import FooterGoogleLogo from '@/app/assets/footer-google-plus.svg';
 import EnterNameLogo from '@/app/assets/enter-name-icon.svg';
 import MailLogo from '@/app/assets/enter-msg-icon.svg';
+import Contactphone from '@/app/assets/contact-call.svg';
+import Contactmail from '@/app/assets/contact-mail.svg';
+import Contactlocation from '@/app/assets/contact-locatn.svg';
 import Image from "next/image";
 import footerStyle from "@/app/Pages/homepage/CommonCompo/footer.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -33,7 +36,7 @@ function Footer() {
                         className={` ${footerStyle.contactBg}  d-flex justify-content-center align-items-center`}
                       >
                         <Image
-                          src={TranslateLogo}
+                          src={Contactphone}
                           className={footerStyle.contactIcon}
                           alt="Phone Icon"
                         />
@@ -51,7 +54,7 @@ function Footer() {
                         className={`${footerStyle.contactBg}  d-flex justify-content-center align-items-center`}
                       >
                         <Image
-                          src={TranslateLogo}
+                          src={Contactmail}
                           className={footerStyle.contactIcon}
                           alt="Mail Icon"
                         />
@@ -76,7 +79,7 @@ function Footer() {
                         className={`${footerStyle.contactBg}  d-flex justify-content-center align-items-center`}
                       >
                         <Image
-                          src={TranslateLogo}
+                          src={Contactlocation}
                           className={footerStyle.contactIcon}
                           alt="Location Icon"
                         />

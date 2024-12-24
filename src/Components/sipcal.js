@@ -12,17 +12,16 @@ import {
   Form,
   Button,
   Accordion,
-  Tooltip,
 } from "react-bootstrap";
 import LumpCalImg from "../app/assets/lumpsumcal.svg";
 import InvestImg from "../app/assets/invest-circle.svg";
 import Image from "next/image";
-import { PieChart, Pie, Legend, Cell, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Legend,Tooltip, Cell, ResponsiveContainer } from "recharts";
 
 const SipCal = () => {
   const [investmentType, setInvestmentType] = useState("Lumpsum");
   const [amount, setAmount] = useState(3000);
-  const [durationYear, setDurationYear] = useState(50);
+  const [durationYear, setDurationYear] = useState(20);
   const [expectedReturn, setExpectedReturn] = useState("8%");
 
   const handleInvestmentTypeChange = (value) => {
@@ -37,42 +36,120 @@ const SipCal = () => {
 
   const handleWheel = (e) => e.target.blur();
 
-  const calculateTotalValue = (amount, years, rate) => {
-    console.log(
-      `Calculating Total Value: Amount=${amount}, Years=${years}, Rate=${rate}`
-    );
-
+  //calculate total value for lumpsum investment
+  const calculateLumpsumValue = (amount, years, rate) => {
     const annualRate = rate / 100;
     return Math.round(amount * Math.pow(1 + annualRate, years));
   };
 
-  const calculateEstReturn = (totalvalue, amount) => totalvalue - amount;
+  //calculate total value for sip investment
+  const calculateSIPValue = (monthlyAmount, years, rate) => {
+    const annualRate = rate / 100;
+    const monthlyRate = annualRate / 12;
+    const months = years * 12;
+
+    //future value formula for sip
+    return Math.round(
+      monthlyAmount *
+        ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) *
+        (1 + monthlyRate)
+    );
+  };
+
+  // const calculateTotalValue = (amount, years, rate) => {
+  //   console.log(
+  //     `Calculating Total Value: Amount=${amount}, Years=${years}, Rate=${rate}`
+  //   );
+
+  //   const annualRate = rate / 100;
+  //   return Math.round(amount * Math.pow(1 + annualRate, years));
+  // };
+
+  //total value based on selected investment type
+  const calculateTotalValue = () => {
+    const rate = parseFloat(expectedReturn) || 0;
+    if (investmentType === "Lumpsum") {
+      return calculateLumpsumValue(parseFloat(amount) || 0, durationYear, rate);
+    } else {
+      return calculateSIPValue(parseFloat(amount) || 0, durationYear, rate);
+    }
+  };
+
+  // const calculateEstReturn = (totalValue, amount) => totalValue - amount;
+
+  const calculateEstReturn = (totalValue) => {
+    if (investmentType === "Lumpsum") {
+      return totalValue - parseFloat(amount); //lumpsum invested amount
+    } else {
+      return totalValue - parseFloat(amount) * durationYear * 12; //SIP total invested amount
+    }
+  };
+
+  // const calculateEstReturn = (totalvalue, amount) => totalvalue - amount;
 
   const colorStyles = {
     investedAmount: "#93C9FC",
     estReturns: "#D3EAFE",
   };
 
+  // const data02 = [
+  //   {
+  //     name: "Invested AMount",
+  //     value: parseFloat(amount) || 0,
+  //     color: colorStyles.investedAmount,
+  //   },
+  //   {
+  //     name: "Est. Returns",
+  //     value:
+  //       calculateEstReturn(
+  //         calculateTotalValue(
+  //           parseFloat(amount) || 0,
+  //           durationYear,
+  //           parseFloat(expectedReturn) || 0
+  //         ),
+  //         parseFloat(amount) || 0
+  //       ) || 0,
+  //     color: colorStyles.estReturns,
+  //   },
+  // ];
+
   const data02 = [
     {
-      name: "Invested AMount",
-      value: parseFloat(amount) || 0,
+      name: "Invested Amount",
+      value:
+        investmentType === "Lumpsum"
+          ? parseFloat(amount) || 0
+          : parseFloat(amount) * durationYear * 12 || 0,
       color: colorStyles.investedAmount,
     },
     {
       name: "Est. Returns",
-      value:
-        calculateEstReturn(
-          calculateTotalValue(
-            parseFloat(amount) || 0,
-            durationYear,
-            parseFloat(expectedReturn) || 0
-          ),
-          parseFloat(amount) || 0
-        ) || 0,
+      value: calculateEstReturn(calculateTotalValue()),
       color: colorStyles.estReturns,
     },
   ];
+
+  const maxAmountLimit = 1000000;
+
+  const handleAmountChange = (e) => {
+    let value = e.target.value;
+
+    //   value = value === "" ? 0 : Number(value);
+
+    //   if(value < 500){
+    //     value = 500;
+    //   } else if (value > 1000000) {
+    //     value = 1000000
+    //   }
+
+    //   setAmount(value);
+    // }
+
+    if (value > maxAmountLimit) {
+      value = maxAmountLimit;
+    }
+    setAmount(value === "" ? 0 : Number(value));
+  };
 
   return (
     <>
@@ -105,7 +182,7 @@ const SipCal = () => {
                       value="SIP"
                       variant="outline-primary"
                       // active={investmentType === "SIP" ? true : undefined}
-                      active={investmentType === "SIP"}
+                      // active={investmentType === "SIP"}
                     >
                       Monthly SIP
                     </ToggleButton>
@@ -114,7 +191,7 @@ const SipCal = () => {
                       value="Lumpsum"
                       variant="outline-primary"
                       // active={investmentType === "Lumpsum" ? true : undefined}
-                      active={investmentType === "Lumpsum"}
+                      // active={investmentType === "Lumpsum"}
                     >
                       Lumpsum
                     </ToggleButton>
@@ -143,11 +220,13 @@ const SipCal = () => {
                           </label>
                           <input
                             type="number"
-                            value={amount}
+                            // value={amount}
+                            value={amount === 0 ? "" : amount}
                             className={sipStyle.custominput}
-                            placeholder="₹ 3,000"
+                            placeholder=""
                             onWheel={handleWheel}
-                            onChange={(e) => setAmount(Number(e.target.value))}
+                            // onChange={(e) => setAmount(Number(e.target.value))}
+                            onChange={handleAmountChange}
                           />
                         </div>
                       </div>
@@ -174,8 +253,8 @@ const SipCal = () => {
                         {/* <Form.Range min={1} max={40} defaultValue={10} /> */}
 
                         <Form.Range
-                          min={1}
-                          max={40}
+                          min={5}
+                          max={100}
                           value={durationYear}
                           onChange={(e) =>
                             setDurationYear(Number(e.target.value))
@@ -185,7 +264,7 @@ const SipCal = () => {
                           className={`d-flex justify-content-between ${sipStyle.belowrangefield}`}
                         >
                           <span>1 Yr</span>
-                          <span>30 Yr</span>
+                          <span>100 Yr</span>
                         </div>
                       </Form.Group>
 
@@ -207,8 +286,8 @@ const SipCal = () => {
                         </div>
                         {/* <Form.Range min={1} max={40} defaultValue={10} /> */}
                         <Form.Range
-                          min={8}
-                          max={40}
+                          min={0}
+                          max={100}
                           // defaultValue={10}
                           value={parseInt(expectedReturn)}
                           onChange={(e) =>
@@ -218,8 +297,8 @@ const SipCal = () => {
                         <div
                           className={`d-flex justify-content-between ${sipStyle.belowrangefield}`}
                         >
-                          <span>8%</span>
-                          <span>30 %</span>
+                          <span>0%</span>
+                          <span>100%</span>
                         </div>
                       </Form.Group>
                     </Form>
@@ -242,16 +321,9 @@ const SipCal = () => {
                           <strong>{durationYear} Years</strong> will be
                         </p>
                         {/* <h2>₹ 4,09,174</h2> */}
-                        <h2>
-                          ₹{" "}
-                          {calculateTotalValue(
-                            parseFloat(amount) || 0,
-                            durationYear,
-                            parseFloat(expectedReturn) || 0
-                          ).toLocaleString()}
-                        </h2>
+                        <h2>₹ {calculateTotalValue().toLocaleString()}</h2>
                       </div>
-                      <div className="d-flex pt-4">
+                      <div className={` d-flex pt-4 ${sipStyle.pie_chart_d_block} `}>
                         <div className="d-flex flex-column">
                           {/* <Image src={InvestImg} alt="investImg" /> */}
                           <div className={sipStyle.piechart_div}>
@@ -260,7 +332,7 @@ const SipCal = () => {
                                 <Pie
                                   dataKey="value"
                                   data={data02}
-                                  cx="50%"
+                                  cx="45%"
                                   cy="50%"
                                   innerRadius={40}
                                   outerRadius={80}
@@ -273,8 +345,8 @@ const SipCal = () => {
                                     />
                                   ))}
                                 </Pie>
-                              </PieChart>
                               <Tooltip />
+                              </PieChart>
                             </ResponsiveContainer>
                           </div>
                           <div className={`${sipStyle.Investbtn} text-center`}>
@@ -297,37 +369,42 @@ const SipCal = () => {
                           </div>
                         </div> */}
 
-                          <div className="ps-5 mt-3">
-                            <div
-                              className={`ps-2 ${sipStyle.investedAmount}`}
-                              style={{
-                                borderLeft: `6px solid ${colorStyles.investedAmount}`,
-                              }}
-                            >
-                              <p>Invested Amount</p>
-                              <h6>₹ {parseFloat(amount).toLocaleString()}</h6>
-                            </div>
-
-                            <div
-                              className={`ps-2 ${sipStyle.investedAmount}`}
-                              style={{
-                                borderLeft: `6px solid ${colorStyles.estReturns}`,
-                              }}
-                            >
-                              <p>Est. Returns</p>
-                              <h6>
-                                ₹{" "}
-                                {calculateEstReturn(
-                                  calculateTotalValue(
-                                    parseFloat(amount) || 0,
-                                    durationYear,
-                                    parseFloat(expectedReturn) || 0
-                                  ),
-                                  parseFloat(amount) || 0
-                                ).toLocaleString()}
-                              </h6>
-                            </div>
+                        <div className="ps-lg-5 ps-sm-0 mt-3">
+                          <div
+                            className={`ps-2 ${sipStyle.investedAmount}`}
+                            style={{
+                              borderLeft: `6px solid ${colorStyles.investedAmount}`,
+                            }}
+                          >
+                            <p>Invested Amount</p>
+                            {/* <h6>₹ {parseFloat(amount).toLocaleString()}</h6> */}
+                            <h6>
+                              ₹{" "}
+                              {investmentType === "Lumpsum"
+                                ? parseFloat(amount).toLocaleString()
+                                : (
+                                    parseFloat(amount) *
+                                    durationYear *
+                                    12
+                                  ).toLocaleString()}
+                            </h6>
                           </div>
+
+                          <div
+                            className={`ps-2 ${sipStyle.investedAmount}`}
+                            style={{
+                              borderLeft: `6px solid ${colorStyles.estReturns}`,
+                            }}
+                          >
+                            <p>Est. Returns</p>
+                            <h6>
+                              ₹{" "}
+                              {calculateEstReturn(
+                                calculateTotalValue()
+                              ).toLocaleString()}
+                            </h6>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -374,7 +451,8 @@ const SipCal = () => {
               </div>
             </Col>
 
-            <Col xs={12} md={8} lg={9} className={sipStyle.qandA}>
+            <Col xs={12} md={8} lg={9} >
+            <div className={sipStyle.qandA}>
               <div className={sipStyle.quesAnsSection}>
                 <h3>What is a SIP Calculator?</h3>
                 <p>
@@ -496,6 +574,7 @@ const SipCal = () => {
                   funds.. Let us look at some examples to figure out how this
                   calculator can help you.
                 </p>
+              </div>
               </div>
             </Col>
           </Row>

@@ -50,7 +50,7 @@ border-radius: 50px;
     position: sticky;
     top: 0;
     /* padding: 20px; */
-    border-right: 1px solid;
+    border-right: 4px solid #EAEFF5;
   }
   .sidebarItem {
     padding: 0px 0px 10px;

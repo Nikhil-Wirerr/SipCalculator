@@ -8,6 +8,7 @@ import {
   Accordion,
   Card,
   Col,
+  Dropdown,
   Form,
   Image,
   Row,
@@ -16,8 +17,9 @@ import {
 } from "react-bootstrap";
 
 const GstCal = () => {
-  const [investmentType, setInvestmentType] = useState("Lumpsum");
-  const [totalAmount, setTotalAmount] = useState(1000);
+  const [investmentType, setInvestmentType] = useState("Exgst");
+  const [totalAmount, setTotalAmount] = useState(50000);
+  const [gstRate, setGstRate] = useState(12);
 
   const handleInvestmentTypeChange = (value) => {
     setInvestmentType(value);
@@ -25,11 +27,29 @@ const GstCal = () => {
 
   const handleWheel = (e) => e.target.blur();
 
+  const calculateGST = () => {
+    const gstValue = (totalAmount * gstRate) / 100;
+    if(investmentType === "Exgst"){
+      return {
+        gst: gstValue,
+        postGst: totalAmount + gstValue,
+      };
+    } else if (investmentType === "Ingst"){
+      const amountWithoutGst = totalAmount / (1 + gstRate /100);
+      return{
+        gst: totalAmount - amountWithoutGst,
+        postGst: totalAmount,
+      }
+    }
+    return {gst: 0, postGst: totalAmount};
+  };
+
+  const { gst, postGst} = calculateGST();
 
   return (
     <>
       <div className={GstStyle.gstBackground}>
-        <div className={`${GstStyle.gstpreHeading} container py-5`}>
+        <div className={`${GstStyle.gstpreHeading} container pt-5`}>
           <h1 className="text-left pt-3">GST Calculator</h1>
           <p className="pt-2 pb-4">
             The GST calculator helps estimate the potential growth of your Good
@@ -52,16 +72,16 @@ const GstCal = () => {
                 className={`${GstStyle.togglebtngroup} ps-3`}
               >
                 <ToggleButton
-                  id="sip-toggle"
-                  value="SIP"
+                  id="exgst-toggle"
+                  value="Exgst"
                   variant="outline-primary"
                   className={GstStyle.togglebtn}
                 >
                   Excluding GST
                 </ToggleButton>
                 <ToggleButton
-                  id="lumpsum-toggle"
-                  value="Lumpsum"
+                  id="ingst-toggle"
+                  value="Ingst"
                   variant="outline-primary"
                 >
                   Including GST
@@ -70,14 +90,6 @@ const GstCal = () => {
             </div>
             <Col className="mb-4">
               <Form>
-                {/* <Form.Group className="m-3 pt-4">
-                  <div className={ `${GstStyle.rangefield} d-flex justify-content-between`}>
-                    <Form.Label>Total amount</Form.Label>
-                    <span>₹ 69,174</span>
-                  </div>
-                  <Form.Range min={1} max={40} defaultValue={10} />
-                </Form.Group> */}
-
                 <Form.Group className="m-3 pt-4">
                   <div
                     className={`d-flex justify-content-between ${GstStyle.rangefield}`}
@@ -91,14 +103,12 @@ const GstCal = () => {
                         onChange={(e) => setTotalAmount(Number(e.target.value))}
                         className={`border-0 text-end ${GstStyle.custominput}`}
                         onWheel={handleWheel}
-                        style={{ width: "70px", textAlign: "right" }}
-                        
                       />
                     </div>
                   </div>
                   <Form.Range
                     min={1}
-                    max={5000}
+                    max={500000}
                     value={totalAmount}
                     onChange={(e) => setTotalAmount(Number(e.target.value))}
                   />
@@ -109,7 +119,18 @@ const GstCal = () => {
                     className={`d-flex justify-content-between ${GstStyle.rangefield}`}
                   >
                     <p>Tax GST</p>
-                    <span>12%</span>
+                    {/* <span>12%</span> */}
+                    <Dropdown className={GstStyle.dropdown}>
+                      <Dropdown.Toggle className="px-5">{gstRate}% </Dropdown.Toggle>
+
+                      <Dropdown.Menu >
+                      <Dropdown.Item onClick={() => setGstRate(0.25)}>0.25%</Dropdown.Item>
+                        <Dropdown.Item onClick={() => setGstRate(3)}>3%</Dropdown.Item>
+                        <Dropdown.Item onClick={() => setGstRate(8)}>8%</Dropdown.Item>
+                        <Dropdown.Item onClick={() => setGstRate(16)}>16%</Dropdown.Item>
+                        <Dropdown.Item onClick={() => setGstRate(28)}>28%</Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
                   </div>
                 </Form.Group>
               </Form>
@@ -117,11 +138,15 @@ const GstCal = () => {
               <div className={`d-block d-md-flex pt-4 ${GstStyle.rangefield} `}>
                 <div className={`ps-0 ps-md-3 ${GstStyle.totalGst}`}>
                   <p>Total GST</p>
-                  <span>₹ 2,40,000</span>
+                  {/* <span>₹ 2,40,000</span> */}
+                  <span>₹ {gst.toFixed(2)}</span>
+
                 </div>
                 <div className="px-0 px-md-5 mt-4 mt-md-0">
                   <p>Post-GST amount</p>
-                  <span>₹ 2,40,000</span>
+                  {/* <span>₹ 2,40,000</span> */}
+                  <span>₹ {postGst.toFixed(2)}</span>
+
                 </div>
               </div>
             </Col>

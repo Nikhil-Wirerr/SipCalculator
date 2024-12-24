@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import apyCalStyle from "@/styles/apycal.module.css";
 import {
@@ -15,16 +15,35 @@ import {
 } from "react-bootstrap";
 
 const ApyCal = () => {
-  const [joiningAge, setJoiningAge] = useState(26);
-  const [totalAmount, setTotalAmount] = useState(1000);
+  const [joiningAge, setJoiningAge] = useState(50);
+  const [totalAmount, setTotalAmount] = useState(2000);
+  const [investmentDuration, setInvestmentDuration] = useState(25); // Default duration in years
+  const [totalInvestment, setTotalInvestment] = useState(0); // To store calculated total investment
 
   const handleWheel = (e) => e.target.blur();
 
+  const availableAmounts = [1000, 2000, 3000, 4000, 5000];
+
+
+  // Handle the calculation of total investment
+  const calculateTotalInvestment = () => {
+    const yearlyInvestment = totalAmount * 12; // Monthly amount * 12 to get yearly investment
+    const total = yearlyInvestment * investmentDuration; // Total investment over the years
+    setTotalInvestment(total);
+  };
+
+  // Recalculate when joiningAge or totalAmount changes
+  useEffect(() => {
+
+    const newInvestmentDuration = 60 - joiningAge;
+    setInvestmentDuration(newInvestmentDuration > 0 ? newInvestmentDuration : 0)
+    calculateTotalInvestment();
+  }, [joiningAge, totalAmount]);
 
   return (
     <>
       <div className={apyCalStyle.apyBackground}>
-        <div className={`${apyCalStyle.apypreHeading} container py-5`}>
+        <div className={`${apyCalStyle.apypreHeading} container pt-5`}>
           <h1 className="text-left pt-3">APY Calculator</h1>
           <p className="pt-2 pb-4">
             The APY calculator helps estimate the potential growth of your
@@ -41,64 +60,94 @@ const ApyCal = () => {
             <Col className="mb-4">
               <Form>
                 <Form.Group className="m-3 pt-4">
-                  <div className={`d-flex justify-content-between ${apyCalStyle.rangefield}`}>
+                  <div
+                    className={`d-flex justify-content-between ${apyCalStyle.rangefield}`}
+                  >
                     <Form.Label>Your joining age</Form.Label>
                     <div className={apyCalStyle.rangefield}>
-                    <input
-                      type="number"
-                      value={joiningAge}
-                      onChange={(e) => setJoiningAge(Number(e.target.value))}
-                      className={`border-0 text-end ${apyCalStyle.custominput}`}
-                      onWheel={handleWheel}
-                    /> 
-                    <span>Yrs</span>
+                      <input
+                        type="number"
+                        value={joiningAge}
+                        onChange={(e) => setJoiningAge(Number(e.target.value))}
+                        className={`border-0 text-end ${apyCalStyle.custominput}`}
+                        onWheel={handleWheel}
+                        min={1}
+                        max={60}
+                        disabled // Disable manual entry for age
+                      />
+                      <span>Yrs</span>
                     </div>
                   </div>
                   <Form.Range
                     min={1}
-                    max={40}
+                    max={60}
                     value={joiningAge}
                     onChange={(e) => setJoiningAge(Number(e.target.value))}
                   />
                 </Form.Group>
 
                 <Form.Group className="m-3 pt-4">
-                  <div className={`d-flex justify-content-between ${apyCalStyle.rangefield}`}>
-                    <Form.Label>Total Amount</Form.Label>
+                  <div
+                    className={`d-flex justify-content-between ${apyCalStyle.rangefield}`}
+                  >
+                    <Form.Label>Desired Monthly Amount</Form.Label>
                     <div>
-                        <span className="me-2">₹</span>
-                    <input
-                      type="number"
-                      value={totalAmount}
-                      onChange={(e) => setTotalAmount(Number(e.target.value))}
-                      className={`border-0 text-end ${apyCalStyle.custominput}`}
-                      onWheel={handleWheel}
-                      style={{ width: "70px", textAlign: "right" }}
-                    />
+                      <span className="me-2">₹</span>
+                      <input
+                        type="number"
+                        value={totalAmount}
+                        // onChange={(e) => setTotalAmount(Number(e.target.value))}
+
+                        onChange={(e) => {
+                          // Ensure that the value is one of the available amounts
+                          const amount = Number(e.target.value);
+                          if (availableAmounts.includes(amount)) {
+                            setTotalAmount(amount);
+                          }
+                        }}
+
+                        className={`border-0 text-end ${apyCalStyle.custominput}`}
+                        onWheel={handleWheel}
+                        min={1000}
+                        max={5000}
+                        
+                        style={{ width: "70px", textAlign: "right" }}
+                        disabled // Disable manual entry for age
+
+                      />
                     </div>
                   </div>
                   <Form.Range
-                    min={1}
+                    min={1000}
                     max={5000}
                     value={totalAmount}
-                    onChange={(e) => setTotalAmount(Number(e.target.value))}
+                    step={1000} 
+                    // onChange={(e) => setTotalAmount(Number(e.target.value))}
+                    onChange={(e) => {
+                      const amount = Number(e.target.value);
+                      if (availableAmounts.includes(amount)) {
+                        setTotalAmount(amount);
+                      }
+                    }}
                   />
                 </Form.Group>
               </Form>
             </Col>
           </Row>
           <div className={apyCalStyle.rangefield}>
-            <div className={`d-flex justify-content-between px-3 ${apyCalStyle.rangefield}`}>
+            <div
+              className={`d-flex justify-content-between px-3 ${apyCalStyle.rangefield}`}
+            >
               <p>Monthly investment</p>
-              <span>₹ 74</span>
+              <span>₹ {totalAmount}</span>
             </div>
             <div className="d-flex justify-content-between  px-3">
               <p>Investment duration</p>
-              <span>25 Yrs</span>
+              <span>{investmentDuration}{" "}years</span>
             </div>
             <div className="d-flex justify-content-between  px-3">
               <p>Total Amount</p>
-              <span>₹ 7,094</span>
+              <span>₹ {totalInvestment}</span>
             </div>
           </div>
         </Card>
@@ -109,7 +158,7 @@ const ApyCal = () => {
           <div className={apyCalStyle.subHeading}>
             <h1 className="text-center">
               {" "}
-              Atal Pension Yojana Calculator Calculator - APY Calculator
+              Atal Pension Yojana Calculator - APY Calculator
             </h1>
           </div>
           <Row>
@@ -333,3 +382,46 @@ const ApyCal = () => {
 };
 
 export default ApyCal;
+
+// const contributionTable = {
+//   1000: { 18: 42, 30: 74, 40: 145 },
+//   2000: { 18: 84, 30: 145, 40: 289 },
+//   3000: { 18: 126, 30: 217, 40: 434 },
+//   4000: { 18: 168, 30: 290, 40: 577 },
+//   5000: { 18: 210, 30: 362, 40: 722 },
+// };
+
+// const interpolate = (age, table) => {
+//   const ages = Object.keys(table).map(Number).sort((a, b) => a - b);
+
+//   if (age <= ages[0]) return table[ages[0]]; // Below minimum age, use minimum
+//   if (age >= ages[ages.length - 1]) return table[ages[ages.length - 1]]; // Above maximum age, use maximum
+
+//   for (let i = 0; i < ages.length - 1; i++) {
+//     const age1 = ages[i];
+//     const age2 = ages[i + 1];
+
+//     if (age >= age1 && age <= age2) {
+//       // Linear interpolation
+//       const value1 = table[age1];
+//       const value2 = table[age2];
+//       return value1 + ((value2 - value1) * (age - age1)) / (age2 - age1);
+//     }
+//   }
+//   return 0; // Fallback, though this shouldn't be reached
+// };
+
+// const calculateAPY = () => {
+//   const durationYears = Math.max(60 - joiningAge, 0);
+
+//   const monthly = interpolate(joiningAge, contributionTable[desiredPension]) || 0;
+//   const total = monthly * 12 * durationYears;
+
+//   setMonthlyInvestment(monthly.toFixed(2)); // Format to 2 decimal places if needed
+//   setInvestmentDuration(durationYears);
+//   setTotalAmount(total.toFixed(2)); // Format to 2 decimal places if needed
+// };
+
+// useEffect(() => {
+//   calculateAPY();
+// }, [joiningAge, desiredPension]);
