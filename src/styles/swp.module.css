@@ -1,22 +1,16 @@
-.html{
-  scroll-behavior: smooth;
-  /* margin-top: 40px; */
-}
-
-
-.apyBackground{
+.swpBackground{
     background: transparent linear-gradient(0deg, #E3EDFE00 0%, #E3EDFE 100%) ;
 /* background-image:url(/src//app/assets/cal-bg.svg) !important; */
 }
 
-.apypreHeading h1{
+.swppreHeading h1{
     font-family: "Poppins-SemiBold";
     font-size: 42px;
     color: #1F1A17;
     text-align: left;
 }
 
-.apypreHeading p{
+.swppreHeading p{
     font-family: "Poppins-Regular";
     color: #1F1A17;
     font-size: 16px;
@@ -29,27 +23,41 @@
     padding: 50px 0;
   }
 
-.togglebtngroup{
-  border-radius: 2px solid white Im !important;
-  outline: none !important;
-}
-
-.togglebtngroup .ToggleButton{
-outline: none;
-border: 1px solid #DBDFE5;
-border-radius: 50px;
-}
-
-/* .togglebtn{
-  color: #1F1A17 !important;
-}
-*/
   
 .custominput::-webkit-outer-spin-button,
 .custominput::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+
+.custominput{
+    /* width: 80px !important; */
+    text-align: right;
+    outline: none;
+    /* background-color: #D3EAFE; */
+    color: #4279F4;
+  }
+  
+  .rangefield input{
+    font-size: 24px;
+    font-family: "Poppins-SemiBold";
+    color: #1F1A17;
+    width: 130px !important;
+  }
+  
+  .rangefield p{
+    font-size: 18px;
+    font-family: "Poppins-Regular";
+    color: #1F1A17;
+  }
+  
+  .rangefield span{
+    color: #272D34;
+    font-size: 24px;
+    font-family: "Poppins-SemiBold";
+}
+  
 
   .sidebar {
     height: 100vh;

@@ -1,11 +1,8 @@
+
 .lumpsumContainer {
     background: transparent linear-gradient(0deg, #e3edfe00 0%, #e3edfe 100%) 0%
-      0% no-repeat padding-box !important;
+      0% no-repeat padding-box;
   }
-/* 
-  .homeloanbgcontainer{
-    background-image: url('../assets/cal-bg.svg') !important;
-  } */
   
   .lumpsumCard {
     padding-left: 20px;
@@ -24,15 +21,9 @@
     color: #1f1a17;
     font-size: 16px;
   }
+
   
-  .togglbgrp {
-    border-radius: 20px;
-    /* border: 1px solid #DBDFE5; */
-    outline: none;
-    padding-left: 20px;
-  }
-  
-  .returnEstimation h6 {
+.returnEstimation h6 {
     color: #1f1a17;
     font-size: 18px;
     text-align: left;
@@ -72,49 +63,6 @@
     font-family: "Poppins-Regular";
   }
   
-.custominput::-webkit-outer-spin-button,
-.custominput::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.rangecustominput input[type="number"]::-webkit-outer-spin-button,
-.rangecustominput input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.rangecustominput{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-
-.rangecustominput input{
-  text-align: right;
-  /* width:90%;
-  padding-top: 30px;
-  height: 80px; */
-  border: 2px solid #4279f4;
-  border-radius: 4px;
-  font-size: 30px;
-  font-family: "Poppins-SemiBold";
-  color: #14406d;
-  font-weight: 600;
-  outline: none;
-}
-.accordion_bdy{
-  overflow: hidden;
-  max-width: 100%;
-
-}
-
-.customTable th, .tacustomTableble td{
-  white-space: nowrap;
-}
-
-
   .custominput {
     text-align: center;
     width: 100%;
@@ -127,6 +75,43 @@
     color: #14406d;
     font-weight: 600;
   }
+  
+  .custominput::-webkit-outer-spin-button,
+  .custominput::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  .rangecustominput input[type="number"]::-webkit-outer-spin-button,
+  .rangecustominput input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  .rangecustominput{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .rangecustominput input{
+    text-align: right;
+    /* width:90%;
+    padding-top: 30px;
+    height: 80px; */
+    border: 2px solid #4279f4;
+    border-radius: 4px;
+    font-size: 30px;
+    font-family: "Poppins-SemiBold";
+    color: #14406d;
+    font-weight: 600;
+    outline: none;
+  }
+  
+  /* .rangecustominput input span{
+    font-size: 20px;
+  padding-top: 10px ;
+  } */
   
   .custominput::placeholder {
     color: #14406d;
@@ -175,6 +160,7 @@
   
   
   .investedAmount {
+    border-left: 6px solid #93c9fc;
     color: #1f1a17;
     font-size: 18px;
     font-family: "Poppins-Regular";
@@ -186,32 +172,51 @@
     font-size: 24px;
   }
 
+  .totalValue{
+    color: #1f1a17;
+    font-size: 18px;
+    font-family: "Poppins-Regular";
+  }
+
+  .totalValue h6{
+    font-family: "Poppins-SemiBold";
+    color: #1f1a17;
+    font-size: 24px;
+  }
+
+  .maturity_year p{
+    color: #1f1a17;
+    font-size: 16px;
+    font-family: "Poppins-Regular";
+    text-align: left;
+  }
+
+  .maturity_year h6{
+    font-family: "Poppins-SemiBold";
+    color: #1f1a17;
+    font-size: 24px;
+  }
+  
   .piechart_div{
     width: 200px;
     height: 200px;
   }
   
   .chart_no_outline{
-    outline: none !important; 
+    outline: none !important; /* Remove focus outline */
   }
   
   .chart-no-outline:focus {
-    outline: none !important; 
+    outline: none !important; /* Ensure outline stays removed even when focused */
   }
+  
+  /* .pie_chart_d_block */
   
   @media (max-width: 492px){
     .pie_chart_d_block{
       display: block !important;
     }
   }
-
-  @media (min-width: 768px) and (max-width: 991px) {
-    .pie_chart_d_block {
-      justify-content: space-between;
-      margin-top: 20px; /* Adjust spacing as needed */
-    }
-  }
-  
   
   .Investbtn button {
     width: 173px;
@@ -236,7 +241,9 @@
     top: 0;
     /* padding: 20px; */
     border-right: 4px solid #EAEFF5;
+    overflow: hidden;
   }
+  
   .sidebarItem {
     padding: 0px 0px 10px;
     cursor: pointer;
@@ -247,17 +254,13 @@
     text-align: left;
   }
   
+  
   /* .qaContent{
       margin-top: -420px;
   } */
   
   .qandA {
     padding: 0px 20px;
-  }
-
- .accordion_header button:not(.collapsed) {
-    /* background-color: var(--bs-accordion-active-bg); */
-    background-color: #f8f9fa !important;
   }
   
   .quesAnsSection h3 {
@@ -273,30 +276,60 @@
     font-size: 16px;
   }
   
-
-  .accordionHeader {
+  /* .accordionHeader {
     color: #1f1a17;
     font-family: "Poppins-SemiBold";
     font-size: 24px;
     text-align: left;
     font-weight: 600;
     border: none !important;
-    padding: 20px;
-    border: 1px solid #ddd;
+    background-color: transparent !important;
+    background: transparent !important;
   }
   
-  .accordionHeader:active{
-    background-color: #010c17; /* Light gray background */
-    padding: 20px;
-    border: 1px solid #ddd;
+  .accordionHeader.accordion-button{
+    background-color: transparent !important;
+    background: transparent !important;
   }
+  
   .accordionbody {
     font-family: "Poppins-Regular";
     color: #707070;
     font-size: 16px;
-    background-color: #f8f9fa; /* Light gray background */
-    padding: 20px;
-    border: 1px solid #ddd;
-    
+  } */
+  
+  
+  
+  .custom_acco_header .accordion-button:not(.collapsed) {
+  position: relative;
+    display: flex
+  ;
+    align-items: center;
+    width: 100%;
+    padding: var(--bs-accordion-btn-padding-y) var(--bs-accordion-btn-padding-x);
+    font-size: 1rem;
+    color: var(--bs-accordion-btn-color);
+    text-align: left;
+    background-color: var(--bs-accordion-btn-bg) !important;
+    border: 0;
+    border-radius: 0;
+    overflow-anchor: none;
+    transition: var(--bs-accordion-transition);
   }
   
+  .custom_acco_header .accordion-button {
+    position: relative;
+    display: flex
+  ;
+    align-items: center;
+    width: 100%;
+    padding: var(--bs-accordion-btn-padding-y) var(--bs-accordion-btn-padding-x);
+    font-size: 1rem;
+    color: var(--bs-accordion-btn-color);
+    text-align: left;
+    background-color: var(--bs-accordion-btn-bg) !important;
+    border: 0;
+    border-radius: 0;
+    overflow-anchor: none;
+    transition: var(--bs-accordion-transition);
+  }

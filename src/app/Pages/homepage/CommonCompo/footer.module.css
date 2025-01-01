@@ -103,6 +103,14 @@
   font-family: "Poppins-Regular";
   text-align: left;
 }
+.signupInput span{
+  margin-right: -23px !important;
+  z-index: 10;
+  align-items: center;
+  display: flex;
+  margin-bottom: 6px;
+
+}
 
 .signupInput .customInput {
   background: #384763;
@@ -110,6 +118,7 @@
   border: 1px solid #384763;
   color: #ffffff;
   box-shadow: none;
+  padding-left: 30px !important;
 }
 
 .customInput {
@@ -119,7 +128,7 @@
   margin-bottom: 10px;
   max-width: 300px !important;
   height: 48px;
-}
+  }
 
 @media (max-width: 492px) {
   .signupInput {
@@ -139,11 +148,11 @@
 }
 
 .customInput:focus {
-  background: #384763;
-  outline: none;
+  background: #384763 !important;
+  outline: none !important;
   box-shadow: none;
   border: 1px solid #384763;
-  color: #ffffff;
+  /* color: #ffffff; */
 }
 
 .customInput:focus::placeholder {

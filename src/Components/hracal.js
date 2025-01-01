@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import HouseRentStyle from "@/styles/houserentallownce.module.css";
+import HouseRentStyle from "@/styles/hracal.module.css";
 import {
   Accordion,
   Card,

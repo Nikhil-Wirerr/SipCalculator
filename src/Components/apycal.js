@@ -15,29 +15,72 @@ import {
 } from "react-bootstrap";
 
 const ApyCal = () => {
-  const [joiningAge, setJoiningAge] = useState(50);
-  const [totalAmount, setTotalAmount] = useState(2000);
-  const [investmentDuration, setInvestmentDuration] = useState(25); // Default duration in years
-  const [totalInvestment, setTotalInvestment] = useState(0); // To store calculated total investment
+  const [joiningAge, setJoiningAge] = useState(25);
+  const [totalAmount, setTotalAmount] = useState(2000); // Desired monthly pension
+  const [investmentDuration, setInvestmentDuration] = useState(35); // Default duration in years
+  const [monthlyContribution, setMonthlyContribution] = useState(0); // Monthly contribution
+  const [totalInvestment, setTotalInvestment] = useState(0); // Total amount calculated
 
   const handleWheel = (e) => e.target.blur();
 
   const availableAmounts = [1000, 2000, 3000, 4000, 5000];
 
-
-  // Handle the calculation of total investment
-  const calculateTotalInvestment = () => {
-    const yearlyInvestment = totalAmount * 12; // Monthly amount * 12 to get yearly investment
-    const total = yearlyInvestment * investmentDuration; // Total investment over the years
-    setTotalInvestment(total);
+  // Contribution table as per Atal Pension Yojana rules
+  const contributionTable = {
+    1000: { 18: 42, 25: 76, 30: 116, 40: 291 },
+    2000: { 18: 84, 25: 151, 30: 231, 40: 582 },
+    3000: { 18: 126, 25: 228, 30: 347, 40: 873 },
+    4000: { 18: 168, 25: 302, 30: 462, 40: 1164 },
+    5000: { 18: 210, 25: 376, 30: 577, 40: 1454 },
   };
 
-  // Recalculate when joiningAge or totalAmount changes
-  useEffect(() => {
+  // Function to calculate monthly contribution
+  const getMonthlyContribution = (age, desiredPension) => {
+    const pensionData = contributionTable[desiredPension];
+    if (!pensionData) return 0; // Return 0 if desired pension is invalid
 
-    const newInvestmentDuration = 60 - joiningAge;
-    setInvestmentDuration(newInvestmentDuration > 0 ? newInvestmentDuration : 0)
-    calculateTotalInvestment();
+    const ages = Object.keys(pensionData)
+      .map(Number)
+      .sort((a, b) => a - b);
+
+    // Find the nearest lower and higher ages
+    let lowerAge = ages[0];
+    let higherAge = ages[ages.length - 1];
+
+    for (let i = 0; i < ages.length; i++) {
+      if (ages[i] <= age) lowerAge = ages[i];
+      if (ages[i] >= age) {
+        higherAge = ages[i];
+        break;
+      }
+    }
+
+    // If the age matches exactly
+    if (lowerAge === higherAge) return pensionData[lowerAge];
+
+    // Linear interpolation
+    const lowerValue = pensionData[lowerAge];
+    const higherValue = pensionData[higherAge];
+    const interpolatedValue =
+      lowerValue +
+      ((age - lowerAge) / (higherAge - lowerAge)) * (higherValue - lowerValue);
+
+    return Math.round(interpolatedValue); // Return rounded value
+  };
+  
+
+  // Update investment duration, monthly contribution, and total investment whenever joiningAge or totalAmount changes
+  useEffect(() => {
+    const newInvestmentDuration = 60 - joiningAge; // Age 60 is the maximum joining age for APY
+    setInvestmentDuration(
+      newInvestmentDuration > 0 ? newInvestmentDuration : 0
+    );
+
+    const contribution = getMonthlyContribution(joiningAge, totalAmount);
+    setMonthlyContribution(contribution);
+
+    const total = contribution * 12 * newInvestmentDuration; // Total amount = monthly contribution * 12 * duration
+    setTotalInvestment(total);
   }, [joiningAge, totalAmount]);
 
   return (
@@ -63,24 +106,20 @@ const ApyCal = () => {
                   <div
                     className={`d-flex justify-content-between ${apyCalStyle.rangefield}`}
                   >
-                    <Form.Label>Your joining age</Form.Label>
+                    <Form.Label>Your Joining Age</Form.Label>
                     <div className={apyCalStyle.rangefield}>
                       <input
                         type="number"
                         value={joiningAge}
-                        onChange={(e) => setJoiningAge(Number(e.target.value))}
+                        readOnly
                         className={`border-0 text-end ${apyCalStyle.custominput}`}
-                        onWheel={handleWheel}
-                        min={1}
-                        max={60}
-                        disabled // Disable manual entry for age
                       />
                       <span>Yrs</span>
                     </div>
                   </div>
                   <Form.Range
-                    min={1}
-                    max={60}
+                    min={18}
+                    max={40}
                     value={joiningAge}
                     onChange={(e) => setJoiningAge(Number(e.target.value))}
                   />
@@ -90,45 +129,24 @@ const ApyCal = () => {
                   <div
                     className={`d-flex justify-content-between ${apyCalStyle.rangefield}`}
                   >
-                    <Form.Label>Desired Monthly Amount</Form.Label>
+                    <Form.Label>Desired Monthly Pension</Form.Label>
                     <div>
                       <span className="me-2">₹</span>
                       <input
                         type="number"
                         value={totalAmount}
-                        // onChange={(e) => setTotalAmount(Number(e.target.value))}
-
-                        onChange={(e) => {
-                          // Ensure that the value is one of the available amounts
-                          const amount = Number(e.target.value);
-                          if (availableAmounts.includes(amount)) {
-                            setTotalAmount(amount);
-                          }
-                        }}
-
+                        readOnly
                         className={`border-0 text-end ${apyCalStyle.custominput}`}
-                        onWheel={handleWheel}
-                        min={1000}
-                        max={5000}
-                        
                         style={{ width: "70px", textAlign: "right" }}
-                        disabled // Disable manual entry for age
-
                       />
                     </div>
                   </div>
                   <Form.Range
                     min={1000}
                     max={5000}
+                    step={1000}
                     value={totalAmount}
-                    step={1000} 
-                    // onChange={(e) => setTotalAmount(Number(e.target.value))}
-                    onChange={(e) => {
-                      const amount = Number(e.target.value);
-                      if (availableAmounts.includes(amount)) {
-                        setTotalAmount(amount);
-                      }
-                    }}
+                    onChange={(e) => setTotalAmount(Number(e.target.value))}
                   />
                 </Form.Group>
               </Form>
@@ -139,11 +157,11 @@ const ApyCal = () => {
               className={`d-flex justify-content-between px-3 ${apyCalStyle.rangefield}`}
             >
               <p>Monthly investment</p>
-              <span>₹ {totalAmount}</span>
+              <span>₹ {monthlyContribution}</span>
             </div>
             <div className="d-flex justify-content-between  px-3">
               <p>Investment duration</p>
-              <span>{investmentDuration}{" "}years</span>
+              <span>{investmentDuration} years</span>
             </div>
             <div className="d-flex justify-content-between  px-3">
               <p>Total Amount</p>
@@ -383,6 +401,86 @@ const ApyCal = () => {
 
 export default ApyCal;
 
+
+
+
+      {/* <Form>
+                <Form.Group className="m-3 pt-4">
+                  <div
+                    className={`d-flex justify-content-between ${apyCalStyle.rangefield}`}
+                  >
+                    <Form.Label>Your joining age</Form.Label>
+                    <div className={apyCalStyle.rangefield}>
+                      <input
+                        type="number"
+                        value={joiningAge}
+                        onChange={(e) => setJoiningAge(Number(e.target.value))}
+                        className={`border-0 text-end ${apyCalStyle.custominput}`}
+                        onWheel={handleWheel}
+                        min={1}
+                        max={60}
+                        disabled // Disable manual entry for age
+                      />
+                      <span>Yrs</span>
+                    </div>
+                  </div>
+                  <Form.Range
+                    min={1}
+                    max={60}
+                    value={joiningAge}
+                    onChange={(e) => setJoiningAge(Number(e.target.value))}
+                  />
+                </Form.Group>
+
+                <Form.Group className="m-3 pt-4">
+                  <div
+                    className={`d-flex justify-content-between ${apyCalStyle.rangefield}`}
+                  >
+                    <Form.Label>Desired Monthly Amount</Form.Label>
+                    <div>
+                      <span className="me-2">₹</span>
+                      <input
+                        type="number"
+                        value={totalAmount}
+                        // onChange={(e) => setTotalAmount(Number(e.target.value))}
+
+                        onChange={(e) => {
+                          // Ensure that the value is one of the available amounts
+                          const amount = Number(e.target.value);
+                          if (availableAmounts.includes(amount)) {
+                            setTotalAmount(amount);
+                          }
+                        }}
+
+                        className={`border-0 text-end ${apyCalStyle.custominput}`}
+                        onWheel={handleWheel}
+                        min={1000}
+                        max={5000}
+                        
+                        style={{ width: "70px", textAlign: "right" }}
+                        disabled // Disable manual entry for age
+
+                      />
+                    </div>
+                  </div>
+                  <Form.Range
+                    min={1000}
+                    max={5000}
+                    value={totalAmount}
+                    step={1000} 
+                    // onChange={(e) => setTotalAmount(Number(e.target.value))}
+                    onChange={(e) => {
+                      const amount = Number(e.target.value);
+                      if (availableAmounts.includes(amount)) {
+                        setTotalAmount(amount);
+                      }
+                    }}
+                  />
+                </Form.Group>
+              </Form> */}
+
+
+              
 // const contributionTable = {
 //   1000: { 18: 42, 30: 74, 40: 145 },
 //   2000: { 18: 84, 30: 145, 40: 289 },

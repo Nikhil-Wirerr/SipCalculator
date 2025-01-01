@@ -1,70 +1,106 @@
 "use client";
 
-import "bootstrap/dist/css/bootstrap.min.css";
-import React, { useState } from "react";
-import SwpStyle from "@/styles/swp.module.css";
+import React, { useMemo, useState } from "react";
+import NpsStyle from "@/styles/nps.module.css";
 import { Accordion, Card, Col, Form, Row } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-const SwpCal = () => {
-  const [totalAmount, setTotalAmount] = useState(50000);
-  const [monthlyWithdrawal, setMonthlyWithdrawal] = useState(1000);
-  const [returnRate, setReturnRate] = useState(10);
-  const [timePeriod, setTimePeriod] = useState(5);
+const NpsCal = () => {
+  const [monthlyInvestment, setMonthlyInvestment] = useState(5000);
+  const [age, setAge] = useState(25);
+  const [expectedReturnRate, setExpectedReturnRate] = useState(9);
 
-  const handleWheel = (e) => e.target.blur();
+//   const handleWheel = (e) => e.target.blur();
 
-  const calculateFinalValue = (
-    totalInvestment,
-    monthlyWithdrawal,
-    returnRate,
-    timePeriod
-  ) => {
-    const monthlyRate = returnRate / 12 / 100; // Convert annual rate to monthly decimal
-    const months = timePeriod * 12; // Convert years to months
+//   // Derived Values
+//   const retirementAge = 60;
+//   const tenure = retirementAge - age;
+//   const monthlyReturnRate = expectedReturnRate / 100 / 12;
 
-    if (monthlyRate === 0) {
-      // Handle the case where the rate is 0 (no growth)
-      return totalInvestment - monthlyWithdrawal * months;
+
+//   // Calculations
+//   const totalInvestment = monthlyInvestment * 12 * tenure;
+
+//   const maturityAmount =
+//     monthlyInvestment *
+//     ((Math.pow(1 + monthlyReturnRate, tenure * 12) - 1) / monthlyReturnRate) *
+//     (1 + monthlyReturnRate);
+
+//   const interestEarned = maturityAmount - totalInvestment;
+
+//   console.log("interst earned:", interestEarned);
+
+ // Helper function to round to 2 decimal places
+ const roundToTwo = (num) => Math.round(num * 100) / 100;
+
+ // Derived Values using useMemo for optimization
+ const retirementAge = 60;
+ const tenure = useMemo(() => retirementAge - age, [age]);
+ const monthlyReturnRate = useMemo(() => expectedReturnRate / 100 / 12, [expectedReturnRate]);
+
+ // Calculations with rounding applied
+ const totalInvestment = useMemo(() => roundToTwo(monthlyInvestment * 12 * tenure), [monthlyInvestment, tenure]);
+ 
+ const maturityAmount = useMemo(() => {
+   if (monthlyReturnRate === 0) {
+     return totalInvestment; // If return rate is 0, maturity will be equal to total investment
+   }
+   return roundToTwo(
+     monthlyInvestment *
+     ((Math.pow(1 + monthlyReturnRate, tenure * 12) - 1) / monthlyReturnRate) *
+     (1 + monthlyReturnRate)
+   );
+ }, [monthlyInvestment, monthlyReturnRate, tenure, totalInvestment]);
+
+ const interestEarned = useMemo(() => roundToTwo(maturityAmount - totalInvestment), [maturityAmount, totalInvestment]);
+
+//  const handleWheel = (e) => e.preventDefault();
+ const handleWheel = (e) => e.target.blur();
+
+
+  // Input validation function
+  const validateInput = (value, min, max) => {
+    if (isNaN(value) || value < min || value > max) {
+      return false;  // Invalid value
     }
+    return true;  // Valid value
+  }
 
-    const finalInvestment = totalInvestment * Math.pow(1 + monthlyRate, months);
-    const withdrawalImpact =
-      monthlyWithdrawal *
-      ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
-
-    return Math.max(0, finalInvestment - withdrawalImpact); // Ensure final value is non-negative
+  // Handle input change with validation
+  const handleMonthlyInvestmentChange = (e) => {
+    const value = Number(e.target.value);
+    if (validateInput(value, 500, 150000)) {
+      setMonthlyInvestment(value);
+    }
   };
 
-
-  const handleInputChange = (value, min, max, setter) => {
-    // Allow empty input for manual editing
-    if (value === "") {
-      setter("");
-      return;
+  const handleAgeChange = (e) => {
+    const value = Number(e.target.value);
+    if (validateInput(value, 18, 59)) {
+      setAge(value);
     }
+  };
 
-    value = Number(value);
-
-    // Validation logic
-    if (value > max) {
-      setter(max);
-    } else {
-      setter(value);
+  const handleReturnRateChange = (e) => {
+    const value = Number(e.target.value);
+    if (validateInput(value, 1, 50)) {
+      setExpectedReturnRate(value);
     }
   };
 
   return (
     <>
-      <div className={SwpStyle.swpBackground}>
+      <div className={NpsStyle.swpBackground}>
         <div>
-          <div className={`${SwpStyle.swppreHeading} container pt-5`}>
-            <h1 className="text-left pt-3">
-              SWP (Systematic Withdrawal Plan) Calculator
-            </h1>
+          <div className={`${NpsStyle.swppreHeading} container pt-5`}>
+            <h1 className="text-left pt-3">NPS Calculator</h1>
             <p className="pt-2 pb-4">
-              SWP stands for systematic withdrawal plan. Under SWP, if you
-              invest lump sum in a mutual fund, you can set an amount you’ll
-              withdraw regularly and the frequency at which you’ll withdraw.
+              The National Pension System or NPS is a measure to introduce a
+              degree of financial stability for Indian citizens after they have
+              retired. It was previously known as the National Pension Scheme.
+              Anyone over the age of 60 is eligible to use the amount gathered
+              in the pension corpus. You will need an NPS calculator to
+              determine how much the total accumulation amounts to.
             </p>
           </div>
         </div>
@@ -76,263 +112,163 @@ const SwpCal = () => {
                 <Form>
                   <Form.Group className="m-3 pt-4">
                     <div
-                      className={`d-flex justify-content-between ${SwpStyle.rangefield}`}
+                      className={`d-flex justify-content-between ${NpsStyle.rangefield}`}
                     >
-                      <Form.Label>Total Investment</Form.Label>
-                      <div className={SwpStyle.rangefield}>
-                        {totalAmount !== "" && totalAmount < 10000 && (
-                          <small className="text-danger me-3">
-                            Minimum value allowed is 10000
-                          </small>
-                        )}
+                      {" "}
+                      <Form.Label>Investment Per Month</Form.Label>
+                      <div className={NpsStyle.rangefield}>
                         <span className="texr-end">₹</span>
                         <input
                           type="number"
-                          value={totalAmount}
-                          // onChange={(e) =>
-                          //   setTotalAmount(Number(e.target.value))
-                          // }
-
-                          onChange={(e) =>
-                            handleInputChange(
-                              Number(e.target.value),
-                              10000,
-                              10000000,
-                              setTotalAmount
-                            )
-                          }
-                          className={`border-0 text-end ${SwpStyle.custominput}`}
-                          onWheel={handleWheel}
-                          min={10000}
-                          max={10000000}
-                        />
-                      </div>
-                    </div>
-
-                    <Form.Range
-                      min={10000}
-                      max={10000000}
-                      value={totalAmount || 0}
-                      // onChange={(e) => setTotalAmount(Number(e.target.value))}
-                      onChange={(e) =>
-                        handleInputChange(
-                          Number(e.target.value),
-                          10000,
-                          10000000,
-                          setTotalAmount
-                        )
-                      }
-                    />
-                  </Form.Group>
-
-                  <Form.Group className="m-3 pt-4">
-                    <div
-                      className={`d-flex justify-content-between ${SwpStyle.rangefield}`}
-                    >
-                      <Form.Label>Withdrawal Per Month</Form.Label>
-                      <div className={SwpStyle.rangefield}>
-                        {monthlyWithdrawal !== "" &&
-                          monthlyWithdrawal < 500 && (
-                            <small className="text-danger me-3">
-                              Minimum value allowed is 500
-                            </small>
-                          )}
-
-                        <span className="texr-end">₹</span>
-                        <input
-                          type="number"
-                          value={monthlyWithdrawal}
-                          // onChange={(e) =>
-                          //   setMonthlyWithdrawal(Number(e.target.value))
-                          // }
-                          onChange={(e) =>
-                            handleInputChange(
-                              e.target.value,
-                              500,
-                              1000000,
-                              setMonthlyWithdrawal
-                            )
-                          }
-                          className={`border-0 text-end ${SwpStyle.custominput}`}
+                          className={`border-0 text-end ${NpsStyle.custominput}`}
                           onWheel={handleWheel}
                           min={500}
-                          max={1000000}
+                          max={150000}
+                          value={monthlyInvestment}
+                        //   onChange={(e) =>
+                        //     setMonthlyInvestment(Number(e.target.value))
+                        //   }
+                        onChange={handleMonthlyInvestmentChange}
                         />
                       </div>
                     </div>
+
                     <Form.Range
                       min={500}
-                      max={1000000}
-                      value={monthlyWithdrawal || 0}
-                      // onChange={(e) =>
-                      //   setMonthlyWithdrawal(Number(e.target.value))
-                      // }
+                      max={150000}
+                      value={monthlyInvestment}
                       onChange={(e) =>
-                        handleInputChange(
-                          e.target.value,
-                          500,
-                          1000000,
-                          setMonthlyWithdrawal
-                        )
+                        setMonthlyInvestment(Number(e.target.value))
                       }
                     />
                   </Form.Group>
+
                   <Form.Group className="m-3 pt-4">
                     <div
-                      className={`d-flex justify-content-between ${SwpStyle.rangefield}`}
+                      className={`d-flex justify-content-between ${NpsStyle.rangefield}`}
+                    >
+                      <Form.Label>Your Age</Form.Label>
+                      <div>
+                        <input
+                          type="number"
+                          className={`border-0 text-end ${NpsStyle.custominput}`}
+                          onWheel={handleWheel}
+                          min={18}
+                          max={59}
+                          value={age}
+                          onChange={(e) => setAge(Number(e.target.value))}
+                        />
+                        <span>Yr</span>
+                      </div>
+                    </div>
+                    <Form.Range
+                      min={18}
+                      max={59}
+                      value={age}
+                      onChange={(e) => setAge(Number(e.target.value))}
+                    />
+                  </Form.Group>
+
+                  <Form.Group className="m-3 pt-4">
+                    <div
+                      className={`d-flex justify-content-between ${NpsStyle.rangefield}`}
                     >
                       <Form.Label>Expected Return Rate (p.a)</Form.Label>
                       <div>
-                        {returnRate < 1  &&(
-                          <small className="text-danger">
-                            Minimum value allowed is 1%
-                          </small>
-                        )}
-
                         <input
                           type="number"
-                          value={returnRate}
-                          // onChange={(e) =>
-                          //   setReturnRate(Number(e.target.value))
-                          // }
-                          onChange={(e) =>
-                            handleInputChange(
-                              e.target.value,
-                              1,
-                              30,
-                              setReturnRate
-                            )
-                          }
-                          className={`border-0 text-end ${SwpStyle.custominput}`}
+                          className={`border-0 text-end ${NpsStyle.custominput}`}
                           onWheel={handleWheel}
                           min={1}
-                          max={30}
+                          max={50}
+                          value={expectedReturnRate}
+                          onChange={(e) =>
+                            setExpectedReturnRate(Number(e.target.value))
+                          }
                         />
                         <span>%</span>
                       </div>
                     </div>
                     <Form.Range
                       min={1}
-                      max={30}
-                      value={returnRate || 1}
-                      // onChange={(e) => setReturnRate(Number(e.target.value))}
+                      max={50}
+                      step={0.1}
+                      value={expectedReturnRate}
                       onChange={(e) =>
-                        handleInputChange(e.target.value, 1, 30, setReturnRate)
-                      }
-                    />
-                  </Form.Group>
-
-                  <Form.Group className="m-3 pt-4">
-                    <div
-                      className={`d-flex justify-content-between ${SwpStyle.rangefield}`}
-                    >
-                      <Form.Label>Time Period</Form.Label>
-                      <div>
-                        {timePeriod < 1 && (
-                          <small className="text-danger">
-                            Minimum value allowed is 1 year
-                          </small>
-                        )}
-                        <input
-                          type="number"
-                          value={timePeriod}
-                          // onChange={(e) =>
-                          //   setTimePeriod(Number(e.target.value))
-                          // }
-                          onChange={(e) =>
-                            handleInputChange(e.target.value, 1, 30, setTimePeriod)
-                          }
-                          className={`border-0 text-end ${SwpStyle.custominput}`}
-                          onWheel={handleWheel}
-                          min={1}
-                          max={30}
-                        />
-                        <span>Yr</span>
-                      </div>
-                    </div>
-                    <Form.Range
-                      min={1}
-                      max={30}
-                      value={timePeriod || 1}
-                      // onChange={(e) => setTimePeriod(Number(e.target.value))}
-                      onChange={(e) =>
-                        handleInputChange(e.target.value, 1, 30, setTimePeriod)
+                        setExpectedReturnRate(Number(e.target.value))
                       }
                     />
                   </Form.Group>
                 </Form>
               </Col>
             </Row>
-            <div className={SwpStyle.rangefield}>
+            <div className={NpsStyle.rangefield}>
               <div
-                className={`d-flex justify-content-between px-3 ${SwpStyle.rangefield}`}
+                className={`d-flex justify-content-between px-3 ${NpsStyle.rangefield}`}
               >
                 <p>Total investment</p>
-                {/* <span>₹ 152 </span> */}
-                <span>₹ {totalAmount}</span>
+                {/* <span>₹ 15,000 </span> */}
+                <span>₹ {totalInvestment.toLocaleString()}</span>
               </div>
               <div className="d-flex justify-content-between  px-3">
-                <p>Total Withdrawal</p>
-                {/* <span>32 years</span> */}
-                <span>₹ {monthlyWithdrawal * timePeriod * 12}</span>
+                <p>Interest Earned</p>
+                {/* <span>₹ 3,90,230</span> */}
+                <span>₹ {interestEarned.toLocaleString()}</span>
               </div>
               <div className="d-flex justify-content-between  px-3">
-                <p>Final Value</p>
-                {/* <span>₹ 43,000</span> */}
-                <span>
-                  ₹{" "}
-                  {calculateFinalValue(
-                    totalAmount,
-                    monthlyWithdrawal,
-                    returnRate,
-                    timePeriod
-                  ).toFixed(2)}
-                </span>
+                <p>Final Maturity amount</p>
+                {/* <span>₹ 10,10,43,700</span> */}
+                <span>₹ {(maturityAmount).toLocaleString()}</span>
+              </div>
+              <div className="d-flex justify-content-between  px-3">
+                <p>Min Annuity Investment</p>
+                {/* <span>₹ 8,43,700</span> */}
+                <span>₹ {(maturityAmount * 0.4).toLocaleString()}</span>
               </div>
             </div>
           </Card>
         </div>
       </div>
 
-      <div className={`${SwpStyle.qaContent} container`}>
+      <div className={`${NpsStyle.qaContent} container`}>
         <section>
-          <div className={SwpStyle.subHeading}>
+          <div className={NpsStyle.subHeading}>
             <h1 className="text-center">
               {" "}
-              SWP (Systematic Withdrawal Plan) Calculator{" "}
+              National Pension Scheme Calculator{" "}
             </h1>
           </div>
           <Row>
             <Col xs={12} md={4} lg={3}>
-              <div className={SwpStyle.sidebar}>
+              <div className={NpsStyle.sidebar}>
                 <ul className="list-unstyled">
-                  <li className={SwpStyle.sidebarItem}>
+                  <li className={NpsStyle.sidebarItem}>
                     What is a SWP Calculator?
                   </li>
-                  <li className={SwpStyle.sidebarItem}>
+                  <li className={NpsStyle.sidebarItem}>
                     How can a SWP Calculator Help You?
                   </li>
-                  <li className={SwpStyle.sidebarItem}>
+                  <li className={NpsStyle.sidebarItem}>
                     Advantages of SWP Calculator
                   </li>
-                  <li className={SwpStyle.sidebarItem}>
+                  <li className={NpsStyle.sidebarItem}>
                     How to use ET Money's SWP Calculator?
                   </li>
-                  <li className={SwpStyle.sidebarItem}>
+                  <li className={NpsStyle.sidebarItem}>
                     Related Mutual Fund SWP Calculators ?
                   </li>
-                  <li className={SwpStyle.sidebarItem}>
+                  <li className={NpsStyle.sidebarItem}>
                     Advantages of SWP Calculator
                   </li>
-                  <li className={SwpStyle.sidebarItem}>
+                  <li className={NpsStyle.sidebarItem}>
                     Related Mutual Fund SWP Calculators ?
                   </li>
                 </ul>
               </div>
             </Col>
 
-            <Col xs={12} md={8} lg={9} className={SwpStyle.qandA}>
-              <div className={SwpStyle.quesAnsSection}>
+            <Col xs={12} md={8} lg={9} className={NpsStyle.qandA}>
+              <div className={NpsStyle.quesAnsSection}>
                 <h3>What is a SWP Calculator?</h3>
                 <p>
                   A SWP (Systematic Withdrawal Plan) Calculator is an online or
@@ -343,7 +279,7 @@ const SwpCal = () => {
                   duration, and expected rate of return.
                 </p>
               </div>
-              <div className={SwpStyle.quesAnsSection}>
+              <div className={NpsStyle.quesAnsSection}>
                 <h3>How can a SWP Calculator Help You?</h3>
                 <p>
                   The Systematic Withdrawal Plan Plan calculator essentially
@@ -364,7 +300,7 @@ const SwpCal = () => {
                   calculator can help you.
                 </p>
               </div>
-              <div className={SwpStyle.quesAnsSection}>
+              <div className={NpsStyle.quesAnsSection}>
                 <h3>Advantages of SWP Calculator</h3>
                 <p>
                   Investments made into market-linked instruments such as Mutual
@@ -395,7 +331,7 @@ const SwpCal = () => {
                   lacking in most SIP calculators
                 </p>
               </div>
-              <div className={SwpStyle.quesAnsSection}>
+              <div className={NpsStyle.quesAnsSection}>
                 <h3>How to use ET Money's SIP Calculator?</h3>
                 <p>
                   If you know how much you want to invest in Mutual Funds every
@@ -433,7 +369,7 @@ const SwpCal = () => {
                   investment goal within the specified investment tenure.
                 </p>
               </div>
-              <div className={SwpStyle.quesAnsSection}>
+              <div className={NpsStyle.quesAnsSection}>
                 <h3>Related Mutual Fund SIP Calculators ?</h3>
                 <p>
                   The Systematic investment Plan calculator essentially gives
@@ -458,7 +394,7 @@ const SwpCal = () => {
           </Row>
         </section>
         <section className="pb-5 mt-5">
-          <div className={`${SwpStyle.preHeading} py-5`}>
+          <div className={`${NpsStyle.preHeading} py-5`}>
             <h1 className="text-align-left pt-5">
               FAQs (Frequently Asked Questions)
             </h1>
@@ -466,50 +402,50 @@ const SwpCal = () => {
           <div>
             <Accordion defaultActiveKey={["1"]} alwaysOpen>
               <Accordion.Item eventKey="0">
-                <Accordion.Header className={SwpStyle.accordionHeader}>
+                <Accordion.Header className={NpsStyle.accordionHeader}>
                   How can a SIP Calculator Help You?
                 </Accordion.Header>
-                <Accordion.Body className={SwpStyle.accordionbody}>
+                <Accordion.Body className={NpsStyle.accordionbody}>
                   There is no maximum tenure of a SIP. You can invest as long as
                   you can. The minimum tenure you can go for is 3 years.
                 </Accordion.Body>
               </Accordion.Item>
 
               <Accordion.Item eventKey="1">
-                <Accordion.Header className={SwpStyle.accordionHeader}>
+                <Accordion.Header className={NpsStyle.accordionHeader}>
                   Can I modify my SIP amount?
                 </Accordion.Header>
-                <Accordion.Body className={SwpStyle.accordionbody}>
+                <Accordion.Body className={NpsStyle.accordionbody}>
                   There is no maximum tenure of a SIP. You can invest as long as
                   you can. The minimum tenure you can go for is 3 years.
                 </Accordion.Body>
               </Accordion.Item>
 
               <Accordion.Item eventKey="2">
-                <Accordion.Header className={SwpStyle.accordionHeader}>
+                <Accordion.Header className={NpsStyle.accordionHeader}>
                   Can I modify my SIP amount?
                 </Accordion.Header>
-                <Accordion.Body className={SwpStyle.accordionbody}>
+                <Accordion.Body className={NpsStyle.accordionbody}>
                   There is no maximum tenure of a SIP. You can invest as long as
                   you can. The minimum tenure you can go for is 3 years.
                 </Accordion.Body>
               </Accordion.Item>
 
               <Accordion.Item eventKey="3">
-                <Accordion.Header className={SwpStyle.accordionHeader}>
+                <Accordion.Header className={NpsStyle.accordionHeader}>
                   Can I modify my SIP amount?
                 </Accordion.Header>
-                <Accordion.Body className={SwpStyle.accordionbody}>
+                <Accordion.Body className={NpsStyle.accordionbody}>
                   There is no maximum tenure of a SIP. You can invest as long as
                   you can. The minimum tenure you can go for is 3 years.
                 </Accordion.Body>
               </Accordion.Item>
 
               <Accordion.Item eventKey="4">
-                <Accordion.Header className={SwpStyle.accordionHeader}>
+                <Accordion.Header className={NpsStyle.accordionHeader}>
                   Can I modify my SIP amount?
                 </Accordion.Header>
-                <Accordion.Body className={SwpStyle.accordionbody}>
+                <Accordion.Body className={NpsStyle.accordionbody}>
                   There is no maximum tenure of a SIP. You can invest as long as
                   you can. The minimum tenure you can go for is 3 years.
                 </Accordion.Body>
@@ -522,4 +458,23 @@ const SwpCal = () => {
   );
 };
 
-export default SwpCal;
+export default NpsCal;
+
+// <Form.Group className="m-3 pt-4">
+// <div
+//   className={`d-flex justify-content-between ${NpsStyle.rangefield}`}
+// >
+//   <Form.Label>Withdrawal Per Month</Form.Label>
+//   <div className={NpsStyle.rangefield}>
+//     <span className="texr-end">₹</span>
+//     <input
+//       type="number"
+//       className={`border-0 text-end ${NpsStyle.custominput}`}
+//       onWheel={handleWheel}
+//       min={500}
+//       max={1000000}
+//     />
+//   </div>
+// </div>
+// <Form.Range min={500} max={1000000} />
+// </Form.Group>

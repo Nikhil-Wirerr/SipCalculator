@@ -91,7 +91,7 @@ const calculators = [
     {
       type: "FD",
       title: "FD",
-      description: "Check returns on your fixed. deposits (FDs) without any hassle",
+      description: "Check returns on your Fixed Deposits (FDs) without any hassle",
       icon: fdimg,
       gradiantClass: "gradient-green",
     },

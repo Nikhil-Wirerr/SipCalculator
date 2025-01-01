@@ -1,27 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import {
-  Col,
-  Container,
-  Row,
-  ToggleButton,
-  ToggleButtonGroup,
-  Card,
-  Form,
-  Button,
-  InputGroup,
-} from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import SsyStyle from "@/styles/ssycal.module.css";
+import { Card, Col, Form, Row } from "react-bootstrap";
 import LumpCalImg from "../app/assets/lumpsumcal.svg";
 import InvestImg from "../app/assets/invest-circle.svg";
 import Image from "next/image";
 import Link from "next/link";
 import Accordion from "react-bootstrap/Accordion";
-import lumpsumStyle from "@/styles/lumpsumcal.module.css";
-import "react-circular-progressbar/dist/styles.css";
-// import "../../src/app/globals.css";
-
 import {
   PieChart,
   Pie,
@@ -30,65 +16,73 @@ import {
   Cell,
   ResponsiveContainer,
 } from "recharts";
-// import SlimScroll from "react-slimscroll";
 
-const LumpsumCal = () => {
-  const [investmentType, setInvestmentType] = useState("Lumpsum");
-  const [amount, setAmount] = useState(5000);
-  const [durationYear, setDurationYear] = useState(20);
-  const [expectedReturn, setExpectedReturn] = useState("8%");
+const SsyCal = () => {
+  const [yearlyInvestment, setYearlyInvestment] = useState(0);
+  const [maturityAmount, setMaturityAmount] = useState(0);
+  const [totalInvested, setTotalInvested] = useState(0);
+  const [estimatedReturns, setEstimatedReturns] = useState(0);
+  const [girlAge, setGirlAge] = useState(0);
+  const [investmentStartYear, setInvestmentStartYear] = useState(2021);
 
-  const handleInvestmentTypeChange = (value) => {
-    setInvestmentType(value);
-  };
-
-  const handleExpectedReturnChange = (e) => {
-    let value = e.target.value.replace("%", "");
-    value = Math.min(Math.max(Number(value), 0), 100);
-    setExpectedReturn(`${value}%`);
-  };
 
   const handleWheel = (e) => e.target.blur();
 
-  //calculate total value for lumpsum investment
-  const calculateLumpsumValue = (amount, years, rate) => {
-    const annualRate = rate / 100;
-    return Math.round(amount * Math.pow(1 + annualRate, years));
-  };
+  const interestRate = 8.2;
+  const investmentDuration = 21;
+  const contributionPeriod = 15;
 
-  //calculate total value for sip investment
-  const calculateSIPValue = (monthlyAmount, years, rate) => {
-    const annualRate = rate / 100;
-    const monthlyRate = annualRate / 12;
-    const months = years * 12;
+  // Calculate the total investment and estimated returns
+  const calculateInvestment = () => {
+    // const currentYear = new Date().getFullYear();
 
-    //future value formula for sip
-    return Math.round(
-      monthlyAmount *
-        ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) *
-        (1 + monthlyRate)
-    );
-  };
+    const yearsToInvest = Math.min(contributionPeriod, investmentDuration - girlAge); // As maturity happens after 21 years
 
-  //total value based on selected investment type
-  const calculateTotalValue = () => {
-    const rate = parseFloat(expectedReturn) || 0;
-    if (investmentType === "Lumpsum") {
-      return calculateLumpsumValue(parseFloat(amount) || 0, durationYear, rate);
-    } else {
-      return calculateSIPValue(parseFloat(amount) || 0, durationYear, rate);
+    // const yearsToMaturity = investmentDuration - yearsToInvest;
+    // console.log("years to maturity:", yearsToMaturity);
+
+    let totalInvest = 0;
+    let totalReturns = 0;
+
+    // Calculate total invested amount
+    totalInvest = yearlyInvestment * yearsToInvest;
+
+    // Calculate estimated returns using compound interest for each deposit
+    for (let year = 0; year < yearsToInvest; year++) {
+      const yearsRemaining = investmentDuration - year; // Each deposit grows for a different time
+      totalReturns +=
+        yearlyInvestment * Math.pow(1 + interestRate / 100, yearsRemaining);
     }
+
+    setTotalInvested(totalInvest);
+    console.log("total invested:", totalInvest);
+
+    setEstimatedReturns(totalReturns - totalInvest); // Returns are total amount minus invested amount
+
+    setMaturityAmount(totalReturns);
+    console.log("maturity amount:", totalReturns);
   };
 
-  // const calculateEstReturn = (totalValue, amount) => totalValue - amount;
+  const handleAmountChange = (e) => {
+    let value = e.target.value;
 
-  const calculateEstReturn = (totalValue) => {
-    if (investmentType === "Lumpsum") {
-      return totalValue - parseFloat(amount); //lumpsum invested amount
-    } else {
-      return totalValue - parseFloat(amount) * durationYear * 12; //SIP total invested amount
+    const maxAmountLimit = 150000;
+
+    if (value > maxAmountLimit) {
+      value = maxAmountLimit;
     }
+    
+    setYearlyInvestment(value === "" ? 0 : Number(value));
+    console.log("yearly investment:", value);
   };
+
+  const handleGirlAgeChange = (e) => {
+    setGirlAge(Number(e.target.value));
+  };
+
+  useEffect(() => {
+    calculateInvestment();
+  }, [yearlyInvestment, girlAge]);
 
   const colorStyles = {
     investedAmount: "#93C9FC",
@@ -98,91 +92,44 @@ const LumpsumCal = () => {
   const data02 = [
     {
       name: "Invested Amount",
-      value:
-        investmentType === "Lumpsum"
-          ? parseFloat(amount) || 0
-          : parseFloat(amount) * durationYear * 12 || 0,
+      value: totalInvested,
       color: colorStyles.investedAmount,
     },
     {
       name: "Est. Returns",
-      value: calculateEstReturn(calculateTotalValue()),
+      value: estimatedReturns,
       color: colorStyles.estReturns,
     },
   ];
 
-  const maxAmountLimit = 1000000;
-
-  const handleAmountChange = (e) => {
-    let value = e.target.value;
-
-    //   value = value === "" ? 0 : Number(value);
-
-    //   if(value < 500){
-    //     value = 500;
-    //   } else if (value > 1000000) {
-    //     value = 1000000
-    //   }
-
-    //   setAmount(value);
-    // }
-
-    if (value > maxAmountLimit) {
-      value = maxAmountLimit;
-    }
-    setAmount(value === "" ? 0 : Number(value));
-  };
-
   return (
     <>
-      <div className={` ${lumpsumStyle.lumpsumContainer}`}>
+      <div className={` ${SsyStyle.lumpsumContainer}`}>
         <div className="container py-5">
-          <div className={lumpsumStyle.preHeading}>
-            <h1 className="text-align-left pt-3">Lumpsum Calculator</h1>
+          <div className={SsyStyle.preHeading}>
+            <h1 className="text-align-left pt-3">SSY Calculator </h1>
             <p className="pt-2 pb-4">
               {" "}
-              Investments in Mutual Funds can be broadly classified into two
-              types- lumpsum and SIP. A lumpsum investment is when the depositor
-              invests a significant sum of money on a particular mutual fund
-              scheme. SIP or Systematic Investment Plan, on the other hand,
-              entails the investment of smaller amounts on a monthly basis.
+              Sukanya Samriddhi Yojana (SSY) is a savings scheme launched back
+              in 2015 as part of the Government initiative Beti Bachao, Beti
+              Padhao campaign. This scheme enables guardians to open a savings
+              account for their girl child with an authorised commercial bank or
+              India Post branch.
             </p>
           </div>
 
           <div>
             <Card className="p-5 border-0 shadow">
               <Row>
-                <div>
-                  <ToggleButtonGroup
-                    type="radio"
-                    name="investmentType"
-                    value={investmentType}
-                    onChange={handleInvestmentTypeChange}
-                    className={lumpsumStyle.togglbgrp}
-                  >
-                    <ToggleButton
-                      id="sip-toggle"
-                      value="SIP"
-                      variant="outline-primary"
-                    >
-                      Monthly SIP
-                    </ToggleButton>
-                    <ToggleButton
-                      id="lumpsum-toggle"
-                      value="Lumpsum"
-                      variant="outline-primary"
-                    >
-                      Lumpsum
-                    </ToggleButton>
-                  </ToggleButtonGroup>
-                </div>
-
                 <Col xs={12} md={12} lg={6} className="mb-4">
-                  <div className={lumpsumStyle.lumpsumCard}>
+                  <div className={SsyStyle.lumpsumCard}>
+                    <div>
+                      <h5>Latest interest rate @ 8.2 % p.a.</h5>
+                    </div>
                     <div className="mt-5">
                       <div className="calc-img d-flex mb-4">
                         <Image src={LumpCalImg} alt="cal-img" />
-                        <div className={lumpsumStyle.returnEstimation}>
+                        <div className={SsyStyle.returnEstimation}>
                           <h6 className="ps-2 mb-1">Return Estimator</h6>
                           <p className="ps-2">
                             Estimation is based on the past performance
@@ -192,18 +139,19 @@ const LumpsumCal = () => {
                     </div>
 
                     <Form>
-                      <div className={`${lumpsumStyle.customformgroup} `}>
-                        <div className={lumpsumStyle.custominputwrapper}>
-                          <label className={lumpsumStyle.customlabel}>
-                            Enter Amount
+                      <div className={`${SsyStyle.customformgroup} `}>
+                        <div className={SsyStyle.custominputwrapper}>
+                          <label className={SsyStyle.customlabel}>
+                            Yearly Investment
                           </label>
                           <input
                             type="number"
-                            value={amount === 0 ? "" : amount}
-                            className={lumpsumStyle.custominput}
+                            className={SsyStyle.custominput}
                             placeholder=""
                             onWheel={handleWheel}
-                            // onChange={(e) => setAmount(Number(e.target.value))}
+                            value={
+                              yearlyInvestment === 0 ? "" : yearlyInvestment
+                            }
                             onChange={handleAmountChange}
                           />
                         </div>
@@ -211,69 +159,64 @@ const LumpsumCal = () => {
 
                       <Form.Group className="pt-5">
                         <div
-                          className={`d-flex justify-content-between ${lumpsumStyle.rangefield}`}
+                          className={`d-flex justify-content-between ${SsyStyle.rangefield}`}
                         >
-                          <Form.Label>Select Duration</Form.Label>
-                          <div className={lumpsumStyle.rangecustominput}>
+                          <Form.Label>Investment Start Year</Form.Label>
+                          <div className={SsyStyle.rangecustominput}>
                             <input
                               type="number"
-                              value={durationYear}
-                              onChange={(e) =>
-                                setDurationYear(Number(e.target.value))
-                              }
                               className="border-0 w-100"
                               onWheel={handleWheel}
+                              value={investmentStartYear}
+                              onChange={(e) =>
+                                setInvestmentStartYear(e.target.value)
+                              } // Handle change
                             />
                             <span>Yrs</span>
                           </div>
                         </div>
                         <Form.Range
-                          min={5}
-                          max={100}
-                          value={durationYear}
+                          min={2015}
+                          max={2033}
+                          value={investmentStartYear}
                           onChange={(e) =>
-                            setDurationYear(Number(e.target.value))
+                            setInvestmentStartYear(e.target.value)
                           }
                         />
                         <div
-                          className={`d-flex justify-content-between ${lumpsumStyle.belowrangefield}`}
+                          className={`d-flex justify-content-between ${SsyStyle.belowrangefield}`}
                         >
-                          <span>1 Yr</span>
-                          <span>100 Yr</span>
+                          <span>2015 Yr</span>
+                          <span>2033 Yr</span>
                         </div>
                       </Form.Group>
-
-                      <Form.Group className="pt-5">
+                      <Form.Group>
                         <div
-                          className={`d-flex justify-content-between ${lumpsumStyle.rangefield}`}
+                          className={`mt-4 d-flex justify-content-between ${SsyStyle.rangefield}`}
                         >
-                          <Form.Label>Expected Rate of Interest</Form.Label>
-                          <div className={lumpsumStyle.rangecustominput}>
+                          <Form.Label>Girl's Age</Form.Label>
+                          <div className={SsyStyle.rangecustominput}>
                             <input
-                              type="text"
-                              value={expectedReturn}
-                              // onChange={(e) =>
-                              //   setExpectedReturn(Number(e.target.value))
-                              // }
-                              onChange={handleExpectedReturnChange}
+                              type="number"
                               className="border-0 w-100"
-                              onWheel={(e) => e.target.blur()}
+                              onWheel={handleWheel}
+                              value={girlAge}
+                              onChange={handleGirlAgeChange}
                             />
+                            <span>Yrs</span>
                           </div>
                         </div>
                         <Form.Range
-                          min={0}
-                          max={100}
-                          value={parseInt(expectedReturn)}
-                          onChange={(e) =>
-                            setExpectedReturn(`${e.target.value}%`)
-                          }
+                          min={1}
+                          max={10}
+                          value={girlAge}
+                          onChange={handleGirlAgeChange}
                         />
                         <div
-                          className={`d-flex justify-content-between ${lumpsumStyle.belowrangefield}`}
+                          className={`d-flex justify-content-between ${SsyStyle.belowrangefield}`}
                         >
-                          <span>0%</span>
-                          <span>100 %</span>
+                          <span>1 Yr</span>
+                          <span>10 Yr</span>
                         </div>
                       </Form.Group>
                     </Form>
@@ -286,23 +229,23 @@ const LumpsumCal = () => {
                   lg={6}
                   className={`d-flex align-items-center `}
                 >
-                  <div className={lumpsumStyle.lumpsumCard}>
+                  <div className={SsyStyle.lumpsumCard}>
                     <div
-                      className={`d-flex align-items-center flex-column ${lumpsumStyle.verticalLine} `}
+                      className={`d-flex align-items-center flex-column ${SsyStyle.verticalLine} `}
                     >
-                      <div className={`${lumpsumStyle.totalInvest} ps-5 mt-2`}>
+                      <div className={`${SsyStyle.totalInvest} ps-5 mt-2`}>
                         <p>
-                          The total value of your investment after{" "}
-                          <strong>{durationYear} Years</strong> will be
+                          The Maturity value of your investment after{" "}
+                          <strong> 21 Years</strong> will be
                         </p>
-                        <h2>₹ {calculateTotalValue().toLocaleString()}</h2>
+                        <h2>₹ {maturityAmount.toFixed(2)}</h2>
                       </div>
                       <div
-                        className={` d-lg-flex d-md-flex pt-4 ${lumpsumStyle.pie_chart_d_block}`}
+                        className={` d-lg-flex d-md-flex pt-4 ${SsyStyle.pie_chart_d_block}`}
                       >
                         <div className="d-flex flex-column">
                           {/* Responsive PieChart */}
-                          <div className={lumpsumStyle.piechart_div}>
+                          <div className={SsyStyle.piechart_div}>
                             <ResponsiveContainer>
                               <PieChart>
                                 <Pie
@@ -312,7 +255,7 @@ const LumpsumCal = () => {
                                   cy="50%"
                                   innerRadius={40}
                                   outerRadius={80}
-                                  className={lumpsumStyle.chart_no_outline}
+                                  className={SsyStyle.chart_no_outline}
                                 >
                                   {data02.map((entry, index) => (
                                     <Cell
@@ -325,9 +268,7 @@ const LumpsumCal = () => {
                               </PieChart>
                             </ResponsiveContainer>
                           </div>
-                          <div
-                            className={`${lumpsumStyle.Investbtn} text-center`}
-                          >
+                          <div className={`${SsyStyle.Investbtn} text-center`}>
                             <button className="mt-4" type="button">
                               Invest Now
                             </button>
@@ -336,40 +277,32 @@ const LumpsumCal = () => {
                         <div className="ps-lg-5  mt-3 ps-sm-0">
                           {/* Invested Amount Section */}
                           <div
-                            className={`ps-2 ${lumpsumStyle.investedAmount} `}
+                            className={`ps-2 ${SsyStyle.investedAmount} `}
                             style={{
                               borderLeft: `6px solid ${colorStyles.investedAmount}`,
                             }}
                           >
-                            <p>Invested Amount</p>
-                            {/* <h6>₹ {parseFloat(amount).toLocaleString()}</h6> */}
-
-                            <h6>
-                              ₹{" "}
-                              {investmentType === "Lumpsum"
-                                ? parseFloat(amount).toLocaleString()
-                                : (
-                                    parseFloat(amount) *
-                                    durationYear *
-                                    12
-                                  ).toLocaleString()}
-                            </h6>
+                            <p> Total Invested Amount</p>
+                            <h6>₹ {totalInvested.toFixed(2)}</h6>
                           </div>
 
                           {/* Estimated Returns Section */}
                           <div
-                            className={`ps-2 mt-4 ${lumpsumStyle.investedAmount} `}
+                            className={`ps-2 mt-4 ${SsyStyle.investedAmount} `}
                             style={{
                               borderLeft: `6px solid ${colorStyles.estReturns}`,
                             }}
                           >
-                            <p>Est. Returns</p>
-                            <h6>
-                              ₹{" "}
-                              {calculateEstReturn(
-                                calculateTotalValue()
-                              ).toLocaleString()}
-                            </h6>
+                            <p>Total Returns</p>
+                            <h6>₹ {estimatedReturns.toFixed(2)}</h6>
+                          </div>
+                          <div
+                            className={`ps-2 mt-4 ${SsyStyle.maturity_year} `}
+                          >
+                            <p>Maturity year</p>
+                            {/* <h6>{investmentStartYear + investmentDuration}</h6> */}
+                            <h6>{Number(investmentStartYear) + investmentDuration}</h6>
+
                           </div>
                         </div>
                       </div>
@@ -382,43 +315,46 @@ const LumpsumCal = () => {
         </div>
       </div>
 
-      <div className={`${lumpsumStyle.qaContent} container`}>
+      <div className={`${SsyStyle.qaContent} container`}>
         <section>
-          <div className={lumpsumStyle.subHeading}>
-            <h1 className="text-center"> Lumpsum Calculator </h1>
+          <div className={SsyStyle.subHeading}>
+            <h1 className="text-center">
+              {" "}
+              Sukanya Samriddhi Yojana (SSY) Calculator
+            </h1>
           </div>
           <Row>
             <Col xs={12} md={4} lg={3}>
-                <div className={lumpsumStyle.sidebar}>
-                  <ul className="list-unstyled">
-                    <li className={lumpsumStyle.sidebarItem}>
-                      What is a SIP Calculator?
-                    </li>
-                    <li className={lumpsumStyle.sidebarItem}>
-                      How can a SIP Calculator Help You?
-                    </li>
-                    <li className={lumpsumStyle.sidebarItem}>
-                      Advantages of SIP Calculator
-                    </li>
-                    <li className={lumpsumStyle.sidebarItem}>
-                      How to use ET Money's SIP Calculator?
-                    </li>
-                    <li className={lumpsumStyle.sidebarItem}>
-                      Related Mutual Fund SIP Calculators ?
-                    </li>
-                    <li className={lumpsumStyle.sidebarItem}>
-                      Advantages of SIP Calculator
-                    </li>
-                    <li className={lumpsumStyle.sidebarItem}>
-                      Related Mutual Fund SIP Calculators ?
-                    </li>
-                  </ul>
-                </div>
+              <div className={SsyStyle.sidebar}>
+                <ul className="list-unstyled">
+                  <li className={SsyStyle.sidebarItem}>
+                    What is a SIP Calculator?
+                  </li>
+                  <li className={SsyStyle.sidebarItem}>
+                    How can a SIP Calculator Help You?
+                  </li>
+                  <li className={SsyStyle.sidebarItem}>
+                    Advantages of SIP Calculator
+                  </li>
+                  <li className={SsyStyle.sidebarItem}>
+                    How to use ET Money's SIP Calculator?
+                  </li>
+                  <li className={SsyStyle.sidebarItem}>
+                    Related Mutual Fund SIP Calculators ?
+                  </li>
+                  <li className={SsyStyle.sidebarItem}>
+                    Advantages of SIP Calculator
+                  </li>
+                  <li className={SsyStyle.sidebarItem}>
+                    Related Mutual Fund SIP Calculators ?
+                  </li>
+                </ul>
+              </div>
             </Col>
 
-            <Col xs={12} md={8} lg={9} >
-              <div className={lumpsumStyle.qandA}>
-                <div className={lumpsumStyle.quesAnsSection}>
+            <Col xs={12} md={8} lg={9}>
+              <div className={SsyStyle.qandA}>
+                <div className={SsyStyle.quesAnsSection}>
                   <h3>What is a SIP Calculator?</h3>
                   <p>
                     A SIP (Systematic Investment Plan) Calculator is an online
@@ -429,7 +365,7 @@ const LumpsumCal = () => {
                     investment amount, duration, and expected rate of return.
                   </p>
                 </div>
-                <div className={lumpsumStyle.quesAnsSection}>
+                <div className={SsyStyle.quesAnsSection}>
                   <h3>How can a SIP Calculator Help You?</h3>
                   <p>
                     The Systematic investment Plan calculator essentially gives
@@ -451,7 +387,7 @@ const LumpsumCal = () => {
                     you.
                   </p>
                 </div>
-                <div className={lumpsumStyle.quesAnsSection}>
+                <div className={SsyStyle.quesAnsSection}>
                   <h3>Advantages of SIP Calculator</h3>
                   <p>
                     Investments made into market-linked instruments such as
@@ -483,7 +419,7 @@ const LumpsumCal = () => {
                     calculators
                   </p>
                 </div>
-                <div className={lumpsumStyle.quesAnsSection}>
+                <div className={SsyStyle.quesAnsSection}>
                   <h3>How to use ET Money's SIP Calculator?</h3>
                   <p>
                     If you know how much you want to invest in Mutual Funds
@@ -523,7 +459,7 @@ const LumpsumCal = () => {
                     tenure.
                   </p>
                 </div>
-                <div className={lumpsumStyle.quesAnsSection}>
+                <div className={SsyStyle.quesAnsSection}>
                   <h3>Related Mutual Fund SIP Calculators ?</h3>
                   <p>
                     The Systematic investment Plan calculator essentially gives
@@ -550,115 +486,16 @@ const LumpsumCal = () => {
           </Row>
         </section>
 
-        {/* <section className="pb-5 mt-5">
-          <div className={`${lumpsumStyle.preHeading} py-5`}>
-            <h1 className="text-align-left pt-5">
-              FAQs (Frequently Asked Questions)
-            </h1>
-          </div>
-          <div>
-            <Accordion defaultActiveKey={["1"]} alwaysOpen>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header className={lumpsumStyle.accordionHeader}>
-                  How can a SIP Calculator Help You?
-                </Accordion.Header>
-                <Accordion.Body className={lumpsumStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="1">
-                <Accordion.Header className={lumpsumStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={lumpsumStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="2">
-                <Accordion.Header className={lumpsumStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={lumpsumStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="3">
-                <Accordion.Header className={lumpsumStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={lumpsumStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="4">
-                <Accordion.Header className={lumpsumStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={lumpsumStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-          </div>
-        </section> */}
-
         <section className="pb-5 mt-5">
-          <div className={`${lumpsumStyle.preHeading} py-5`}>
+          <div className={`${SsyStyle.preHeading} py-5`}>
             <h1 className="text-align-left pt-5">
               FAQs (Frequently Asked Questions)
             </h1>
           </div>
           <div>
-            {/* <Accordion defaultActiveKey="0" alwaysOpen className={lumpsumStyle.custom_accordion_Header}>
-      <Accordion.Item eventKey="0">
-        <Accordion.Header className={lumpsumStyle.custom_accordion_Header2}>
-          How can a SIP Calculator Help You?
-        </Accordion.Header>
-        <Accordion.Body className={lumpsumStyle.accordionBody}>
-          There is no maximum tenure of a SIP. You can invest as long as you can. The minimum tenure you can go for is 3 years.
-        </Accordion.Body>
-      </Accordion.Item>
-
-      <Accordion.Item eventKey="1">
-        <Accordion.Header className={lumpsumStyle.accordionHeader}>
-          Can I modify my SIP amount?
-        </Accordion.Header>
-        <Accordion.Body className={lumpsumStyle.accordionBody}>
-          Yes, you can modify your SIP amount at any point during your tenure by contacting your fund manager or using the online portal.
-        </Accordion.Body>
-      </Accordion.Item>
-
-      <Accordion.Item eventKey="2">
-        <Accordion.Header className={lumpsumStyle.accordionHeader}>
-          What is the minimum tenure for SIP?
-        </Accordion.Header>
-        <Accordion.Body className={lumpsumStyle.accordionBody}>
-          The minimum tenure for a SIP is usually 6 months, but it can vary depending on the mutual fund you select.
-        </Accordion.Body>
-      </Accordion.Item>
-
-      <Accordion.Item eventKey="3">
-        <Accordion.Header className={lumpsumStyle.accordionHeader}>
-          What happens if I miss a SIP payment?
-        </Accordion.Header>
-        <Accordion.Body className={lumpsumStyle.accordionBody}>
-          If you miss a SIP payment, your account will not be penalized. However, consistent payments are encouraged for better returns.
-        </Accordion.Body>
-      </Accordion.Item>
-               </Accordion> */}
-
             <Accordion defaultActiveKey="0" alwaysOpen>
               <Accordion.Item eventKey="0">
-                <Accordion.Header className={lumpsumStyle.custom_acco_header}>
+                <Accordion.Header className={SsyStyle.custom_acco_header}>
                   How can a SIP Calculator Help You?
                 </Accordion.Header>
                 <Accordion.Body>
@@ -704,4 +541,4 @@ const LumpsumCal = () => {
   );
 };
 
-export default LumpsumCal;
+export default SsyCal;

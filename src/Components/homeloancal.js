@@ -148,9 +148,9 @@ const HomeloanCal = () => {
           </div>
 
           <div>
-            <Card className="p-5 border-0 shadow">
+            <Card className="p-lg-5 p-md-4  border-0 shadow">
               <Row>
-                <div>
+                <div className="pt-4 pt-md-0">
                   <ToggleButtonGroup
                     type="radio"
                     name="investmentType"
@@ -285,15 +285,12 @@ const HomeloanCal = () => {
                   xs={12}
                   md={12}
                   lg={6}
-                  className={`d-flex align-items-center `}
+                  className={`d-flex align-items-center`}
                 >
                   <div className={homeloanStyle.lumpsumCard}>
-                    <div
-                      className={`d-flex  flex-column ${homeloanStyle.verticalLine} `}
-                    >
+                    <div className={`d-flex  flex-column ${homeloanStyle.verticalLine} `}>
                       <div className={`${homeloanStyle.totalInvest} ps-5 mt-2`}>
                         <p>The total amount will be</p>
-                        {/* <h2>₹ 4,09,174</h2> */}
                         <h2>
                           ₹{" "}
                           {calculateTotalValue(
@@ -303,7 +300,7 @@ const HomeloanCal = () => {
                           ).toLocaleString()}
                         </h2>
                       </div>
-                      <div className={` d-flex pt-4 ${homeloanStyle.pie_chart_d_block} `}>
+                      <div className={` d-lg-flex d-md-flex pt-4 ${homeloanStyle.pie_chart_d_block} `}>
                         <div className="d-flex flex-column">
                           {/* <Image src={InvestImg} alt="investImg" /> */}
 
@@ -346,16 +343,6 @@ const HomeloanCal = () => {
                           >
                             <p>Monthly EMI</p>
                             {/* <h6>₹ 19,566</h6> */}
-                            {/* <h6>
-                              ₹{" "}
-                              {calculateEMI(
-                                parseFloat(amount) || 0,
-                                parseFloat(expectedReturn) || 0,
-                                durationYear || 0
-                              ).toLocaleString(undefined, {
-                                maximumFractionDigits: 2,
-                              })}
-                            </h6> */}
                             <h6>
                               ₹{" "}
                               {amount > 0 && durationYear > 0
@@ -427,7 +414,8 @@ const HomeloanCal = () => {
                           <Accordion.Header>
                             {2024 + parseInt(year) - 1}
                           </Accordion.Header>
-                          <Accordion.Body>
+                          <Accordion.Body className={homeloanStyle.accordion_bdy} >
+                            <div style={{overflowX:"auto", maxWidth:"100%"}}>
                             <table
                               className={`table table-striped ${homeloanStyle.customTable}`}
                             >
@@ -469,6 +457,7 @@ const HomeloanCal = () => {
                                 ))}
                               </tbody>
                             </table>
+                            </div>
                           </Accordion.Body>
                         </Accordion.Item>
                       )
@@ -711,171 +700,112 @@ const HomeloanCal = () => {
 export default HomeloanCal;
 
 
+// <Col
+// xs={12}
+// md={12}
+// lg={6}
+// className={`d-flex align-items-center `}
+// >
+// <div className={homeloanStyle.lumpsumCard}>
+//   <div
+//     className={`d-flex  flex-column ${homeloanStyle.verticalLine} `}
+//   >
+//     <div className={`${homeloanStyle.totalInvest} ps-5 mt-2`}>
+//       <p>The total amount will be</p>
+//       <h2>
+//         ₹{" "}
+//         {calculateTotalValue(
+//           parseFloat(amount) || 0,
+//           durationYear,
+//           parseFloat(expectedReturn) || 0
+//         ).toLocaleString()}
+//       </h2>
+//     </div>
+//     <div className={` d-lg-flex d-md-flex pt-4 ${homeloanStyle.pie_chart_d_block} `}>
+//       <div className="d-flex flex-column">
 
-  {/* {showAccordion && (
-                  <div className="mt-4">
-                    <Accordion defaultActiveKey="4">
-                      <Accordion.Item eventKey="0">
-                        <Accordion.Header>2024</Accordion.Header>
-                        <Accordion.Body>
-                          <table className="table table-striped">
-                            <thead>
-                              <tr>
-                                <th>#</th>
-                                <th>Column 1</th>
-                                <th>Column 2</th>
-                                <th>Column 3</th>
-                                <th>Column 4</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {Array.from({ length: 12 }, (_, index) => (
-                                <tr key={index}>
-                                  <td>{index + 1}</td>
-                                  <td>Data {index + 1}.1</td>
-                                  <td>Data {index + 1}.2</td>
-                                  <td>Data {index + 1}.3</td>
-                                  <td>Data {index + 1}.4</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </Accordion.Body>
-                      </Accordion.Item>
-                      <Accordion.Item eventKey="1">
-                        <Accordion.Header>2025</Accordion.Header>
-                        <Accordion.Body>
-                          <table className="table table-striped">
-                            <thead>
-                              <tr>
-                                <th>#</th>
-                                <th>Column 1</th>
-                                <th>Column 2</th>
-                                <th>Column 3</th>
-                                <th>Column 4</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {Array.from({ length: 12 }, (_, index) => (
-                                <tr key={index}>
-                                  <td>{index + 1}</td>
-                                  <td>Data {index + 1}.1</td>
-                                  <td>Data {index + 1}.2</td>
-                                  <td>Data {index + 1}.3</td>
-                                  <td>Data {index + 1}.4</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </Accordion.Body>
-                      </Accordion.Item>
-                      <Accordion.Item eventKey="2">
-                        <Accordion.Header>2026</Accordion.Header>
-                        <Accordion.Body>
-                          <table className="table table-striped">
-                            <thead>
-                              <tr>
-                                <th>#</th>
-                                <th>Column 1</th>
-                                <th>Column 2</th>
-                                <th>Column 3</th>
-                                <th>Column 4</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {Array.from({ length: 12 }, (_, index) => (
-                                <tr key={index}>
-                                  <td>{index + 1}</td>
-                                  <td>Data {index + 1}.1</td>
-                                  <td>Data {index + 1}.2</td>
-                                  <td>Data {index + 1}.3</td>
-                                  <td>Data {index + 1}.4</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </Accordion.Body>
-                      </Accordion.Item>
-                      <Accordion.Item eventKey="3">
-                        <Accordion.Header>2027</Accordion.Header>
-                        <Accordion.Body>
-                          <table className="table table-striped">
-                            <thead>
-                              <tr>
-                                <th>Month</th>
-                                <th>Principal paid</th>
-                                <th>Interest Chargesd</th>
-                                <th>CTotal Payment</th>
-                                <th>Balance </th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {[
-                                "Jan",
-                                "Feb",
-                                "Mar",
-                                "Apr",
-                                "May",
-                                "Jun",
-                                "Jul",
-                                "Aug",
-                                "Sep",
-                                "Oct",
-                                "Nov",
-                                "Dec",
-                              ].map((month, index) => (
-                                <tr key={index}>
-                                  <td>{month}</td>
-                                  <td>Data {index + 1}.1</td>
-                                  <td>Data {index + 1}.2</td>
-                                  <td>Data {index + 1}.3</td>
-                                  <td>Data {index + 1}.4</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </Accordion.Body>
-                      </Accordion.Item>
-                      <Accordion.Item eventKey="4">
-                        <Accordion.Header>2028</Accordion.Header>
-                        <Accordion.Body>
-                          <table className="table table-striped text-center">
-                            <thead>
-                              <tr>
-                                <th>Month</th>
-                                <th>Principal paid</th>
-                                <th>Interest Chargesd</th>
-                                <th>Total Payment</th>
-                                <th> Balance</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {[
-                                "Jan",
-                                "Feb",
-                                "Mar",
-                                "Apr",
-                                "May",
-                                "Jun",
-                                "Jul",
-                                "Aug",
-                                "Sep",
-                                "Oct",
-                                "Nov",
-                                "Dec",
-                              ].map((month, index) => (
-                                <tr key={index}>
-                                  <td>{month}</td>
-                                  <td>Data {index + 1}.1</td>
-                                  <td>Data {index + 1}.2</td>
-                                  <td>Data {index + 1}.3</td>
-                                  <td>Data {index + 1}.4</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </Accordion.Body>
-                      </Accordion.Item>
-                    </Accordion>
-                  </div>
-                )} */}
+//         <div className={homeloanStyle.piechart_div}>
+//           <ResponsiveContainer>
+//             <PieChart>
+//               <Pie
+//                 dataKey="value"
+//                 data={data02}
+//                 cx="50%"
+//                 cy="50%"
+//                 innerRadius={40}
+//                 outerRadius={80}
+//                 className={homeloanStyle.chart_no_outline}
+//               >
+//                 {data02.map((entry, index) => (
+//                   <Cell
+//                     key={`cell-${index}`}
+//                     fill={entry.color}
+//                   />
+//                 ))}
+//               </Pie>
+//             <Tooltip />
+//             </PieChart>
+//           </ResponsiveContainer>
+//         </div>
+
+//         <div
+//           className={`${homeloanStyle.Investbtn} text-center`}
+//         >
+//           <button className="mt-4" type="button">
+//             Invest Now
+//           </button>
+//         </div>
+//       </div>
+
+//       <div className="ps-lg-5 ps-sm-0 mt-3">
+//         <div
+//           className={`ps-2 pb-2 ${homeloanStyle.investedAmount}`}
+//         >
+//           <p>Monthly EMI</p>
+//           <h6>
+//             ₹{" "}
+//             {amount > 0 && durationYear > 0
+//               ? calculateEMI(
+//                   amount,
+//                   parseFloat(expectedReturn),
+//                   durationYear
+//                 ).toLocaleString(undefined, {
+//                   maximumFractionDigits: 2,
+//                 })
+//               : "0"}
+//           </h6>
+//         </div>
+//         <div
+//           className={`ps-2 ${homeloanStyle.investedAmount}`}
+//           style={{
+//             borderLeft: `6px solid ${colorStyles.investedAmount}`,
+//           }}
+//         >
+//           <p>Invested Amount</p>
+//           <h6>₹ {parseFloat(amount).toLocaleString()}</h6>
+//         </div>
+
+//         <div
+//           className={`ps-2 ${homeloanStyle.investedAmount}`}
+//           style={{
+//             borderLeft: `6px solid ${colorStyles.estReturns}`,
+//           }}
+//         >
+//           <p>Est. Returns</p>
+//           <h6>
+//             ₹{" "}
+//             {calculateEstReturn(
+//               calculateTotalValue(
+//                 parseFloat(amount) || 0,
+//                 durationYear,
+//                 parseFloat(expectedReturn) || 0
+//               ),
+//               parseFloat(amount) || 0
+//             ).toLocaleString()}
+//           </h6>
+//         </div>
+//       </div>
+//     </div>
+//   </div>
+// </div>
+// </Col>

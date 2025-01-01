@@ -323,7 +323,7 @@ const SipCal = () => {
                         {/* <h2>₹ 4,09,174</h2> */}
                         <h2>₹ {calculateTotalValue().toLocaleString()}</h2>
                       </div>
-                      <div className={` d-flex pt-4 ${sipStyle.pie_chart_d_block} `}>
+                      <div className={` d-lg-flex d-md-flex pt-4 ${sipStyle.pie_chart_d_block} `}>
                         <div className="d-flex flex-column">
                           {/* <Image src={InvestImg} alt="investImg" /> */}
                           <div className={sipStyle.piechart_div}>
@@ -332,7 +332,7 @@ const SipCal = () => {
                                 <Pie
                                   dataKey="value"
                                   data={data02}
-                                  cx="45%"
+                                  cx="50%"
                                   cy="50%"
                                   innerRadius={40}
                                   outerRadius={80}
