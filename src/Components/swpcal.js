@@ -27,13 +27,24 @@ const SwpCal = () => {
       return totalInvestment - monthlyWithdrawal * months;
     }
 
-    const finalInvestment = totalInvestment * Math.pow(1 + monthlyRate, months);
-    const withdrawalImpact =
-      monthlyWithdrawal *
-      ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
 
-    return Math.max(0, finalInvestment - withdrawalImpact); // Ensure final value is non-negative
-  };
+  //   const finalInvestment = totalInvestment * Math.pow(1 + monthlyRate, months);
+  //   const withdrawalImpact =
+  //     monthlyWithdrawal *
+  //     ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
+
+  //   return Math.max(0, finalInvestment - withdrawalImpact); // Ensure final value is non-negative
+  // };
+
+
+  let currentAmount = totalInvestment;
+  for (let month = 0; month < months; month++) {
+    currentAmount += currentAmount * monthlyRate; // Apply return to the current amount
+    currentAmount -= monthlyWithdrawal; // Deduct the monthly withdrawal
+  }
+
+  return currentAmount; // This may be negative or close to zero
+};
 
 
   const handleInputChange = (value, min, max, setter) => {
@@ -59,7 +70,7 @@ const SwpCal = () => {
         <div>
           <div className={`${SwpStyle.swppreHeading} container pt-5`}>
             <h1 className="text-left pt-3">
-              SWP (Systematic Withdrawal Plan) Calculator
+              SWP Calculator
             </h1>
             <p className="pt-2 pb-4">
               SWP stands for systematic withdrawal plan. Under SWP, if you
@@ -70,7 +81,7 @@ const SwpCal = () => {
         </div>
 
         <div className="container">
-          <Card className="px-3 py-3 mb-4 border-0 shadow">
+          <Card className="px-3 py-3 mb-4 border border-0 shadow-sm">
             <Row>
               <Col className="mb-4">
                 <Form>
@@ -458,64 +469,138 @@ const SwpCal = () => {
           </Row>
         </section>
         <section className="pb-5 mt-5">
-          <div className={`${SwpStyle.preHeading} py-5`}>
-            <h1 className="text-align-left pt-5">
+          <div className={`${SwpStyle.faq_Heading} py-5`}>
+            <h1 className="text-align-left">
               FAQs (Frequently Asked Questions)
             </h1>
           </div>
-          <div>
-            <Accordion defaultActiveKey={["1"]} alwaysOpen>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header className={SwpStyle.accordionHeader}>
-                  How can a SIP Calculator Help You?
-                </Accordion.Header>
-                <Accordion.Body className={SwpStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
+            <div
+              className="accordion accordion-flush"
+              id="accordionFlushExample"
+            >
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${SwpStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseOne"
+                  >
+                    How can a SWP Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseOne"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${SwpStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${SwpStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseTwo"
+                  >
+                    Can I modify my SWP amount?
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseTwo"
+                  className="accordion-collapse collapse show"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${SwpStyle.acco_body}`}>
+                    There is no maximum tenure of a SIP. You can invest as long
+                    as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${SwpStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseThree"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseThree"
+                  >
+                    How can a SWP Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseThree"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${SwpStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-              <Accordion.Item eventKey="1">
-                <Accordion.Header className={SwpStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={SwpStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${SwpStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFour"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFour"
+                  >
+                    How can a SWP Calculator Help You ?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseFour"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${SwpStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-              <Accordion.Item eventKey="2">
-                <Accordion.Header className={SwpStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={SwpStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="3">
-                <Accordion.Header className={SwpStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={SwpStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="4">
-                <Accordion.Header className={SwpStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={SwpStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-          </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${SwpStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFive"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFive"
+                  >
+                    How can a SWP Calculator Help You  ?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseFive"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${SwpStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+            </div>
         </section>
       </div>
     </>

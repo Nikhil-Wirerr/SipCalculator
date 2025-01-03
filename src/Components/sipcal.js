@@ -16,7 +16,16 @@ import {
 import LumpCalImg from "../app/assets/lumpsumcal.svg";
 import InvestImg from "../app/assets/invest-circle.svg";
 import Image from "next/image";
-import { PieChart, Pie, Legend,Tooltip, Cell, ResponsiveContainer } from "recharts";
+import {
+  PieChart,
+  Pie,
+  Legend,
+  Tooltip,
+  Cell,
+  ResponsiveContainer,
+} from "recharts";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+
 
 const SipCal = () => {
   const [investmentType, setInvestmentType] = useState("Lumpsum");
@@ -56,14 +65,6 @@ const SipCal = () => {
     );
   };
 
-  // const calculateTotalValue = (amount, years, rate) => {
-  //   console.log(
-  //     `Calculating Total Value: Amount=${amount}, Years=${years}, Rate=${rate}`
-  //   );
-
-  //   const annualRate = rate / 100;
-  //   return Math.round(amount * Math.pow(1 + annualRate, years));
-  // };
 
   //total value based on selected investment type
   const calculateTotalValue = () => {
@@ -92,27 +93,6 @@ const SipCal = () => {
     estReturns: "#D3EAFE",
   };
 
-  // const data02 = [
-  //   {
-  //     name: "Invested AMount",
-  //     value: parseFloat(amount) || 0,
-  //     color: colorStyles.investedAmount,
-  //   },
-  //   {
-  //     name: "Est. Returns",
-  //     value:
-  //       calculateEstReturn(
-  //         calculateTotalValue(
-  //           parseFloat(amount) || 0,
-  //           durationYear,
-  //           parseFloat(expectedReturn) || 0
-  //         ),
-  //         parseFloat(amount) || 0
-  //       ) || 0,
-  //     color: colorStyles.estReturns,
-  //   },
-  // ];
-
   const data02 = [
     {
       name: "Invested Amount",
@@ -133,17 +113,6 @@ const SipCal = () => {
 
   const handleAmountChange = (e) => {
     let value = e.target.value;
-
-    //   value = value === "" ? 0 : Number(value);
-
-    //   if(value < 500){
-    //     value = 500;
-    //   } else if (value > 1000000) {
-    //     value = 1000000
-    //   }
-
-    //   setAmount(value);
-    // }
 
     if (value > maxAmountLimit) {
       value = maxAmountLimit;
@@ -167,7 +136,7 @@ const SipCal = () => {
           </div>
 
           <div>
-            <Card className="p-5 border-0 shadow">
+            <Card className="p-5 border border-0 shadow-sm">
               <Row>
                 <div>
                   <ToggleButtonGroup
@@ -181,6 +150,7 @@ const SipCal = () => {
                       id="sip-toggle"
                       value="SIP"
                       variant="outline-primary"
+                      className={`border border-0 ${sipStyle.toggel_bg}`}
                       // active={investmentType === "SIP" ? true : undefined}
                       // active={investmentType === "SIP"}
                     >
@@ -190,6 +160,8 @@ const SipCal = () => {
                       id="lumpsum-toggle"
                       value="Lumpsum"
                       variant="outline-primary"
+                      className={`border border-0 ${sipStyle.toggel_bg}`}
+
                       // active={investmentType === "Lumpsum" ? true : undefined}
                       // active={investmentType === "Lumpsum"}
                     >
@@ -198,9 +170,9 @@ const SipCal = () => {
                   </ToggleButtonGroup>
                 </div>
 
-                <Col xs={12} md={12} lg={6} className="mb-4">
+                <Col xs={12} md={12} lg={6} className="mb-4 mt-5">
                   <div className={sipStyle.lumpsumCard}>
-                    <div className="mt-5">
+                    <div>
                       <div className="calc-img d-flex mb-4">
                         <Image src={LumpCalImg} alt="cal-img" />
                         <div className={sipStyle.returnEstimation}>
@@ -220,12 +192,10 @@ const SipCal = () => {
                           </label>
                           <input
                             type="number"
-                            // value={amount}
                             value={amount === 0 ? "" : amount}
                             className={sipStyle.custominput}
                             placeholder=""
                             onWheel={handleWheel}
-                            // onChange={(e) => setAmount(Number(e.target.value))}
                             onChange={handleAmountChange}
                           />
                         </div>
@@ -268,7 +238,7 @@ const SipCal = () => {
                         </div>
                       </Form.Group>
 
-                      <Form.Group className="pt-5">
+                      <Form.Group className="pt-4">
                         <div
                           className={`d-flex justify-content-between ${sipStyle.rangefield}`}
                         >
@@ -309,12 +279,10 @@ const SipCal = () => {
                   xs={12}
                   md={12}
                   lg={6}
-                  className={`d-flex align-items-center `}
+                  className={`d-flex  justify-content-around mt-5 ${sipStyle.verticalLine} `}
                 >
                   <div className={sipStyle.lumpsumCard}>
-                    <div
-                      className={`d-flex align-items-center flex-column ${sipStyle.verticalLine} `}
-                    >
+                    <div className={`d-flex align-items-center flex-column `}>
                       <div className={`${sipStyle.totalInvest} ps-5 mt-2`}>
                         <p>
                           The total value of your investment after{" "}
@@ -323,7 +291,9 @@ const SipCal = () => {
                         {/* <h2>₹ 4,09,174</h2> */}
                         <h2>₹ {calculateTotalValue().toLocaleString()}</h2>
                       </div>
-                      <div className={` d-lg-flex d-md-flex pt-4 ${sipStyle.pie_chart_d_block} `}>
+                      <div
+                        className={` d-lg-flex d-md-flex pt-4 ${sipStyle.pie_chart_d_block} `}
+                      >
                         <div className="d-flex flex-column">
                           {/* <Image src={InvestImg} alt="investImg" /> */}
                           <div className={sipStyle.piechart_div}>
@@ -345,7 +315,7 @@ const SipCal = () => {
                                     />
                                   ))}
                                 </Pie>
-                              <Tooltip />
+                                <Tooltip />
                               </PieChart>
                             </ResponsiveContainer>
                           </div>
@@ -355,20 +325,6 @@ const SipCal = () => {
                             </button>
                           </div>
                         </div>
-
-                        {/* <div className={`ps-5 mt-3`}>
-                          <div className={`ps-2 ${sipStyle.investedAmount}`}>
-                            <p>Invested Amount</p>
-                            <h6>₹ 2,40,000</h6>
-                          </div>
-                          <div
-                            className={`mt-4 ps-2 ${sipStyle.investedAmount}`}
-                          >
-                            <p>Est. Returns</p>
-                            <h6>₹ 69,174</h6>
-                          </div>
-                        </div> */}
-
                         <div className="ps-lg-5 ps-sm-0 mt-3">
                           <div
                             className={`ps-2 ${sipStyle.investedAmount}`}
@@ -451,193 +407,272 @@ const SipCal = () => {
               </div>
             </Col>
 
-            <Col xs={12} md={8} lg={9} >
-            <div className={sipStyle.qandA}>
-              <div className={sipStyle.quesAnsSection}>
-                <h3>What is a SIP Calculator?</h3>
-                <p>
-                  A SIP (Systematic Investment Plan) Calculator is an online or
-                  software tool used to calculate the potential returns from
-                  investing in mutual funds through SIP. It helps investors
-                  estimate how much their regular monthly investments can grow
-                  over time, considering factors like the investment amount,
-                  duration, and expected rate of return.
-                </p>
-              </div>
-              <div className={sipStyle.quesAnsSection}>
-                <h3>How can a SIP Calculator Help You?</h3>
-                <p>
-                  The Systematic investment Plan calculator essentially gives
-                  investors a bifurcation of the future value of the SIP
-                  investment with two figures: the estimated return they can
-                  expect to make on the investment and the principal. Therefore,
-                  you can use the SiP return calculator to get an overview of
-                  how your investment will grow over a certain holding period,
-                  assuming a certain rate of return and SIP contribution. You
-                  can also factor in the effect of inflation when using the SIP
-                  calculator online, though not explicitly, You could do this by
-                  manually figuring out the nominal rate of return you'd expect
-                  to earn from your investment, based on your target real rate
-                  of return and the prevalling rate of Inflation. Then, you just
-                  need to use the manually computed rate as your rate of return
-                  and enter it into the calculator to start investing in mutual
-                  funds.. Let us look at some examples to figure out how this
-                  calculator can help you.
-                </p>
-              </div>
-              <div className={sipStyle.quesAnsSection}>
-                <h3>Advantages of SIP Calculator</h3>
-                <p>
-                  Investments made into market-linked instruments such as Mutual
-                  Funds do not provide guaranteed returns. So investors might
-                  find it difficult to figure out how much their money will grow
-                  in the future or how much they need to invest to reach
-                  financial goals.
-                  <br />
-                  The ET Money SIP Investment Calculator helps overcome these
-                  problems and provides the following key advantages to
-                  investors:
-                  <br />
-                  Instantly Calculate Investment Future Value: ET Money SIP
-                  Calculator delivers immediate and precise results, sparing you
-                  from number-crunching.
-                  <br />
-                  User-Friendly SIP Calculator: Easily estimate your investment
-                  needs with our user-friendly SIP Calculator, suitable for
-                  anyone, and it's completely free and unlimited. Empower
-                  Informed Investment Choices: Plan your investments effectively
-                  with the SIP Calculator, ensuring you meet your financial
-                  goals effortlessly. Discover Top Investment Opportunities:
-                  Unlike others, our calculator not only predicts future values
-                  and investments but also recommends funds to align with your
-                  goals. Inflation-Adjusted Results at Your Fingertips: Combat
-                  rising costs by effortlessly obtaining inflation-adjusted
-                  investment results with a simple button click, a feature
-                  lacking in most SIP calculators
-                </p>
-              </div>
-              <div className={sipStyle.quesAnsSection}>
-                <h3>How to use ET Money's SIP Calculator?</h3>
-                <p>
-                  If you know how much you want to invest in Mutual Funds every
-                  month, you can use the ET Money SIP Calculator to estimate the
-                  potential future value of your investments.
-                  <br />
-                  To use this functionality, you need to provide 3 key inputs:
-                  <br />
-                  Option 1. If You Know Your Investment Amount If you know how
-                  much you want to invest in Mutual Funds every month, you can
-                  use the ET Money SIP Calculator to estimate the potential
-                  future value of your investments. To use this functionality,
-                  you need to enter the following inputs: Investment Amount -
-                  This is the SIP amount you plan to invest at regular intervals
-                  on specific SIP date. Investment Duration - This is the period
-                  in years for which you plan to continue your SIP. After
-                  entering the above details in the Mutual Fund SIP calculator,
-                  just click on calculate to view the future value of your
-                  investments along with a short list of Mutual Funds that might
-                  be suitable to help you achieve your investment goal.
-                  <br /> Option 2. If You Know Your Investment Goal Amount If
-                  you are planning to invest in order to achieve a specific goal
-                  such as buying a new car or arranging for the downpayment of a
-                  new house, you would already know how much money you will
-                  need. In this case, you can use the sip amount calculator to
-                  figure out the SIP you need to reach your investment goal. To
-                  use this feature of the monthly SIP calculator, you need to
-                  provide the following inputs:
-                  <br />
-                  Savings Goal - This is the amount that you have to save to
-                  reach your investment goal. Time Period - This is the time
-                  period in years within which you plan to reach the investment
-                  goal. Once you have entered the above details, the SIP
-                  calculator will provide the SIP amount you need to reach your
-                  investment goal within the specified investment tenure.
-                </p>
-              </div>
-              <div className={sipStyle.quesAnsSection}>
-                <h3>Related Mutual Fund SIP Calculators ?</h3>
-                <p>
-                  The Systematic investment Plan calculator essentially gives
-                  investors a bifurcation of the future value of the SIP
-                  investment with two figures: the estimated return they can
-                  expect to make on the investment and the principal. Therefore,
-                  you can use the SiP return calculator to get an overview of
-                  how your investment will grow over a certain holding period,
-                  assuming a certain rate of return and SIP contribution. You
-                  can also factor in the effect of inflation when using the SIP
-                  calculator online, though not explicitly, You could do this by
-                  manually figuring out the nominal rate of return you'd expect
-                  to earn from your investment, based on your target real rate
-                  of return and the prevalling rate of Inflation. Then, you just
-                  need to use the manually computed rate as your rate of return
-                  and enter it into the calculator to start investing in mutual
-                  funds.. Let us look at some examples to figure out how this
-                  calculator can help you.
-                </p>
-              </div>
+            <Col xs={12} md={8} lg={9}>
+              <div className={sipStyle.qandA}>
+                <div className={sipStyle.quesAnsSection}>
+                  <h3>What is a SIP Calculator?</h3>
+                  <p>
+                    A SIP (Systematic Investment Plan) Calculator is an online
+                    or software tool used to calculate the potential returns
+                    from investing in mutual funds through SIP. It helps
+                    investors estimate how much their regular monthly
+                    investments can grow over time, considering factors like the
+                    investment amount, duration, and expected rate of return.
+                  </p>
+                </div>
+                <div className={sipStyle.quesAnsSection}>
+                  <h3>How can a SIP Calculator Help You?</h3>
+                  <p>
+                    The Systematic investment Plan calculator essentially gives
+                    investors a bifurcation of the future value of the SIP
+                    investment with two figures: the estimated return they can
+                    expect to make on the investment and the principal.
+                    Therefore, you can use the SiP return calculator to get an
+                    overview of how your investment will grow over a certain
+                    holding period, assuming a certain rate of return and SIP
+                    contribution. You can also factor in the effect of inflation
+                    when using the SIP calculator online, though not explicitly,
+                    You could do this by manually figuring out the nominal rate
+                    of return you'd expect to earn from your investment, based
+                    on your target real rate of return and the prevalling rate
+                    of Inflation. Then, you just need to use the manually
+                    computed rate as your rate of return and enter it into the
+                    calculator to start investing in mutual funds.. Let us look
+                    at some examples to figure out how this calculator can help
+                    you.
+                  </p>
+                </div>
+                <div className={sipStyle.quesAnsSection}>
+                  <h3>Advantages of SIP Calculator</h3>
+                  <p>
+                    Investments made into market-linked instruments such as
+                    Mutual Funds do not provide guaranteed returns. So investors
+                    might find it difficult to figure out how much their money
+                    will grow in the future or how much they need to invest to
+                    reach financial goals.
+                    <br />
+                    The ET Money SIP Investment Calculator helps overcome these
+                    problems and provides the following key advantages to
+                    investors:
+                    <br />
+                    Instantly Calculate Investment Future Value: ET Money SIP
+                    Calculator delivers immediate and precise results, sparing
+                    you from number-crunching.
+                    <br />
+                    User-Friendly SIP Calculator: Easily estimate your
+                    investment needs with our user-friendly SIP Calculator,
+                    suitable for anyone, and it's completely free and unlimited.
+                    Empower Informed Investment Choices: Plan your investments
+                    effectively with the SIP Calculator, ensuring you meet your
+                    financial goals effortlessly. Discover Top Investment
+                    Opportunities: Unlike others, our calculator not only
+                    predicts future values and investments but also recommends
+                    funds to align with your goals. Inflation-Adjusted Results
+                    at Your Fingertips: Combat rising costs by effortlessly
+                    obtaining inflation-adjusted investment results with a
+                    simple button click, a feature lacking in most SIP
+                    calculators
+                  </p>
+                </div>
+                <div className={sipStyle.quesAnsSection}>
+                  <h3>How to use ET Money's SIP Calculator?</h3>
+                  <p>
+                    If you know how much you want to invest in Mutual Funds
+                    every month, you can use the ET Money SIP Calculator to
+                    estimate the potential future value of your investments.
+                    <br />
+                    To use this functionality, you need to provide 3 key inputs:
+                    <br />
+                    Option 1. If You Know Your Investment Amount If you know how
+                    much you want to invest in Mutual Funds every month, you can
+                    use the ET Money SIP Calculator to estimate the potential
+                    future value of your investments. To use this functionality,
+                    you need to enter the following inputs: Investment Amount -
+                    This is the SIP amount you plan to invest at regular
+                    intervals on specific SIP date. Investment Duration - This
+                    is the period in years for which you plan to continue your
+                    SIP. After entering the above details in the Mutual Fund SIP
+                    calculator, just click on calculate to view the future value
+                    of your investments along with a short list of Mutual Funds
+                    that might be suitable to help you achieve your investment
+                    goal.
+                    <br /> Option 2. If You Know Your Investment Goal Amount If
+                    you are planning to invest in order to achieve a specific
+                    goal such as buying a new car or arranging for the
+                    downpayment of a new house, you would already know how much
+                    money you will need. In this case, you can use the sip
+                    amount calculator to figure out the SIP you need to reach
+                    your investment goal. To use this feature of the monthly SIP
+                    calculator, you need to provide the following inputs:
+                    <br />
+                    Savings Goal - This is the amount that you have to save to
+                    reach your investment goal. Time Period - This is the time
+                    period in years within which you plan to reach the
+                    investment goal. Once you have entered the above details,
+                    the SIP calculator will provide the SIP amount you need to
+                    reach your investment goal within the specified investment
+                    tenure.
+                  </p>
+                </div>
+                <div className={sipStyle.quesAnsSection}>
+                  <h3>Related Mutual Fund SIP Calculators ?</h3>
+                  <p>
+                    The Systematic investment Plan calculator essentially gives
+                    investors a bifurcation of the future value of the SIP
+                    investment with two figures: the estimated return they can
+                    expect to make on the investment and the principal.
+                    Therefore, you can use the SiP return calculator to get an
+                    overview of how your investment will grow over a certain
+                    holding period, assuming a certain rate of return and SIP
+                    contribution. You can also factor in the effect of inflation
+                    when using the SIP calculator online, though not explicitly,
+                    You could do this by manually figuring out the nominal rate
+                    of return you'd expect to earn from your investment, based
+                    on your target real rate of return and the prevalling rate
+                    of Inflation. Then, you just need to use the manually
+                    computed rate as your rate of return and enter it into the
+                    calculator to start investing in mutual funds.. Let us look
+                    at some examples to figure out how this calculator can help
+                    you.
+                  </p>
+                </div>
               </div>
             </Col>
           </Row>
         </section>
-        <section className="pb-5 mt-5">
-          <div className={`${sipStyle.preHeading} py-5`}>
-            <h1 className="text-align-left pt-5">
+         <section className="pb-5 mt-5">
+          <div className={`${sipStyle.faq_Heading} py-5`}>
+            <h1 className="text-align-left">
               FAQs (Frequently Asked Questions)
             </h1>
           </div>
-          <div>
-            <Accordion defaultActiveKey={["1"]} alwaysOpen>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header className={sipStyle.accordionHeader}>
-                  How can a SIP Calculator Help You?
-                </Accordion.Header>
-                <Accordion.Body className={sipStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
+            <div
+              className="accordion accordion-flush"
+              id="accordionFlushExample"
+            >
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${sipStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseOne"
+                  >
+                    How can a SIP Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseOne"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${sipStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${sipStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseTwo"
+                  >
+                    Can I modify my SIP amount?
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseTwo"
+                  className="accordion-collapse collapse show"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${sipStyle.acco_body}`}>
+                    There is no maximum tenure of a SIP. You can invest as long
+                    as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${sipStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseThree"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseThree"
+                  >
+                    How can a SIP Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseThree"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${sipStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-              <Accordion.Item eventKey="1">
-                <Accordion.Header className={sipStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={sipStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${sipStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFour"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFour"
+                  >
+                    How can a SIP Calculator Help You ?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseFour"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${sipStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-              <Accordion.Item eventKey="2">
-                <Accordion.Header className={sipStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={sipStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="3">
-                <Accordion.Header className={sipStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={sipStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="4">
-                <Accordion.Header className={sipStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={sipStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-          </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${sipStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFive"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFive"
+                  >
+                    How can a SIP Calculator Help You  ?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseFive"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${sipStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+            </div>
         </section>
       </div>
     </>

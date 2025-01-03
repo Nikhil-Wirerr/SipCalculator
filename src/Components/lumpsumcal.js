@@ -116,17 +116,6 @@ const LumpsumCal = () => {
   const handleAmountChange = (e) => {
     let value = e.target.value;
 
-    //   value = value === "" ? 0 : Number(value);
-
-    //   if(value < 500){
-    //     value = 500;
-    //   } else if (value > 1000000) {
-    //     value = 1000000
-    //   }
-
-    //   setAmount(value);
-    // }
-
     if (value > maxAmountLimit) {
       value = maxAmountLimit;
     }
@@ -150,7 +139,7 @@ const LumpsumCal = () => {
           </div>
 
           <div>
-            <Card className="p-5 border-0 shadow">
+            <Card className="p-5 border border-0 shadow-sm">
               <Row>
                 <div>
                   <ToggleButtonGroup
@@ -164,6 +153,8 @@ const LumpsumCal = () => {
                       id="sip-toggle"
                       value="SIP"
                       variant="outline-primary"
+                      className={`border border-0 ${lumpsumStyle.toggel_bg}`}
+
                     >
                       Monthly SIP
                     </ToggleButton>
@@ -171,15 +162,17 @@ const LumpsumCal = () => {
                       id="lumpsum-toggle"
                       value="Lumpsum"
                       variant="outline-primary"
+                      className={`border border-0 ${lumpsumStyle.toggel_bg}`}
+
                     >
                       Lumpsum
                     </ToggleButton>
                   </ToggleButtonGroup>
                 </div>
 
-                <Col xs={12} md={12} lg={6} className="mb-4">
+                <Col xs={12} md={12} lg={6} className="mb-4 mt-5">
                   <div className={lumpsumStyle.lumpsumCard}>
-                    <div className="mt-5">
+                    <div>
                       <div className="calc-img d-flex mb-4">
                         <Image src={LumpCalImg} alt="cal-img" />
                         <div className={lumpsumStyle.returnEstimation}>
@@ -203,7 +196,6 @@ const LumpsumCal = () => {
                             className={lumpsumStyle.custominput}
                             placeholder=""
                             onWheel={handleWheel}
-                            // onChange={(e) => setAmount(Number(e.target.value))}
                             onChange={handleAmountChange}
                           />
                         </div>
@@ -243,7 +235,7 @@ const LumpsumCal = () => {
                         </div>
                       </Form.Group>
 
-                      <Form.Group className="pt-5">
+                      <Form.Group className="pt-4">
                         <div
                           className={`d-flex justify-content-between ${lumpsumStyle.rangefield}`}
                         >
@@ -284,11 +276,11 @@ const LumpsumCal = () => {
                   xs={12}
                   md={12}
                   lg={6}
-                  className={`d-flex align-items-center `}
+                  className={`d-flex  mt-5  ${lumpsumStyle.verticalLine}`}
                 >
                   <div className={lumpsumStyle.lumpsumCard}>
                     <div
-                      className={`d-flex align-items-center flex-column ${lumpsumStyle.verticalLine} `}
+                      className={`d-flex align-items-center flex-column  `}
                     >
                       <div className={`${lumpsumStyle.totalInvest} ps-5 mt-2`}>
                         <p>
@@ -392,25 +384,25 @@ const LumpsumCal = () => {
                 <div className={lumpsumStyle.sidebar}>
                   <ul className="list-unstyled">
                     <li className={lumpsumStyle.sidebarItem}>
-                      What is a SIP Calculator?
+                      What is a Lumpsum Calculator?
                     </li>
                     <li className={lumpsumStyle.sidebarItem}>
-                      How can a SIP Calculator Help You?
+                      How can a Lumpsum Calculator Help You?
                     </li>
                     <li className={lumpsumStyle.sidebarItem}>
-                      Advantages of SIP Calculator
+                      Advantages of Lumpsum Calculator
                     </li>
                     <li className={lumpsumStyle.sidebarItem}>
-                      How to use ET Money's SIP Calculator?
+                      How to use Sernet's Lumpsum Calculator?
                     </li>
                     <li className={lumpsumStyle.sidebarItem}>
-                      Related Mutual Fund SIP Calculators ?
+                      Related Mutual Fund Lumpsum Calculators ?
                     </li>
                     <li className={lumpsumStyle.sidebarItem}>
-                      Advantages of SIP Calculator
+                      Advantages of Lumpsum Calculator
                     </li>
                     <li className={lumpsumStyle.sidebarItem}>
-                      Related Mutual Fund SIP Calculators ?
+                      Related Mutual Fund Lumpsum Calculators ?
                     </li>
                   </ul>
                 </div>
@@ -419,7 +411,7 @@ const LumpsumCal = () => {
             <Col xs={12} md={8} lg={9} >
               <div className={lumpsumStyle.qandA}>
                 <div className={lumpsumStyle.quesAnsSection}>
-                  <h3>What is a SIP Calculator?</h3>
+                  <h3>What is a Lumpsum Calculator?</h3>
                   <p>
                     A SIP (Systematic Investment Plan) Calculator is an online
                     or software tool used to calculate the potential returns
@@ -430,7 +422,7 @@ const LumpsumCal = () => {
                   </p>
                 </div>
                 <div className={lumpsumStyle.quesAnsSection}>
-                  <h3>How can a SIP Calculator Help You?</h3>
+                  <h3>How can a Lumpsum Calculator Help You?</h3>
                   <p>
                     The Systematic investment Plan calculator essentially gives
                     investors a bifurcation of the future value of the SIP
@@ -452,7 +444,7 @@ const LumpsumCal = () => {
                   </p>
                 </div>
                 <div className={lumpsumStyle.quesAnsSection}>
-                  <h3>Advantages of SIP Calculator</h3>
+                  <h3>Advantages of Lumpsum Calculator</h3>
                   <p>
                     Investments made into market-linked instruments such as
                     Mutual Funds do not provide guaranteed returns. So investors
@@ -484,7 +476,7 @@ const LumpsumCal = () => {
                   </p>
                 </div>
                 <div className={lumpsumStyle.quesAnsSection}>
-                  <h3>How to use ET Money's SIP Calculator?</h3>
+                  <h3>How to use sernet's Lumpsum Calculator?</h3>
                   <p>
                     If you know how much you want to invest in Mutual Funds
                     every month, you can use the ET Money SIP Calculator to
@@ -524,7 +516,7 @@ const LumpsumCal = () => {
                   </p>
                 </div>
                 <div className={lumpsumStyle.quesAnsSection}>
-                  <h3>Related Mutual Fund SIP Calculators ?</h3>
+                  <h3>Related Mutual Fund Lumpsum Calculators ?</h3>
                   <p>
                     The Systematic investment Plan calculator essentially gives
                     investors a bifurcation of the future value of the SIP
@@ -550,154 +542,139 @@ const LumpsumCal = () => {
           </Row>
         </section>
 
-        {/* <section className="pb-5 mt-5">
-          <div className={`${lumpsumStyle.preHeading} py-5`}>
-            <h1 className="text-align-left pt-5">
-              FAQs (Frequently Asked Questions)
-            </h1>
-          </div>
-          <div>
-            <Accordion defaultActiveKey={["1"]} alwaysOpen>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header className={lumpsumStyle.accordionHeader}>
-                  How can a SIP Calculator Help You?
-                </Accordion.Header>
-                <Accordion.Body className={lumpsumStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="1">
-                <Accordion.Header className={lumpsumStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={lumpsumStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="2">
-                <Accordion.Header className={lumpsumStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={lumpsumStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="3">
-                <Accordion.Header className={lumpsumStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={lumpsumStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="4">
-                <Accordion.Header className={lumpsumStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={lumpsumStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-          </div>
-        </section> */}
-
         <section className="pb-5 mt-5">
-          <div className={`${lumpsumStyle.preHeading} py-5`}>
-            <h1 className="text-align-left pt-5">
+          <div className={`${lumpsumStyle.faq_Heading} py-5`}>
+            <h1 className="text-align-left">
               FAQs (Frequently Asked Questions)
             </h1>
           </div>
-          <div>
-            {/* <Accordion defaultActiveKey="0" alwaysOpen className={lumpsumStyle.custom_accordion_Header}>
-      <Accordion.Item eventKey="0">
-        <Accordion.Header className={lumpsumStyle.custom_accordion_Header2}>
-          How can a SIP Calculator Help You?
-        </Accordion.Header>
-        <Accordion.Body className={lumpsumStyle.accordionBody}>
-          There is no maximum tenure of a SIP. You can invest as long as you can. The minimum tenure you can go for is 3 years.
-        </Accordion.Body>
-      </Accordion.Item>
+            <div
+              className="accordion accordion-flush"
+              id="accordionFlushExample"
+            >
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${lumpsumStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseOne"
+                  >
+                    How can a Lumpsum Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseOne"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${lumpsumStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${lumpsumStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseTwo"
+                  >
+                    Can I modify my Lumpsum amount?
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseTwo"
+                  className="accordion-collapse collapse show"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${lumpsumStyle.acco_body}`}>
+                    There is no maximum tenure of a SIP. You can invest as long
+                    as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${lumpsumStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseThree"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseThree"
+                  >
+                    How can a Lumpsum Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseThree"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${lumpsumStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-      <Accordion.Item eventKey="1">
-        <Accordion.Header className={lumpsumStyle.accordionHeader}>
-          Can I modify my SIP amount?
-        </Accordion.Header>
-        <Accordion.Body className={lumpsumStyle.accordionBody}>
-          Yes, you can modify your SIP amount at any point during your tenure by contacting your fund manager or using the online portal.
-        </Accordion.Body>
-      </Accordion.Item>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${lumpsumStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFour"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFour"
+                  >
+                    How can a Lumpsum Calculator Help You ?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseFour"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${lumpsumStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-      <Accordion.Item eventKey="2">
-        <Accordion.Header className={lumpsumStyle.accordionHeader}>
-          What is the minimum tenure for SIP?
-        </Accordion.Header>
-        <Accordion.Body className={lumpsumStyle.accordionBody}>
-          The minimum tenure for a SIP is usually 6 months, but it can vary depending on the mutual fund you select.
-        </Accordion.Body>
-      </Accordion.Item>
-
-      <Accordion.Item eventKey="3">
-        <Accordion.Header className={lumpsumStyle.accordionHeader}>
-          What happens if I miss a SIP payment?
-        </Accordion.Header>
-        <Accordion.Body className={lumpsumStyle.accordionBody}>
-          If you miss a SIP payment, your account will not be penalized. However, consistent payments are encouraged for better returns.
-        </Accordion.Body>
-      </Accordion.Item>
-               </Accordion> */}
-
-            <Accordion defaultActiveKey="0" alwaysOpen>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header className={lumpsumStyle.custom_acco_header}>
-                  How can a SIP Calculator Help You?
-                </Accordion.Header>
-                <Accordion.Body>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="1">
-                <Accordion.Header>Can I modify my SIP amount?</Accordion.Header>
-                <Accordion.Body>
-                  Yes, you can modify your SIP amount at any point during your
-                  tenure by contacting your fund manager or using the online
-                  portal.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="2">
-                <Accordion.Header>
-                  What is the minimum tenure for SIP?
-                </Accordion.Header>
-                <Accordion.Body>
-                  The minimum tenure for a SIP is usually 6 months, but it can
-                  vary depending on the mutual fund you select.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="3">
-                <Accordion.Header>
-                  What happens if I miss a SIP payment?
-                </Accordion.Header>
-                <Accordion.Body>
-                  If you miss a SIP payment, your account will not be penalized.
-                  However, consistent payments are encouraged for better
-                  returns.
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-          </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${lumpsumStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFive"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFive"
+                  >
+                    How can a Lumpsum Calculator Help You  ?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseFive"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${lumpsumStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+            </div>
         </section>
       </div>
     </>

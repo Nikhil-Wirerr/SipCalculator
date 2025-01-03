@@ -100,11 +100,11 @@ const PpfCal = () => {
           </div>
 
           <div>
-            <Card className="p-5 border-0 shadow">
+            <Card className="p-5 border border-0 shadow-sm">
               <Row>
                 <Col xs={12} md={12} lg={6} className="mb-4">
                   <div className={PpfStyle.lumpsumCard}>
-                    <div className="mt-5">
+                    <div>
                       <div className="calc-img d-flex mb-4">
                         <Image src={LumpCalImg} alt="cal-img" />
                         <div className={PpfStyle.returnEstimation}>
@@ -188,11 +188,11 @@ const PpfCal = () => {
                   xs={12}
                   md={12}
                   lg={6}
-                  className={`d-flex align-items-center `}
+                  className={`d-flex pt-md-5 pt-lg-0  justify-content-around ${PpfStyle.verticalLine} `}
                 >
                   <div className={PpfStyle.lumpsumCard}>
                     <div
-                      className={`d-flex align-items-center flex-column ${PpfStyle.verticalLine} `}
+                      className={`d-flex align-items-center flex-column `}
                     >
                       <div className={`${PpfStyle.totalInvest} ps-5 mt-2`}>
                         <p>
@@ -283,25 +283,25 @@ const PpfCal = () => {
               <div className={PpfStyle.sidebar}>
                 <ul className="list-unstyled">
                   <li className={PpfStyle.sidebarItem}>
-                    What is a SIP Calculator?
+                    What is a PPF Calculator?
                   </li>
                   <li className={PpfStyle.sidebarItem}>
-                    How can a SIP Calculator Help You?
+                    How can a PPF Calculator Help You?
                   </li>
                   <li className={PpfStyle.sidebarItem}>
-                    Advantages of SIP Calculator
+                    Advantages of PPF Calculator
                   </li>
                   <li className={PpfStyle.sidebarItem}>
-                    How to use ET Money's SIP Calculator?
+                    How to use Sernet's PPF Calculator?
                   </li>
                   <li className={PpfStyle.sidebarItem}>
-                    Related Mutual Fund SIP Calculators ?
+                    Related PPF Calculators ?
                   </li>
                   <li className={PpfStyle.sidebarItem}>
-                    Advantages of SIP Calculator
+                    Advantages of PPF Calculator
                   </li>
                   <li className={PpfStyle.sidebarItem}>
-                    Related Mutual Fund SIP Calculators ?
+                    Related PPF Calculators ?
                   </li>
                 </ul>
               </div>
@@ -310,7 +310,7 @@ const PpfCal = () => {
             <Col xs={12} md={8} lg={9}>
               <div className={PpfStyle.qandA}>
                 <div className={PpfStyle.quesAnsSection}>
-                  <h3>What is a SIP Calculator?</h3>
+                  <h3>What is a PPF Calculator?</h3>
                   <p>
                     A SIP (Systematic Investment Plan) Calculator is an online
                     or software tool used to calculate the potential returns
@@ -321,7 +321,7 @@ const PpfCal = () => {
                   </p>
                 </div>
                 <div className={PpfStyle.quesAnsSection}>
-                  <h3>How can a SIP Calculator Help You?</h3>
+                  <h3>How can a PPF Calculator Help You?</h3>
                   <p>
                     The Systematic investment Plan calculator essentially gives
                     investors a bifurcation of the future value of the SIP
@@ -343,7 +343,7 @@ const PpfCal = () => {
                   </p>
                 </div>
                 <div className={PpfStyle.quesAnsSection}>
-                  <h3>Advantages of SIP Calculator</h3>
+                  <h3>Advantages of PPF Calculator</h3>
                   <p>
                     Investments made into market-linked instruments such as
                     Mutual Funds do not provide guaranteed returns. So investors
@@ -375,7 +375,7 @@ const PpfCal = () => {
                   </p>
                 </div>
                 <div className={PpfStyle.quesAnsSection}>
-                  <h3>How to use ET Money's SIP Calculator?</h3>
+                  <h3>How to use Sernet's PPF Calculator?</h3>
                   <p>
                     If you know how much you want to invest in Mutual Funds
                     every month, you can use the ET Money SIP Calculator to
@@ -415,7 +415,7 @@ const PpfCal = () => {
                   </p>
                 </div>
                 <div className={PpfStyle.quesAnsSection}>
-                  <h3>Related Mutual Fund SIP Calculators ?</h3>
+                  <h3>Related  PPF Calculators ?</h3>
                   <p>
                     The Systematic investment Plan calculator essentially gives
                     investors a bifurcation of the future value of the SIP
@@ -442,54 +442,138 @@ const PpfCal = () => {
         </section>
 
         <section className="pb-5 mt-5">
-          <div className={`${PpfStyle.preHeading} py-5`}>
-            <h1 className="text-align-left pt-5">
+          <div className={`${PpfStyle.faq_Heading} py-5`}>
+            <h1 className="text-align-left">
               FAQs (Frequently Asked Questions)
             </h1>
           </div>
-          <div>
-            <Accordion defaultActiveKey="0" alwaysOpen>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header className={PpfStyle.custom_acco_header}>
-                  How can a SIP Calculator Help You?
-                </Accordion.Header>
-                <Accordion.Body>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
+            <div
+              className="accordion accordion-flush"
+              id="accordionFlushExample"
+            >
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${PpfStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseOne"
+                  >
+                    How can a PPF Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseOne"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${PpfStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${PpfStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseTwo"
+                  >
+                    Can I modify my PPF amount?
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseTwo"
+                  className="accordion-collapse collapse show"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${PpfStyle.acco_body}`}>
+                    There is no maximum tenure of a SIP. You can invest as long
+                    as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${PpfStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseThree"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseThree"
+                  >
+                    How can a PPF Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseThree"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${PpfStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-              <Accordion.Item eventKey="1">
-                <Accordion.Header>Can I modify my SIP amount?</Accordion.Header>
-                <Accordion.Body>
-                  Yes, you can modify your SIP amount at any point during your
-                  tenure by contacting your fund manager or using the online
-                  portal.
-                </Accordion.Body>
-              </Accordion.Item>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${PpfStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFour"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFour"
+                  >
+                    How can a PPF Calculator Help You ?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseFour"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${PpfStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-              <Accordion.Item eventKey="2">
-                <Accordion.Header>
-                  What is the minimum tenure for SIP?
-                </Accordion.Header>
-                <Accordion.Body>
-                  The minimum tenure for a SIP is usually 6 months, but it can
-                  vary depending on the mutual fund you select.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="3">
-                <Accordion.Header>
-                  What happens if I miss a SIP payment?
-                </Accordion.Header>
-                <Accordion.Body>
-                  If you miss a SIP payment, your account will not be penalized.
-                  However, consistent payments are encouraged for better
-                  returns.
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-          </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${PpfStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFive"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFive"
+                  >
+                    How can a PPF  Calculator Help You  ?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseFive"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${PpfStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+            </div>
         </section>
       </div>
     </>

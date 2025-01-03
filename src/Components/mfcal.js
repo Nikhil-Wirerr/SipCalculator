@@ -17,7 +17,6 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import "react-circular-progressbar/dist/styles.css";
 
 function MutualFundcal() {
   const [amount, setAmount] = useState(5000);
@@ -84,7 +83,7 @@ function MutualFundcal() {
 
   return (
     <>
-      <div className={` ${MutualFundStyle.lumpsumContainer}`}>
+      <div className={` ${MutualFundStyle.mfContainer}`}>
         <div className="container py-5">
           <div className={MutualFundStyle.preHeading}>
             <h1 className="text-align-left pt-3">
@@ -101,11 +100,11 @@ function MutualFundcal() {
           </div>
 
           <div>
-            <Card className="p-lg-5 p-md-4 border-0 shadow">
+            <Card className="p-lg-5 p-md-4  border border-0 shadow-sm">
               <Row>
                 <Col xs={12} md={12} lg={6} className="mb-4">
-                  <div className={MutualFundStyle.lumpsumCard}>
-                    <div className="mt-5">
+                  <div className={MutualFundStyle.mfcard}>
+                    <div>
                       <div className="calc-img d-flex mb-4">
                         <Image src={LumpCalImg} alt="cal-img" />
                         <div className={MutualFundStyle.returnEstimation}>
@@ -169,7 +168,7 @@ function MutualFundcal() {
                         </div>
                       </Form.Group>
 
-                      <Form.Group className="pt-5">
+                      <Form.Group className="pt-4">
                         <div
                           className={`d-flex justify-content-between ${MutualFundStyle.rangefield}`}
                         >
@@ -212,14 +211,14 @@ function MutualFundcal() {
                   xs={12}
                   md={12}
                   lg={6}
-                  className={`d-flex align-items-center `}
+                  className={`d-flex  justify-content-around  ${MutualFundStyle.verticalLine}`}
                 >
                   <div className={MutualFundStyle.lumpsumCard}>
                     <div
-                      className={`d-flex align-items-center flex-column ${MutualFundStyle.verticalLine} `}
+                      className={`d-flex align-items-center flex-column  `}
                     >
                       <div
-                        className={`${MutualFundStyle.totalInvest} ps-lg-5 ps-md-4  mt-2`}
+                        className={`${MutualFundStyle.totalInvest} ps-lg-5 ps-md-4 `}
                       >
                         <p>
                           The total value of your investment after {" "}
@@ -327,25 +326,25 @@ function MutualFundcal() {
               <div className={MutualFundStyle.sidebar}>
                 <ul className="list-unstyled">
                   <li className={MutualFundStyle.sidebarItem}>
-                    What is a SIP Calculator?
+                    What is a Mutual Fund  Calculator?
                   </li>
                   <li className={MutualFundStyle.sidebarItem}>
                     How can a SIP Calculator Help You?
                   </li>
                   <li className={MutualFundStyle.sidebarItem}>
-                    Advantages of SIP Calculator
+                    Advantages of Mutual Fund  Calculator
                   </li>
                   <li className={MutualFundStyle.sidebarItem}>
-                    How to use ET Money's SIP Calculator?
+                    How to use Sernet's Mutual Fund  Calculator?
                   </li>
                   <li className={MutualFundStyle.sidebarItem}>
-                    Related Mutual Fund SIP Calculators ?
+                    Related Mutual Fund  Calculators ?
                   </li>
                   <li className={MutualFundStyle.sidebarItem}>
-                    Advantages of SIP Calculator
+                    Advantages of Mutual Fund  Calculator
                   </li>
                   <li className={MutualFundStyle.sidebarItem}>
-                    Related Mutual Fund SIP Calculators ?
+                    Related Mutual Fund  Calculators ?
                   </li>
                 </ul>
               </div>
@@ -486,56 +485,138 @@ function MutualFundcal() {
         </section>
 
         <section className="pb-5 mt-5">
-          <div className={`${MutualFundStyle.preHeading} py-5`}>
-            <h1 className="text-align-left pt-5">
+          <div className={`${MutualFundStyle.faq_Heading} py-5`}>
+            <h1 className="text-align-left">
               FAQs (Frequently Asked Questions)
             </h1>
           </div>
-          <div>
-            <Accordion defaultActiveKey="0" alwaysOpen>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header
-                  className={MutualFundStyle.custom_acco_header}
+            <div
+              className="accordion accordion-flush"
+              id="accordionFlushExample"
+            >
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${MutualFundStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseOne"
+                  >
+                    How can a Mutual Fund Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseOne"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
                 >
-                  How can a SIP Calculator Help You?
-                </Accordion.Header>
-                <Accordion.Body>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
+                  <div className={`accordion-body px-0 ${MutualFundStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${MutualFundStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseTwo"
+                  >
+                    Can I modify my Mutual Fund  amount?
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseTwo"
+                  className="accordion-collapse collapse show"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${MutualFundStyle.acco_body}`}>
+                    There is no maximum tenure of a SIP. You can invest as long
+                    as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${MutualFundStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseThree"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseThree"
+                  >
+                    How can a Mutual Fund  Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseThree"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${MutualFundStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-              <Accordion.Item eventKey="1">
-                <Accordion.Header>Can I modify my SIP amount?</Accordion.Header>
-                <Accordion.Body>
-                  Yes, you can modify your SIP amount at any point during your
-                  tenure by contacting your fund manager or using the online
-                  portal.
-                </Accordion.Body>
-              </Accordion.Item>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${MutualFundStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFour"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFour"
+                  >
+                    How can a Mutual Fund  Calculator Help You ?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseFour"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${MutualFundStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-              <Accordion.Item eventKey="2">
-                <Accordion.Header>
-                  What is the minimum tenure for SIP?
-                </Accordion.Header>
-                <Accordion.Body>
-                  The minimum tenure for a SIP is usually 6 months, but it can
-                  vary depending on the mutual fund you select.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="3">
-                <Accordion.Header>
-                  What happens if I miss a SIP payment?
-                </Accordion.Header>
-                <Accordion.Body>
-                  If you miss a SIP payment, your account will not be penalized.
-                  However, consistent payments are encouraged for better
-                  returns.
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-          </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${MutualFundStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFive"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFive"
+                  >
+                    How can a Mutual Fund  Calculator Help You  ?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseFive"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${MutualFundStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+            </div>
         </section>
       </div>
     </>

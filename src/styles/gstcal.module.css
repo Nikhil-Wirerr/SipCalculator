@@ -24,14 +24,20 @@
   }
 
 .togglebtngroup{
-  border-radius: 2px solid white Im !important;
+  border: 1px solid #dbdfe5;
   outline: none !important;
+  border-radius: 50px !important;
+  padding: 4px 6px;
+  margin-left: 10px;
 }
 
-.togglebtngroup .ToggleButton{
-outline: none;
-border: 1px solid #DBDFE5;
-border-radius: 50px;
+.togglebtn{
+  border-radius: 50px !important;
+  font-family: "Poppins-Regular";
+}
+
+.togglebtn:not(:active){
+  color: #1f1a17 ;
 }
 
 .rangefield {
@@ -88,7 +94,7 @@ border-radius: 50px;
   .sidebar {
     height: 100vh;
     position: sticky;
-    top: 0;
+    top: 120px;
     /* padding: 20px; */
     border-right: 4px solid #EAEFF5;
   }
@@ -121,21 +127,33 @@ border-radius: 50px;
     font-size: 16px;
   }
   
-  .accordionHeader {
-    color: #1f1a17;
-    font-family: "Poppins-SemiBold";
-    font-size: 30px;
-    text-align: left;
-    font-weight: 600;
-    border: none !important;
-    background-color: transparent;
-  }
-  
-  .accordionbody {
-    font-family: "Poppins-Regular";
-    color: #707070;
-    font-size: 16px;
-  }
-  
+.faq_Heading  h1{
+  color: #383e42;
+  font-family: "Poppins-SemiBold";
+  font-size: 42px;
+}
+
+.accbtn {
+  background-color: transparent !important;
+  color: #1f1a17 !important;
+  font-size: 24px !important;
+  font-family: "Poppins-SemiBold";
+  font-weight: 600 !important;
+}
+
+.accbtn:not(.collapsed) {
+  color: #1f1a17 !important;
+}
+
+.accbtn:focus {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.acco_body {
+  color: #707070;
+  font-size: 20px;
+}
+
   
   

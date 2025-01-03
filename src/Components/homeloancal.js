@@ -148,9 +148,9 @@ const HomeloanCal = () => {
           </div>
 
           <div>
-            <Card className="p-lg-5 p-md-4  border-0 shadow">
+            <Card className="p-lg-5 p-md-4  border border-0 shadow-sm">
               <Row>
-                <div className="pt-4 pt-md-0">
+                <div>
                   <ToggleButtonGroup
                     type="radio"
                     name="investmentType"
@@ -163,6 +163,7 @@ const HomeloanCal = () => {
                       value="SIP"
                       variant="outline-primary"
                       active={investmentType === "SIP"}
+                      className={`border border-0 ${homeloanStyle.toggel_bg}`}
                     >
                       Monthly SIP
                     </ToggleButton>
@@ -171,15 +172,16 @@ const HomeloanCal = () => {
                       value="Lumpsum"
                       variant="outline-primary"
                       active={investmentType === "Lumpsum"}
+                      className={`border border-0 ${homeloanStyle.toggel_bg}`}
                     >
                       Lumpsum
                     </ToggleButton>
                   </ToggleButtonGroup>
                 </div>
 
-                <Col xs={12} md={12} lg={6} className="mb-4">
+                <Col xs={12} md={12} lg={6} className="mb-4 mt-5">
                   <div className={homeloanStyle.lumpsumCard}>
-                    <div className="mt-5">
+                    <div>
                       <div className="calc-img d-flex mb-4">
                         <Image src={LumpCalImg} alt="cal-img" />
                         <div className={homeloanStyle.returnEstimation}>
@@ -244,7 +246,7 @@ const HomeloanCal = () => {
                         </div>
                       </Form.Group>
 
-                      <Form.Group className="pt-5">
+                      <Form.Group className="pt-4">
                         <div
                           className={`d-flex justify-content-between ${homeloanStyle.rangefield}`}
                         >
@@ -285,11 +287,11 @@ const HomeloanCal = () => {
                   xs={12}
                   md={12}
                   lg={6}
-                  className={`d-flex align-items-center`}
+                  className={`d-flex  mt-5 ${homeloanStyle.verticalLine}` }
                 >
                   <div className={homeloanStyle.lumpsumCard}>
-                    <div className={`d-flex  flex-column ${homeloanStyle.verticalLine} `}>
-                      <div className={`${homeloanStyle.totalInvest} ps-5 mt-2`}>
+                    <div className={`d-flex  flex-column  `}>
+                      <div className={`${homeloanStyle.totalInvest} ps-5 `}>
                         <p>The total amount will be</p>
                         <h2>
                           ₹{" "}
@@ -336,8 +338,10 @@ const HomeloanCal = () => {
                             </button>
                           </div>
                         </div>
-
-                        <div className="ps-lg-5 ps-sm-0 mt-3">
+                      </div>
+                    </div>
+                  </div>
+                  <div className=" ps-sm-0 mt-3">
                           <div
                             className={`ps-2 pb-2 ${homeloanStyle.investedAmount}`}
                           >
@@ -386,9 +390,6 @@ const HomeloanCal = () => {
                             </h6>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  </div>
                 </Col>
 
                 <div className="text-center my-3">
@@ -482,22 +483,19 @@ const HomeloanCal = () => {
               <div className={homeloanStyle.sidebar}>
                 <ul className="list-unstyled">
                   <li className={homeloanStyle.sidebarItem}>
-                    What is a SIP Calculator?
+                    What is a Home Loan Calculator?
                   </li>
                   <li className={homeloanStyle.sidebarItem}>
-                    How can a SIP Calculator Help You?
+                    How can a Home Loan Calculator Help You?
                   </li>
                   <li className={homeloanStyle.sidebarItem}>
-                    Advantages of SIP Calculator
+                    Advantages of Home Loan Calculator
                   </li>
                   <li className={homeloanStyle.sidebarItem}>
                     How to use ET Money's SIP Calculator?
                   </li>
                   <li className={homeloanStyle.sidebarItem}>
-                    Related Mutual Fund SIP Calculators ?
-                  </li>
-                  <li className={homeloanStyle.sidebarItem}>
-                    Advantages of SIP Calculator
+                    Advantages of Home Loan Calculator
                   </li>
                   <li className={homeloanStyle.sidebarItem}>
                     Related Mutual Fund SIP Calculators ?
@@ -508,7 +506,7 @@ const HomeloanCal = () => {
 
             <Col xs={12} md={8} lg={9} className={homeloanStyle.qandA}>
               <div className={homeloanStyle.quesAnsSection}>
-                <h3>What is a SIP Calculator?</h3>
+                <h3>What is a Home Loan Calculator?</h3>
                 <p>
                   A SIP (Systematic Investment Plan) Calculator is an online or
                   software tool used to calculate the potential returns from
@@ -519,7 +517,7 @@ const HomeloanCal = () => {
                 </p>
               </div>
               <div className={homeloanStyle.quesAnsSection}>
-                <h3>How can a SIP Calculator Help You?</h3>
+                <h3>How can a Home Loan Calculator Help You?</h3>
                 <p>
                   The Systematic investment Plan calculator essentially gives
                   investors a bifurcation of the future value of the SIP
@@ -540,7 +538,7 @@ const HomeloanCal = () => {
                 </p>
               </div>
               <div className={homeloanStyle.quesAnsSection}>
-                <h3>Advantages of SIP Calculator</h3>
+                <h3>Advantages of Home Loan Calculator</h3>
                 <p>
                   Investments made into market-linked instruments such as Mutual
                   Funds do not provide guaranteed returns. So investors might
@@ -571,7 +569,7 @@ const HomeloanCal = () => {
                 </p>
               </div>
               <div className={homeloanStyle.quesAnsSection}>
-                <h3>How to use ET Money's SIP Calculator?</h3>
+                <h3>How to use Sernet's Home Loan Calculator?</h3>
                 <p>
                   If you know how much you want to invest in Mutual Funds every
                   month, you can use the ET Money SIP Calculator to estimate the
@@ -633,64 +631,138 @@ const HomeloanCal = () => {
           </Row>
         </section>
         <section className="pb-5 mt-5">
-          <div className={`${homeloanStyle.preHeading} py-5`}>
-            <h1 className="text-align-left pt-5">
+          <div className={`${homeloanStyle.faq_Heading} py-5`}>
+            <h1 className="text-align-left">
               FAQs (Frequently Asked Questions)
             </h1>
           </div>
-          <div>
-            <Accordion defaultActiveKey={["1"]} alwaysOpen>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header className={homeloanStyle.accordionHeader}>
-                  How can a SIP Calculator Help You?
-                </Accordion.Header>
-                <Accordion.Body className={homeloanStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
+            <div
+              className="accordion accordion-flush"
+              id="accordionFlushExample"
+            >
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${homeloanStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseOne"
+                  >
+                    How can a Home Loan Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseOne"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${homeloanStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${homeloanStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseTwo"
+                  >
+                    Can I modify my Home Loan amount?
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseTwo"
+                  className="accordion-collapse collapse show"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${homeloanStyle.acco_body}`}>
+                    There is no maximum tenure of a SIP. You can invest as long
+                    as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${homeloanStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseThree"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseThree"
+                  >
+                    How can a Home Loan Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseThree"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${homeloanStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-              <Accordion.Item eventKey="1">
-                <Accordion.Header className={homeloanStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={homeloanStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${homeloanStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFour"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFour"
+                  >
+                    How can a Home Loan Calculator Help You?{" "}
+                    </button>
+                </h2>
+                <div
+                  id="flush-collapseFour"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${homeloanStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-              <Accordion.Item eventKey="2">
-                <Accordion.Header className={homeloanStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={homeloanStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="3">
-                <Accordion.Header className={homeloanStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={homeloanStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="4">
-                <Accordion.Header className={homeloanStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={homeloanStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-          </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${homeloanStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFive"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFive"
+                  >
+                    How can a Home Loan Calculator Help You?{" "}
+                    </button>
+                </h2>
+                <div
+                  id="flush-collapseFive"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${homeloanStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+            </div>
         </section>
       </div>
     </>

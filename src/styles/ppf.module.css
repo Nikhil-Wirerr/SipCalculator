@@ -5,9 +5,16 @@
   }
   
   .lumpsumCard {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 10px;
+    padding-right: 70px;
   }
+
+  @media (max-width: 768px) {
+    .lumpsumCard {
+      padding: 0;
+    }
+  }
+  
   
   .preHeading h1 {
     font-family: "Poppins-SemiBold";
@@ -69,7 +76,7 @@
     padding-top: 30px;
     height: 80px;
     border: 2px solid #4279f4;
-    border-radius: 4px;
+    border-radius: 12px;
     font-size: 30px;
     font-family: "Poppins-SemiBold";
     color: #14406d;
@@ -92,13 +99,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border-bottom: 1px solid #dbdfe5;
+    max-width: 18%;
+    width: 100%;
   }
   
   .rangecustominput input{
     text-align: right;
-    /* width:90%;
-    padding-top: 30px;
-    height: 80px; */
     border: 2px solid #4279f4;
     border-radius: 4px;
     font-size: 30px;
@@ -107,11 +114,6 @@
     font-weight: 600;
     outline: none;
   }
-  
-  /* .rangecustominput input span{
-    font-size: 20px;
-  padding-top: 10px ;
-  } */
   
   .custominput::placeholder {
     color: #14406d;
@@ -138,11 +140,17 @@
   }
   
   .verticalLine {
-    border-left: 1px solid;
+    border-left: 1px solid #dbdfe5;
     padding-left: 20px;
     padding-right: 20px;
   }
   
+  @media (max-width: 992px) {
+    .verticalLine {
+      border: none !important;
+    }
+  }
+
   .totalInvest p {
     color: #1f1a17;
     font-size: 16px;
@@ -213,6 +221,8 @@
     border-radius: 8px;
     color: #ffffff;
     border: none;
+    text-transform: uppercase;
+    font-family: "Poppins-SemiBold";
   }
   
   .subHeading h1 {
@@ -225,7 +235,7 @@
   .sidebar {
     height: 100vh;
     position: sticky;
-    top: 0;
+    top: 120px;
     /* padding: 20px; */
     border-right: 4px solid #EAEFF5;
     overflow: hidden;
@@ -263,60 +273,31 @@
     font-size: 16px;
   }
   
-  /* .accordionHeader {
-    color: #1f1a17;
+.faq_Heading h1 {
+    color: #383e42;
     font-family: "Poppins-SemiBold";
-    font-size: 24px;
-    text-align: left;
-    font-weight: 600;
-    border: none !important;
-    background-color: transparent !important;
-    background: transparent !important;
+    font-size: 42px;
   }
   
-  .accordionHeader.accordion-button{
+  .accbtn {
     background-color: transparent !important;
-    background: transparent !important;
+    color: #1f1a17 !important;
+    font-size: 24px !important;
+    font-family: "Poppins-SemiBold";
+    font-weight: 600 !important;
   }
   
-  .accordionbody {
-    font-family: "Poppins-Regular";
+  .accbtn:not(.collapsed) {
+    color: #1f1a17 !important;
+  }
+  
+  .accbtn:focus {
+    box-shadow: none !important;
+    outline: none !important;
+  }
+  
+  .acco_body {
     color: #707070;
-    font-size: 16px;
-  } */
-  
-  
-  
-  .custom_acco_header .accordion-button:not(.collapsed) {
-  position: relative;
-    display: flex
-  ;
-    align-items: center;
-    width: 100%;
-    padding: var(--bs-accordion-btn-padding-y) var(--bs-accordion-btn-padding-x);
-    font-size: 1rem;
-    color: var(--bs-accordion-btn-color);
-    text-align: left;
-    background-color: var(--bs-accordion-btn-bg) !important;
-    border: 0;
-    border-radius: 0;
-    overflow-anchor: none;
-    transition: var(--bs-accordion-transition);
+    font-size: 20px;
   }
   
-  .custom_acco_header .accordion-button {
-    position: relative;
-    display: flex
-  ;
-    align-items: center;
-    width: 100%;
-    padding: var(--bs-accordion-btn-padding-y) var(--bs-accordion-btn-padding-x);
-    font-size: 1rem;
-    color: var(--bs-accordion-btn-color);
-    text-align: left;
-    background-color: var(--bs-accordion-btn-bg) !important;
-    border: 0;
-    border-radius: 0;
-    overflow-anchor: none;
-    transition: var(--bs-accordion-transition);
-  }

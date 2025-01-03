@@ -8,8 +8,14 @@
   } */
   
   .lumpsumCard {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 10px;
+    padding-right: 70px;
+  }
+
+  @media (max-width: 768px) {
+    .lumpsumCard {
+      padding: 0;
+    }
   }
   
   .preHeading h1 {
@@ -26,10 +32,17 @@
   }
   
   .togglbgrp {
-    border-radius: 20px;
-    /* border: 1px solid #DBDFE5; */
     outline: none;
-    padding-left: 20px;
+    border-radius: 50px !important;
+    border: 1px solid #dbdfe5;
+    padding: 4px 6px;
+    margin-left: 10px;
+  }
+
+  .toggel_bg {
+    border-radius: 50px !important;
+    color: #1f1a17;
+    font-family: "Poppins-Regular";
   }
   
   .returnEstimation h6 {
@@ -88,6 +101,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-bottom: 1px solid #dbdfe5;
+  width: 15%;
 }
 
 
@@ -104,6 +119,7 @@
   font-weight: 600;
   outline: none;
 }
+
 .accordion_bdy{
   overflow: hidden;
   max-width: 100%;
@@ -121,7 +137,7 @@
     padding-top: 30px;
     height: 80px;
     border: 2px solid #4279f4;
-    border-radius: 4px;
+    border-radius: 12px;
     font-size: 30px;
     font-family: "Poppins-SemiBold";
     color: #14406d;
@@ -153,9 +169,15 @@
   }
   
   .verticalLine {
-    border-left: 1px solid;
+    border-left: 1px solid #dbdfe5;
     padding-left: 20px;
-    padding-right: 20px;
+    /* padding-right: 20px; */
+  }
+
+  @media (max-width: 992px) {
+    .verticalLine {
+      border: none !important;
+    }
   }
   
   .totalInvest p {
@@ -221,6 +243,8 @@
     border-radius: 8px;
     color: #ffffff;
     border: none;
+    text-transform: uppercase;
+    font-family: "Poppins-SemiBold";
   }
   
   .subHeading h1 {
@@ -233,7 +257,7 @@
   .sidebar {
     height: 100vh;
     position: sticky;
-    top: 0;
+    top: 120px;
     /* padding: 20px; */
     border-right: 4px solid #EAEFF5;
   }
@@ -273,30 +297,31 @@
     font-size: 16px;
   }
   
+  
+.faq_Heading h1 {
+  color: #383e42;
+  font-family: "Poppins-SemiBold";
+  font-size: 42px;
+}
 
-  .accordionHeader {
-    color: #1f1a17;
-    font-family: "Poppins-SemiBold";
-    font-size: 24px;
-    text-align: left;
-    font-weight: 600;
-    border: none !important;
-    padding: 20px;
-    border: 1px solid #ddd;
-  }
-  
-  .accordionHeader:active{
-    background-color: #010c17; /* Light gray background */
-    padding: 20px;
-    border: 1px solid #ddd;
-  }
-  .accordionbody {
-    font-family: "Poppins-Regular";
-    color: #707070;
-    font-size: 16px;
-    background-color: #f8f9fa; /* Light gray background */
-    padding: 20px;
-    border: 1px solid #ddd;
-    
-  }
-  
+.accbtn {
+  background-color: transparent !important;
+  color: #1f1a17 !important;
+  font-size: 24px !important;
+  font-family: "Poppins-SemiBold";
+  font-weight: 600 !important;
+}
+
+.accbtn:not(.collapsed) {
+  color: #1f1a17 !important;
+}
+
+.accbtn:focus {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.acco_body {
+  color: #707070;
+  font-size: 20px;
+}

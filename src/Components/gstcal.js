@@ -29,129 +29,148 @@ const GstCal = () => {
 
   const calculateGST = () => {
     const gstValue = (totalAmount * gstRate) / 100;
-    if(investmentType === "Exgst"){
+
+    if (investmentType === "Exgst") {
       return {
         gst: gstValue,
         postGst: totalAmount + gstValue,
       };
-    } else if (investmentType === "Ingst"){
-      const amountWithoutGst = totalAmount / (1 + gstRate /100);
-      return{
+
+    } else if (investmentType === "Ingst") {
+      const amountWithoutGst = totalAmount / (1 + gstRate / 100);
+      return {
         gst: totalAmount - amountWithoutGst,
-        postGst: totalAmount,
-      }
+        postGst: amountWithoutGst,
+      };
     }
-    return {gst: 0, postGst: totalAmount};
+    return { gst: 0, postGst: totalAmount };
   };
 
-  const { gst, postGst} = calculateGST();
+  const { gst, postGst } = calculateGST();
 
   return (
     <>
       <div className={GstStyle.gstBackground}>
-        <div className={`${GstStyle.gstpreHeading} container pt-5`}>
-          <h1 className="text-left pt-3">GST Calculator</h1>
+        <div className={`${GstStyle.gstpreHeading} container py-5`}>
+          <h1 className="text-left ">GST Calculator</h1>
           <p className="pt-2 pb-4">
             The GST calculator helps estimate the potential growth of your Good
             and Services Tax Calculator (GST) investment over your chosen time
             frame. GST is a convenient method to save for your long-term
             financial goals.
           </p>
-        </div>
-      </div>
 
-      <div className="container">
-        <Card className="p-4 border-0 shadow">
-          <Row>
-            <div>
-              <ToggleButtonGroup
-                type="radio"
-                name="investmentType"
-                value={investmentType}
-                onChange={handleInvestmentTypeChange}
-                className={`${GstStyle.togglebtngroup} ps-3`}
-              >
-                <ToggleButton
-                  id="exgst-toggle"
-                  value="Exgst"
-                  variant="outline-primary"
-                  className={GstStyle.togglebtn}
-                >
-                  Excluding GST
-                </ToggleButton>
-                <ToggleButton
-                  id="ingst-toggle"
-                  value="Ingst"
-                  variant="outline-primary"
-                >
-                  Including GST
-                </ToggleButton>
-              </ToggleButtonGroup>
-            </div>
-            <Col className="mb-4">
-              <Form>
-                <Form.Group className="m-3 pt-4">
-                  <div
-                    className={`d-flex justify-content-between ${GstStyle.rangefield}`}
+          <div>
+            <Card className="p-4 border border-0 shadow-sm">
+              <Row>
+                <div>
+                  <ToggleButtonGroup
+                    type="radio"
+                    name="investmentType"
+                    value={investmentType}
+                    onChange={handleInvestmentTypeChange}
+                    className={`${GstStyle.togglebtngroup}`}
                   >
-                    <Form.Label>Total Amount</Form.Label>
-                    <div>
-                      <span className="me-2 text-end">₹</span>
-                      <input
-                        type="number"
+                    <ToggleButton
+                      id="exgst-toggle"
+                      value="Exgst"
+                      variant="outline-primary"
+                      className={`border border-0  ${GstStyle.togglebtn} `}
+                    >
+                      Excluding GST
+                    </ToggleButton>
+                    <ToggleButton
+                      id="ingst-toggle"
+                      value="Ingst"
+                      variant="outline-primary"
+                      className={`border border-0  ${GstStyle.togglebtn} `}
+                    >
+                      Including GST
+                    </ToggleButton>
+                  </ToggleButtonGroup>
+                </div>
+                <Col className="mb-4">
+                  <Form>
+                    <Form.Group className="m-3 pt-4">
+                      <div
+                        className={`d-flex justify-content-between ${GstStyle.rangefield}`}
+                      >
+                        <Form.Label>Total Amount</Form.Label>
+                        <div className={GstStyle.rangefield}>
+                          <span className="pe-2 text-end">₹</span>
+                          <input
+                            type="number"
+                            value={totalAmount}
+                            onChange={(e) =>
+                              setTotalAmount(Number (e.target.value).toLocaleString)
+                            }
+                            className={`border-0 text-end ${GstStyle.custominput}`}
+                            onWheel={handleWheel}
+                          />
+                        </div>
+                      </div>
+                      <Form.Range
+                        min={1}
+                        max={500000}
                         value={totalAmount}
                         onChange={(e) => setTotalAmount(Number(e.target.value))}
-                        className={`border-0 text-end ${GstStyle.custominput}`}
-                        onWheel={handleWheel}
                       />
+                    </Form.Group>
+
+                    <Form.Group className="m-3 pt-4">
+                      <div
+                        className={`d-flex justify-content-between ${GstStyle.rangefield}`}
+                      >
+                        <p>Tax GST</p>
+                        {/* <span>12%</span> */}
+                        <Dropdown className={GstStyle.dropdown}>
+                          <Dropdown.Toggle className="px-5">
+                            {gstRate}%{" "}
+                          </Dropdown.Toggle>
+
+                          <Dropdown.Menu>
+                            <Dropdown.Item onClick={() => setGstRate(0.25)}>
+                              0.25%
+                            </Dropdown.Item>
+                            <Dropdown.Item onClick={() => setGstRate(3)}>
+                              3%
+                            </Dropdown.Item>
+                            <Dropdown.Item onClick={() => setGstRate(8)}>
+                              8%
+                            </Dropdown.Item>
+                            <Dropdown.Item onClick={() => setGstRate(16)}>
+                              16%
+                            </Dropdown.Item>
+                            <Dropdown.Item onClick={() => setGstRate(28)}>
+                              28%
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </div>
+                    </Form.Group>
+                  </Form>
+
+                  <div
+                    className={`d-block d-md-flex pt-4 ${GstStyle.rangefield} `}
+                  >
+                    <div className={`ps-0 ps-md-3 ${GstStyle.totalGst}`}>
+                      <p>Total GST</p>
+                      <span>₹ {gst.toLocaleString()}</span>
+                    </div>
+                    <div className="px-0 px-md-5 mt-4 mt-md-0">
+                      <p>
+                        {investmentType === "Exgst"
+                          ? "Post-Gst AMount"
+                          : "Pre-Gst Amount"}
+                      </p>
+                      <span>₹ {postGst.toLocaleString()}</span>
                     </div>
                   </div>
-                  <Form.Range
-                    min={1}
-                    max={500000}
-                    value={totalAmount}
-                    onChange={(e) => setTotalAmount(Number(e.target.value))}
-                  />
-                </Form.Group>
-
-                <Form.Group className="m-3 pt-4">
-                  <div
-                    className={`d-flex justify-content-between ${GstStyle.rangefield}`}
-                  >
-                    <p>Tax GST</p>
-                    {/* <span>12%</span> */}
-                    <Dropdown className={GstStyle.dropdown}>
-                      <Dropdown.Toggle className="px-5">{gstRate}% </Dropdown.Toggle>
-
-                      <Dropdown.Menu >
-                      <Dropdown.Item onClick={() => setGstRate(0.25)}>0.25%</Dropdown.Item>
-                        <Dropdown.Item onClick={() => setGstRate(3)}>3%</Dropdown.Item>
-                        <Dropdown.Item onClick={() => setGstRate(8)}>8%</Dropdown.Item>
-                        <Dropdown.Item onClick={() => setGstRate(16)}>16%</Dropdown.Item>
-                        <Dropdown.Item onClick={() => setGstRate(28)}>28%</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </div>
-                </Form.Group>
-              </Form>
-
-              <div className={`d-block d-md-flex pt-4 ${GstStyle.rangefield} `}>
-                <div className={`ps-0 ps-md-3 ${GstStyle.totalGst}`}>
-                  <p>Total GST</p>
-                  {/* <span>₹ 2,40,000</span> */}
-                  <span>₹ {gst.toFixed(2)}</span>
-
-                </div>
-                <div className="px-0 px-md-5 mt-4 mt-md-0">
-                  <p>Post-GST amount</p>
-                  {/* <span>₹ 2,40,000</span> */}
-                  <span>₹ {postGst.toFixed(2)}</span>
-
-                </div>
-              </div>
-            </Col>
-          </Row>
-        </Card>
+                </Col>
+              </Row>
+            </Card>
+          </div>
+        </div>
       </div>
 
       <div className={`${GstStyle.qaContent} container`}>
@@ -167,25 +186,25 @@ const GstCal = () => {
               <div className={GstStyle.sidebar}>
                 <ul className="list-unstyled">
                   <li className={GstStyle.sidebarItem}>
-                    What is a SIP Calculator?
+                    What is a GST Calculator?
                   </li>
                   <li className={GstStyle.sidebarItem}>
-                    How can a SIP Calculator Help You?
+                    How can a GST Calculator Help You?
                   </li>
                   <li className={GstStyle.sidebarItem}>
-                    Advantages of SIP Calculator
+                    Advantages of GST Calculator
                   </li>
                   <li className={GstStyle.sidebarItem}>
-                    How to use ET Money's SIP Calculator?
+                    How to use Sernet's GST Calculator?
                   </li>
                   <li className={GstStyle.sidebarItem}>
-                    Related Mutual Fund SIP Calculators ?
+                    Related  Calculators ?
                   </li>
                   <li className={GstStyle.sidebarItem}>
-                    Advantages of SIP Calculator
+                    Advantages of GST Calculator
                   </li>
                   <li className={GstStyle.sidebarItem}>
-                    Related Mutual Fund SIP Calculators ?
+                    Related  Calculators ?
                   </li>
                 </ul>
               </div>
@@ -317,65 +336,140 @@ const GstCal = () => {
             </Col>
           </Row>
         </section>
+         
         <section className="pb-5 mt-5">
-          <div className={`${GstStyle.preHeading} py-5`}>
-            <h1 className="text-align-left pt-5">
+          <div className={`${GstStyle.faq_Heading} py-5`}>
+            <h1 className="text-align-left">
               FAQs (Frequently Asked Questions)
             </h1>
           </div>
-          <div>
-            <Accordion defaultActiveKey={["1"]} alwaysOpen>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header className={GstStyle.accordionHeader}>
-                  How can a SIP Calculator Help You?
-                </Accordion.Header>
-                <Accordion.Body className={GstStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
+            <div
+              className="accordion accordion-flush"
+              id="accordionFlushExample"
+            >
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${GstStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseOne"
+                  >
+                    How can a GST Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseOne"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${GstStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${GstStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseTwo"
+                  >
+                    Can I modify my GST amount?
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseTwo"
+                  className="accordion-collapse collapse show"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${GstStyle.acco_body}`}>
+                    There is no maximum tenure of a SIP. You can invest as long
+                    as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${GstStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseThree"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseThree"
+                  >
+                    How can a GST Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseThree"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${GstStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-              <Accordion.Item eventKey="1">
-                <Accordion.Header className={GstStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={GstStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${GstStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFour"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFour"
+                  >
+                    How can a GST Calculator Help You ?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseFour"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${GstStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-              <Accordion.Item eventKey="2">
-                <Accordion.Header className={GstStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={GstStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="3">
-                <Accordion.Header className={GstStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={GstStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="4">
-                <Accordion.Header className={GstStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={GstStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-          </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${GstStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFive"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFive"
+                  >
+                    How can a GST Calculator Help You  ?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseFive"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${GstStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+            </div>
         </section>
       </div>
     </>

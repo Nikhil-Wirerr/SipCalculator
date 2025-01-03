@@ -14,8 +14,8 @@ const EpfCal = () => {
   const [accumulatedAmount, setAccumulatedAmount] = useState(0);
 
   const retirementAge = 58;
-
   const interestRate = 8.1;
+  const monthlyInterestRate = interestRate / 12 / 100; // Monthly interest rate
 
   const handleInputChange = (value, min, max, setter) => {
     if (value >= min && value <= max) {
@@ -27,27 +27,28 @@ const EpfCal = () => {
     let totalAmount = 0;
     let currentSalary = monthlySalary;
     const years = retirementAge - joiningAge;
-    const annualInterestRate = interestRate / 100;
-    
-
+    // Calculate for each year
     for (let year = 1; year <= years; year++) {
-      const annualContribution = (currentSalary * 12 * epfContribution) / 100;
-      totalAmount =
-        (totalAmount + annualContribution) * (1 + annualInterestRate);
-      currentSalary *= 1 + annualIncrease / 100;
-    }
-
-    setAccumulatedAmount(totalAmount.toFixed(2));
-  };
-
-  useEffect(() => {
-    calculateEPF();
-  }, [
-    monthlySalary,
-    joiningAge,
-    epfContribution,
-    annualIncrease,
-  ]);
+        const monthlyEmployeeContribution = (currentSalary * epfContribution) / 100;
+        const monthlyEmployerContribution = (currentSalary * 3.67) / 100;
+        const monthlyTotalContribution = monthlyEmployeeContribution + monthlyEmployerContribution;
+        
+        // Compound monthly interest on total amount after contribution
+        for (let month = 1; month <= 12; month++) {
+          totalAmount += monthlyTotalContribution;
+          totalAmount *= (1 + monthlyInterestRate); // Monthly compounding
+        }
+  
+        // Apply salary increase annually
+        currentSalary *= 1 + annualIncrease / 100;
+      }
+  
+      setAccumulatedAmount(totalAmount.toFixed(2));
+    };
+  
+    useEffect(() => {
+      calculateEPF();
+    }, [monthlySalary, joiningAge, epfContribution, annualIncrease]);
 
   const handleWheel = (e) => e.target.blur();
 
@@ -66,7 +67,7 @@ const EpfCal = () => {
         </div>
 
         <div className="container">
-          <Card className="px-3 py-3  border-0 shadow">
+          <Card className="px-3 py-3 border border-0 shadow-sm">
             <Row>
               <Col className="mb-4">
                 <Form>
@@ -248,7 +249,7 @@ const EpfCal = () => {
           <div className={EpfStyle.cardbottom}>
             <p className="text-center py-5">
               You Will have accumulated <br />
-              {/* ₹ 2,53,46,997 */}₹ {accumulatedAmount}
+              {/* ₹ 2,53,46,997 */}₹ {accumulatedAmount.toLocaleString()}
               <br />
               by the time you retire
             </p>
@@ -266,25 +267,25 @@ const EpfCal = () => {
               <div className={EpfStyle.sidebar}>
                 <ul className="list-unstyled">
                   <li className={EpfStyle.sidebarItem}>
-                    What is a SWP Calculator?
+                    What is a EPF Calculator?
                   </li>
                   <li className={EpfStyle.sidebarItem}>
-                    How can a SWP Calculator Help You?
+                    How can a EPF Calculator Help You?
                   </li>
                   <li className={EpfStyle.sidebarItem}>
-                    Advantages of SWP Calculator
+                    Advantages of EPF Calculator
                   </li>
                   <li className={EpfStyle.sidebarItem}>
-                    How to use ET Money's SWP Calculator?
+                    How to use Sernet's EPF Calculator?
                   </li>
                   <li className={EpfStyle.sidebarItem}>
-                    Related Mutual Fund SWP Calculators ?
+                    Related EPF Calculators ?
                   </li>
                   <li className={EpfStyle.sidebarItem}>
-                    Advantages of SWP Calculator
+                    Advantages of EPF Calculator
                   </li>
                   <li className={EpfStyle.sidebarItem}>
-                    Related Mutual Fund SWP Calculators ?
+                    Related EPF Calculators ?
                   </li>
                 </ul>
               </div>
@@ -292,7 +293,7 @@ const EpfCal = () => {
 
             <Col xs={12} md={8} lg={9} className={EpfStyle.qandA}>
               <div className={EpfStyle.quesAnsSection}>
-                <h3>What is a SWP Calculator?</h3>
+                <h3>What is a EPF Calculator?</h3>
                 <p>
                   A SWP (Systematic Withdrawal Plan) Calculator is an online or
                   software tool used to calculate the potential returns from
@@ -303,7 +304,7 @@ const EpfCal = () => {
                 </p>
               </div>
               <div className={EpfStyle.quesAnsSection}>
-                <h3>How can a SWP Calculator Help You?</h3>
+                <h3>How can a EPF Calculator Help You?</h3>
                 <p>
                   The Systematic Withdrawal Plan Plan calculator essentially
                   gives investors a bifurcation of the future value of the SIP
@@ -324,7 +325,7 @@ const EpfCal = () => {
                 </p>
               </div>
               <div className={EpfStyle.quesAnsSection}>
-                <h3>Advantages of SWP Calculator</h3>
+                <h3>Advantages of EPF Calculator</h3>
                 <p>
                   Investments made into market-linked instruments such as Mutual
                   Funds do not provide guaranteed returns. So investors might
@@ -355,7 +356,7 @@ const EpfCal = () => {
                 </p>
               </div>
               <div className={EpfStyle.quesAnsSection}>
-                <h3>How to use ET Money's SIP Calculator?</h3>
+                <h3>How to use Sernet's EPF Calculator?</h3>
                 <p>
                   If you know how much you want to invest in Mutual Funds every
                   month, you can use the ET Money SIP Calculator to estimate the
@@ -393,7 +394,7 @@ const EpfCal = () => {
                 </p>
               </div>
               <div className={EpfStyle.quesAnsSection}>
-                <h3>Related Mutual Fund SIP Calculators ?</h3>
+                <h3>Related EPF Calculators ?</h3>
                 <p>
                   The Systematic investment Plan calculator essentially gives
                   investors a bifurcation of the future value of the SIP
@@ -417,64 +418,138 @@ const EpfCal = () => {
           </Row>
         </section>
         <section className="pb-5 mt-5">
-          <div className={`${EpfStyle.preHeading} py-5`}>
-            <h1 className="text-align-left pt-5">
+          <div className={`${EpfStyle.faq_Heading} py-5`}>
+            <h1 className="text-align-left">
               FAQs (Frequently Asked Questions)
             </h1>
           </div>
-          <div>
-            <Accordion defaultActiveKey={["1"]} alwaysOpen>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header className={EpfStyle.accordionHeader}>
-                  How can a SIP Calculator Help You?
-                </Accordion.Header>
-                <Accordion.Body className={EpfStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
+            <div
+              className="accordion accordion-flush"
+              id="accordionFlushExample"
+            >
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${EpfStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseOne"
+                  >
+                    How can a EPF Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseOne"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${EpfStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${EpfStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseTwo"
+                  >
+                    Can I modify my EPF amount?
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseTwo"
+                  className="accordion-collapse collapse show"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${EpfStyle.acco_body}`}>
+                    There is no maximum tenure of a SIP. You can invest as long
+                    as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${EpfStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseThree"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseThree"
+                  >
+                    How can a EPF Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseThree"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${EpfStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-              <Accordion.Item eventKey="1">
-                <Accordion.Header className={EpfStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={EpfStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${EpfStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFour"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFour"
+                  >
+                    How can a EPF Calculator Help You ?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseFour"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${EpfStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-              <Accordion.Item eventKey="2">
-                <Accordion.Header className={EpfStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={EpfStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="3">
-                <Accordion.Header className={EpfStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={EpfStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="4">
-                <Accordion.Header className={EpfStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={EpfStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-          </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${EpfStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFive"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFive"
+                  >
+                    How can a EPF  Calculator Help You  ?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseFive"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${EpfStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+            </div>
         </section>
       </div>
     </>
@@ -482,63 +557,3 @@ const EpfCal = () => {
 };
 
 export default EpfCal;
-
-{
-  /* <Form.Group className="m-3 pt-4">
-                    <div
-                      className={`d-flex justify-content-between ${EpfStyle.rangefield}`}
-                    >
-                      <Form.Label>Rate of Interest</Form.Label>
-                      <div>
-                        <input
-                          type="number"
-                          value={interestRate}
-                          onChange={(e) =>
-                            handleInputChange(
-                              Number(e.target.value),
-                              8,
-                              30,
-                              setInterestRate
-                            )
-                          }
-                          className={`border-0 text-end ${EpfStyle.custominput}`}
-                          onWheel={(e) => e.target.blur()}
-                          min={8}
-                          max={30}
-                        />
-                        <span>%</span>
-                      </div>
-                    </div>
-                    <Form.Range
-                      min={8}
-                      max={30}
-                      step={0.1}
-                      value={interestRate}
-                      onChange={(e) =>
-                        handleInputChange(
-                          Number(e.target.value),
-                          8,
-                          30,
-                          setInterestRate
-                        )
-                      }
-                    />
-                  </Form.Group> */
-}
-
-// const handleInputChange = (value, min, max, setter) => {
-//   // Allow empty input for manual editing
-//   if (value === "") {
-//     setter("");
-//     return;
-//   }
-
-//   value = Number(value);
-
-//   // Validation logic
-//   if (value > max) {
-//     setter(max);
-//   } else {
-//     setter(value);
-//   }
-// };

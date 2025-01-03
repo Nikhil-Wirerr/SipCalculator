@@ -14,8 +14,8 @@ import {
 } from "react-bootstrap";
 
 const HouseRentAllowanceaCal = () => {
-  const [totalAmount, setTotalAmount] = useState(100);
-  const [selectedOption, setSelectedOption] = useState("");
+  // const [totalAmount, setTotalAmount] = useState(100);
+  // const [selectedOption, setSelectedOption] = useState("");
 
   const [basicSalary, setBasicSalary] = useState(0);
   const [dearnessAllowance, setDearnessAllowance] = useState(0);
@@ -30,7 +30,7 @@ const HouseRentAllowanceaCal = () => {
     const metroLimit = isMetro ? 0.5 : 0.4; // 50% for metro, 40% for non-metro
     const maxExemption = metroLimit * salaryComponent;
 
-    const exempted = Math.min(hraReceived, rentExcess, maxExemption);
+    const exempted = Math.min(rentExcess, hraReceived, maxExemption);
 
     // console.log({
     //   salaryComponent,
@@ -56,19 +56,19 @@ const HouseRentAllowanceaCal = () => {
 
   return (
     <>
-      <div className={HouseRentStyle.hraBackground}>
-        <div className={`${HouseRentStyle.gstpreHeading} container pt-5`}>
-          <h1 className="text-left pt-3">HRA Calculator</h1>
+    <div className={`${HouseRentStyle.hraContainer}`}>
+      <div className='container py-5'>
+        <div className={`${HouseRentStyle.gstpreHeading}`}>
+          <h1 className="text-left">HRA Calculator</h1>
           <p className="pt-2 pb-4">
             The HRA calculator helps estimate the potential growth of your House
             rent allowance investment over your chosen time frame. GST is a
             convenient method to save for your long-term financial goals.
           </p>
         </div>
-      </div>
 
-      <div className="container">
-        <Card className="p-4 border-0 shadow">
+      <div >
+        <Card className="p-4 border border-0 shadow-sm">
           <Row>
             <Col className="mb-4">
               <Form>
@@ -199,7 +199,8 @@ const HouseRentAllowanceaCal = () => {
           </p>
         </div>
       </div>
-
+      </div>
+    </div>
       <div className={`${HouseRentStyle.qaContent} container`}>
         <section>
           <div className={HouseRentStyle.subHeading}>
@@ -213,25 +214,25 @@ const HouseRentAllowanceaCal = () => {
               <div className={HouseRentStyle.sidebar}>
                 <ul className="list-unstyled">
                   <li className={HouseRentStyle.sidebarItem}>
-                    What is a SIP Calculator?
+                    What is a HRA Calculator?
                   </li>
                   <li className={HouseRentStyle.sidebarItem}>
-                    How can a SIP Calculator Help You?
+                    How can a HRA Calculator Help You?
                   </li>
                   <li className={HouseRentStyle.sidebarItem}>
-                    Advantages of SIP Calculator
+                    Advantages of HRA Calculator
                   </li>
                   <li className={HouseRentStyle.sidebarItem}>
-                    How to use ET Money's SIP Calculator?
+                    How to use Sernet's HRA Calculator?
                   </li>
                   <li className={HouseRentStyle.sidebarItem}>
-                    Related Mutual Fund SIP Calculators ?
+                    Related HRA Calculators ?
                   </li>
                   <li className={HouseRentStyle.sidebarItem}>
-                    Advantages of SIP Calculator
+                    Advantages of HRA Calculator
                   </li>
                   <li className={HouseRentStyle.sidebarItem}>
-                    Related Mutual Fund SIP Calculators ?
+                    Related HRA Calculators ?
                   </li>
                 </ul>
               </div>
@@ -239,7 +240,7 @@ const HouseRentAllowanceaCal = () => {
 
             <Col xs={12} md={8} lg={9} className={HouseRentStyle.qandA}>
               <div className={HouseRentStyle.quesAnsSection}>
-                <h3>What is a SIP Calculator?</h3>
+                <h3>What is a HRA Calculator?</h3>
                 <p>
                   A SIP (Systematic Investment Plan) Calculator is an online or
                   software tool used to calculate the potential returns from
@@ -250,7 +251,7 @@ const HouseRentAllowanceaCal = () => {
                 </p>
               </div>
               <div className={HouseRentStyle.quesAnsSection}>
-                <h3>How can a SIP Calculator Help You?</h3>
+                <h3>How can a HRA Calculator Help You?</h3>
                 <p>
                   The Systematic investment Plan calculator essentially gives
                   investors a bifurcation of the future value of the SIP
@@ -271,7 +272,7 @@ const HouseRentAllowanceaCal = () => {
                 </p>
               </div>
               <div className={HouseRentStyle.quesAnsSection}>
-                <h3>Advantages of SIP Calculator</h3>
+                <h3>Advantages of HRA Calculator</h3>
                 <p>
                   Investments made into market-linked instruments such as Mutual
                   Funds do not provide guaranteed returns. So investors might
@@ -302,7 +303,7 @@ const HouseRentAllowanceaCal = () => {
                 </p>
               </div>
               <div className={HouseRentStyle.quesAnsSection}>
-                <h3>How to use ET Money's SIP Calculator?</h3>
+                <h3>How to use Sernet's HRA Calculator?</h3>
                 <p>
                   If you know how much you want to invest in Mutual Funds every
                   month, you can use the ET Money SIP Calculator to estimate the
@@ -340,7 +341,7 @@ const HouseRentAllowanceaCal = () => {
                 </p>
               </div>
               <div className={HouseRentStyle.quesAnsSection}>
-                <h3>Related Mutual Fund SIP Calculators ?</h3>
+                <h3>Related HRA Calculators ?</h3>
                 <p>
                   The Systematic investment Plan calculator essentially gives
                   investors a bifurcation of the future value of the SIP
@@ -363,65 +364,140 @@ const HouseRentAllowanceaCal = () => {
             </Col>
           </Row>
         </section>
+       
         <section className="pb-5 mt-5">
-          <div className={`${HouseRentStyle.preHeading} py-5`}>
-            <h1 className="text-align-left pt-5">
+          <div className={`${HouseRentStyle.faq_Heading} py-5`}>
+            <h1 className="text-align-left">
               FAQs (Frequently Asked Questions)
             </h1>
           </div>
-          <div>
-            <Accordion defaultActiveKey={["1"]} alwaysOpen>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header className={HouseRentStyle.accordionHeader}>
-                  How can a SIP Calculator Help You?
-                </Accordion.Header>
-                <Accordion.Body className={HouseRentStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
+            <div
+              className="accordion accordion-flush"
+              id="accordionFlushExample"
+            >
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${HouseRentStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseOne"
+                  >
+                    How can a HRA Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseOne"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${HouseRentStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${HouseRentStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseTwo"
+                  >
+                    Can I modify my HRA amount?
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseTwo"
+                  className="accordion-collapse collapse show"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${HouseRentStyle.acco_body}`}>
+                    There is no maximum tenure of a SIP. You can invest as long
+                    as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${HouseRentStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseThree"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseThree"
+                  >
+                    How can a HRA Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseThree"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${HouseRentStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-              <Accordion.Item eventKey="1">
-                <Accordion.Header className={HouseRentStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={HouseRentStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${HouseRentStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFour"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFour"
+                  >
+                    How can a HRA Calculator Help You ?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseFour"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${HouseRentStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-              <Accordion.Item eventKey="2">
-                <Accordion.Header className={HouseRentStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={HouseRentStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="3">
-                <Accordion.Header className={HouseRentStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={HouseRentStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="4">
-                <Accordion.Header className={HouseRentStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={HouseRentStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-          </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${HouseRentStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFive"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFive"
+                  >
+                    How can a HRA Calculator Help You  ?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseFive"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${HouseRentStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+            </div>
         </section>
       </div>
     </>
@@ -429,70 +505,3 @@ const HouseRentAllowanceaCal = () => {
 };
 
 export default HouseRentAllowanceaCal;
-
-
- {/* <Form.Group className="m-3 pt-4">
-                  <div
-                    className={`${HouseRentStyle.rangefield} d-flex justify-content-between`}
-                  >
-                    <Form.Label>Basic salary (p.a)</Form.Label>
-                    <span>₹{" "}69,174</span>
-                  </div>
-                </Form.Group>
-
-                <Form.Group className="m-3 pt-4">
-                  <div
-                    className={`${HouseRentStyle.rangefield} d-flex justify-content-between`}
-                  >
-                    <Form.Label>Dearness allowance (p.a)</Form.Label>
-                    <span>₹ 0</span>
-                  </div>
-                </Form.Group>
-
-                <Form.Group className="m-3 pt-4">
-                  <div
-                    className={`${HouseRentStyle.rangefield} d-flex justify-content-between`}
-                  >
-                    <Form.Label>HRA received (p.a)</Form.Label>
-                    <span>₹ 10,174</span>
-                  </div>
-                </Form.Group>
-
-                <Form.Group className="m-3 pt-4">
-                  <div
-                    className={`${HouseRentStyle.rangefield} d-flex justify-content-between`}
-                  >
-                    <Form.Label>Total rent paid (p.a)</Form.Label>
-                    <span>₹ 19,174</span>
-                  </div>
-                </Form.Group>
-
-                <Form.Group className="m-3 pt-4">
-                  <div
-                    className={`${HouseRentStyle.rangefield} d-flex justify-content-between align-items-center`}
-                  >
-                    <Form.Label>Are you working in a metro city?</Form.Label>
-                    <div className="d-flex justify-content-center align-items-center">
-                      <Form.Check
-                        inline
-                        type="radio"
-                        id="metroCityYes"
-                        name="metroCity"
-                        label="Yes"
-                        value="yes"
-                        checked={selectedOption === "yes"}
-                        onChange={handleOptionChange}
-                      />
-                      <Form.Check
-                        inline
-                        type="radio"
-                        id="metroCityNo"
-                        name="metrocity"
-                        label="No"
-                        value="no"
-                        checked={selectedOption === "no"}
-                        onChange={handleOptionChange}
-                      />
-                    </div>
-                  </div>
-                </Form.Group> */}

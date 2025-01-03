@@ -18,7 +18,7 @@ import {
 } from "recharts";
 
 const SsyCal = () => {
-  const [yearlyInvestment, setYearlyInvestment] = useState(0);
+  const [yearlyInvestment, setYearlyInvestment] = useState(5000);
   const [maturityAmount, setMaturityAmount] = useState(0);
   const [totalInvested, setTotalInvested] = useState(0);
   const [estimatedReturns, setEstimatedReturns] = useState(0);
@@ -71,7 +71,7 @@ const SsyCal = () => {
     if (value > maxAmountLimit) {
       value = maxAmountLimit;
     }
-    
+
     setYearlyInvestment(value === "" ? 0 : Number(value));
     console.log("yearly investment:", value);
   };
@@ -104,7 +104,7 @@ const SsyCal = () => {
 
   return (
     <>
-      <div className={` ${SsyStyle.lumpsumContainer}`}>
+      <div className={` ${SsyStyle.ssyContainer}`}>
         <div className="container py-5">
           <div className={SsyStyle.preHeading}>
             <h1 className="text-align-left pt-3">SSY Calculator </h1>
@@ -119,25 +119,13 @@ const SsyCal = () => {
           </div>
 
           <div>
-            <Card className="p-5 border-0 shadow">
+            <Card className="p-5 border border-0 shadow-sm">
               <Row>
                 <Col xs={12} md={12} lg={6} className="mb-4">
-                  <div className={SsyStyle.lumpsumCard}>
-                    <div>
-                      <h5>Latest interest rate @ 8.2 % p.a.</h5>
+                  <div className={SsyStyle.ssycard}>
+                    <div className="mb-4">
+                      <h5>Latest SSY Rate=8.2%</h5>
                     </div>
-                    <div className="mt-5">
-                      <div className="calc-img d-flex mb-4">
-                        <Image src={LumpCalImg} alt="cal-img" />
-                        <div className={SsyStyle.returnEstimation}>
-                          <h6 className="ps-2 mb-1">Return Estimator</h6>
-                          <p className="ps-2">
-                            Estimation is based on the past performance
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
                     <Form>
                       <div className={`${SsyStyle.customformgroup} `}>
                         <div className={SsyStyle.custominputwrapper}>
@@ -157,42 +145,9 @@ const SsyCal = () => {
                         </div>
                       </div>
 
-                      <Form.Group className="pt-5">
-                        <div
-                          className={`d-flex justify-content-between ${SsyStyle.rangefield}`}
-                        >
-                          <Form.Label>Investment Start Year</Form.Label>
-                          <div className={SsyStyle.rangecustominput}>
-                            <input
-                              type="number"
-                              className="border-0 w-100"
-                              onWheel={handleWheel}
-                              value={investmentStartYear}
-                              onChange={(e) =>
-                                setInvestmentStartYear(e.target.value)
-                              } // Handle change
-                            />
-                            <span>Yrs</span>
-                          </div>
-                        </div>
-                        <Form.Range
-                          min={2015}
-                          max={2033}
-                          value={investmentStartYear}
-                          onChange={(e) =>
-                            setInvestmentStartYear(e.target.value)
-                          }
-                        />
-                        <div
-                          className={`d-flex justify-content-between ${SsyStyle.belowrangefield}`}
-                        >
-                          <span>2015 Yr</span>
-                          <span>2033 Yr</span>
-                        </div>
-                      </Form.Group>
                       <Form.Group>
                         <div
-                          className={`mt-4 d-flex justify-content-between ${SsyStyle.rangefield}`}
+                          className={`pt-5 d-flex justify-content-between ${SsyStyle.rangefield}`}
                         >
                           <Form.Label>Girl's Age</Form.Label>
                           <div className={SsyStyle.rangecustominput}>
@@ -219,6 +174,40 @@ const SsyCal = () => {
                           <span>10 Yr</span>
                         </div>
                       </Form.Group>
+
+                      <Form.Group className="pt-4">
+                        <div
+                          className={`d-flex justify-content-between ${SsyStyle.rangefield}`}
+                        >
+                          <Form.Label>Start Period</Form.Label>
+                          <div className={SsyStyle.rangecustominput}>
+                            <input
+                              type="number"
+                              className="border-0 w-100"
+                              onWheel={handleWheel}
+                              value={investmentStartYear}
+                              onChange={(e) =>
+                                setInvestmentStartYear(e.target.value)
+                              } // Handle change
+                            />
+                          </div>
+                        </div>
+                        <Form.Range
+                          min={2015}
+                          max={2033}
+                          value={investmentStartYear}
+                          onChange={(e) =>
+                            setInvestmentStartYear(e.target.value)
+                          }
+                        />
+                        <div
+                          className={`d-flex justify-content-between ${SsyStyle.belowrangefield}`}
+                        >
+                          <span>2015 Yr</span>
+                          <span>2033 Yr</span>
+                        </div>
+                      </Form.Group>
+                      
                     </Form>
                   </div>
                 </Col>
@@ -227,13 +216,13 @@ const SsyCal = () => {
                   xs={12}
                   md={12}
                   lg={6}
-                  className={`d-flex align-items-center `}
+                  className={`d-flex justify-content-around ${SsyStyle.verticalLine} `}
                 >
                   <div className={SsyStyle.lumpsumCard}>
                     <div
-                      className={`d-flex align-items-center flex-column ${SsyStyle.verticalLine} `}
+                      className={`d-flex align-items-center flex-column  `}
                     >
-                      <div className={`${SsyStyle.totalInvest} ps-5 mt-2`}>
+                      <div className={`${SsyStyle.totalInvest} ps-5 `}>
                         <p>
                           The Maturity value of your investment after{" "}
                           <strong> 21 Years</strong> will be
@@ -328,25 +317,25 @@ const SsyCal = () => {
               <div className={SsyStyle.sidebar}>
                 <ul className="list-unstyled">
                   <li className={SsyStyle.sidebarItem}>
-                    What is a SIP Calculator?
+                    What is a SSY Calculator?
                   </li>
                   <li className={SsyStyle.sidebarItem}>
-                    How can a SIP Calculator Help You?
+                    How can a SSY Calculator Help You?
                   </li>
                   <li className={SsyStyle.sidebarItem}>
-                    Advantages of SIP Calculator
+                    Advantages of SSY Calculator
                   </li>
                   <li className={SsyStyle.sidebarItem}>
-                    How to use ET Money's SIP Calculator?
+                    How to use ET Money's SSY Calculator?
                   </li>
                   <li className={SsyStyle.sidebarItem}>
-                    Related Mutual Fund SIP Calculators ?
+                    Related Mutual Fund SSY Calculators ?
                   </li>
                   <li className={SsyStyle.sidebarItem}>
-                    Advantages of SIP Calculator
+                    Advantages of SSY Calculator
                   </li>
                   <li className={SsyStyle.sidebarItem}>
-                    Related Mutual Fund SIP Calculators ?
+                    Related Mutual Fund SSY Calculators ?
                   </li>
                 </ul>
               </div>
@@ -355,18 +344,18 @@ const SsyCal = () => {
             <Col xs={12} md={8} lg={9}>
               <div className={SsyStyle.qandA}>
                 <div className={SsyStyle.quesAnsSection}>
-                  <h3>What is a SIP Calculator?</h3>
+                  <h3>What is a SSY Calculator?</h3>
                   <p>
-                    A SIP (Systematic Investment Plan) Calculator is an online
+                    A SSY (Sukanya Samriddhi Yojana ) Calculator is an online
                     or software tool used to calculate the potential returns
-                    from investing in mutual funds through SIP. It helps
+                    from investing in mutual funds through SSY. It helps
                     investors estimate how much their regular monthly
                     investments can grow over time, considering factors like the
                     investment amount, duration, and expected rate of return.
                   </p>
                 </div>
                 <div className={SsyStyle.quesAnsSection}>
-                  <h3>How can a SIP Calculator Help You?</h3>
+                  <h3>How can a SSY Calculator Help You?</h3>
                   <p>
                     The Systematic investment Plan calculator essentially gives
                     investors a bifurcation of the future value of the SIP
@@ -388,7 +377,7 @@ const SsyCal = () => {
                   </p>
                 </div>
                 <div className={SsyStyle.quesAnsSection}>
-                  <h3>Advantages of SIP Calculator</h3>
+                  <h3>Advantages of SSY Calculator</h3>
                   <p>
                     Investments made into market-linked instruments such as
                     Mutual Funds do not provide guaranteed returns. So investors
@@ -420,7 +409,7 @@ const SsyCal = () => {
                   </p>
                 </div>
                 <div className={SsyStyle.quesAnsSection}>
-                  <h3>How to use ET Money's SIP Calculator?</h3>
+                  <h3>How to use Sernet's SSY Calculator?</h3>
                   <p>
                     If you know how much you want to invest in Mutual Funds
                     every month, you can use the ET Money SIP Calculator to
@@ -460,7 +449,7 @@ const SsyCal = () => {
                   </p>
                 </div>
                 <div className={SsyStyle.quesAnsSection}>
-                  <h3>Related Mutual Fund SIP Calculators ?</h3>
+                  <h3>Related Mutual Fund SSY Calculators ?</h3>
                   <p>
                     The Systematic investment Plan calculator essentially gives
                     investors a bifurcation of the future value of the SIP
@@ -485,56 +474,139 @@ const SsyCal = () => {
             </Col>
           </Row>
         </section>
-
         <section className="pb-5 mt-5">
-          <div className={`${SsyStyle.preHeading} py-5`}>
-            <h1 className="text-align-left pt-5">
+          <div className={`${SsyStyle.faq_Heading} py-5`}>
+            <h1 className="text-align-left">
               FAQs (Frequently Asked Questions)
             </h1>
           </div>
-          <div>
-            <Accordion defaultActiveKey="0" alwaysOpen>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header className={SsyStyle.custom_acco_header}>
-                  How can a SIP Calculator Help You?
-                </Accordion.Header>
-                <Accordion.Body>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
+            <div
+              className="accordion accordion-flush"
+              id="accordionFlushExample"
+            >
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${SsyStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseOne"
+                  >
+                    How can a SSY Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseOne"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${SsyStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${SsyStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseTwo"
+                  >
+                    Can I modify my SSY amount?
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseTwo"
+                  className="accordion-collapse collapse show"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${SsyStyle.acco_body}`}>
+                    There is no maximum tenure of a SIP. You can invest as long
+                    as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${SsyStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseThree"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseThree"
+                  >
+                    How can a SSY Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseThree"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${SsyStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-              <Accordion.Item eventKey="1">
-                <Accordion.Header>Can I modify my SIP amount?</Accordion.Header>
-                <Accordion.Body>
-                  Yes, you can modify your SIP amount at any point during your
-                  tenure by contacting your fund manager or using the online
-                  portal.
-                </Accordion.Body>
-              </Accordion.Item>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${SsyStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFour"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFour"
+                  >
+                    How can a SSY Calculator Help You ?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseFour"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${SsyStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-              <Accordion.Item eventKey="2">
-                <Accordion.Header>
-                  What is the minimum tenure for SIP?
-                </Accordion.Header>
-                <Accordion.Body>
-                  The minimum tenure for a SIP is usually 6 months, but it can
-                  vary depending on the mutual fund you select.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="3">
-                <Accordion.Header>
-                  What happens if I miss a SIP payment?
-                </Accordion.Header>
-                <Accordion.Body>
-                  If you miss a SIP payment, your account will not be penalized.
-                  However, consistent payments are encouraged for better
-                  returns.
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-          </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${SsyStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFive"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFive"
+                  >
+                    How can a SSY Calculator Help You  ?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseFive"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${SsyStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+            </div>
         </section>
       </div>
     </>

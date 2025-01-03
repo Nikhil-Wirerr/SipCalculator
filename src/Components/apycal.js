@@ -67,9 +67,7 @@ const ApyCal = () => {
 
     return Math.round(interpolatedValue); // Return rounded value
   };
-  
 
-  // Update investment duration, monthly contribution, and total investment whenever joiningAge or totalAmount changes
   useEffect(() => {
     const newInvestmentDuration = 60 - joiningAge; // Age 60 is the maximum joining age for APY
     setInvestmentDuration(
@@ -85,90 +83,92 @@ const ApyCal = () => {
 
   return (
     <>
-      <div className={apyCalStyle.apyBackground}>
-        <div className={`${apyCalStyle.apypreHeading} container pt-5`}>
-          <h1 className="text-left pt-3">APY Calculator</h1>
-          <p className="pt-2 pb-4">
-            The APY calculator helps estimate the potential growth of your
-            Systematic Investment Plan (SIP) investment over your chosen time
-            frame. APY is a convenient method to save for your long-term
-            financial goals.
-          </p>
-        </div>
-      </div>
-
-      <div className="container">
-        <Card className="px-3 py-3 mb-4 border-0 shadow">
-          <Row>
-            <Col className="mb-4">
-              <Form>
-                <Form.Group className="m-3 pt-4">
-                  <div
-                    className={`d-flex justify-content-between ${apyCalStyle.rangefield}`}
-                  >
-                    <Form.Label>Your Joining Age</Form.Label>
-                    <div className={apyCalStyle.rangefield}>
-                      <input
-                        type="number"
-                        value={joiningAge}
-                        readOnly
-                        className={`border-0 text-end ${apyCalStyle.custominput}`}
-                      />
-                      <span>Yrs</span>
-                    </div>
-                  </div>
-                  <Form.Range
-                    min={18}
-                    max={40}
-                    value={joiningAge}
-                    onChange={(e) => setJoiningAge(Number(e.target.value))}
-                  />
-                </Form.Group>
-
-                <Form.Group className="m-3 pt-4">
-                  <div
-                    className={`d-flex justify-content-between ${apyCalStyle.rangefield}`}
-                  >
-                    <Form.Label>Desired Monthly Pension</Form.Label>
-                    <div>
-                      <span className="me-2">₹</span>
-                      <input
-                        type="number"
-                        value={totalAmount}
-                        readOnly
-                        className={`border-0 text-end ${apyCalStyle.custominput}`}
-                        style={{ width: "70px", textAlign: "right" }}
-                      />
-                    </div>
-                  </div>
-                  <Form.Range
-                    min={1000}
-                    max={5000}
-                    step={1000}
-                    value={totalAmount}
-                    onChange={(e) => setTotalAmount(Number(e.target.value))}
-                  />
-                </Form.Group>
-              </Form>
-            </Col>
-          </Row>
-          <div className={apyCalStyle.rangefield}>
-            <div
-              className={`d-flex justify-content-between px-3 ${apyCalStyle.rangefield}`}
-            >
-              <p>Monthly investment</p>
-              <span>₹ {monthlyContribution}</span>
-            </div>
-            <div className="d-flex justify-content-between  px-3">
-              <p>Investment duration</p>
-              <span>{investmentDuration} years</span>
-            </div>
-            <div className="d-flex justify-content-between  px-3">
-              <p>Total Amount</p>
-              <span>₹ {totalInvestment}</span>
-            </div>
+      <div className={`${apyCalStyle.apyContainer}`}>
+        <div className='container py-5'>
+          <div className={`${apyCalStyle.apypreHeading}`}>
+            <h1 className="text-left">APY Calculator</h1>
+            <p className="pt-2 ">
+              The APY calculator helps estimate the potential growth of your
+              Systematic Investment Plan (SIP) investment over your chosen time
+              frame. APY is a convenient method to save for your long-term
+              financial goals.
+            </p>
           </div>
-        </Card>
+
+        <div>
+          <Card className="px-3 py-3 mb-4 border-0 shadow">
+            <Row>
+              <Col className="mb-4">
+                <Form>
+                  <Form.Group className="m-3 pt-4">
+                    <div
+                      className={`d-flex justify-content-between ${apyCalStyle.rangefield}`}
+                    >
+                      <Form.Label>Your Joining Age</Form.Label>
+                      <div className={apyCalStyle.rangefield}>
+                        <input
+                          type="number"
+                          value={joiningAge}
+                          readOnly
+                          className={`border-0 text-end ${apyCalStyle.custominput}`}
+                        />
+                        <span>Yrs</span>
+                      </div>
+                    </div>
+                    <Form.Range
+                      min={18}
+                      max={40}
+                      value={joiningAge}
+                      onChange={(e) => setJoiningAge(Number(e.target.value))}
+                    />
+                  </Form.Group>
+
+                  <Form.Group className="m-3 pt-4">
+                    <div
+                      className={`d-flex justify-content-between ${apyCalStyle.rangefield}`}
+                    >
+                      <Form.Label>Desired Monthly Pension</Form.Label>
+                      <div>
+                        <span className="me-2">₹</span>
+                        <input
+                          type="number"
+                          value={totalAmount}
+                          readOnly
+                          className={`border-0 text-end ${apyCalStyle.custominput}`}
+                          style={{ width: "70px", textAlign: "right" }}
+                        />
+                      </div>
+                    </div>
+                    <Form.Range
+                      min={1000}
+                      max={5000}
+                      step={1000}
+                      value={totalAmount}
+                      onChange={(e) => setTotalAmount(Number(e.target.value))}
+                    />
+                  </Form.Group>
+                </Form>
+              </Col>
+            </Row>
+            <div className={apyCalStyle.rangefield}>
+              <div
+                className={`d-flex justify-content-between px-3 ${apyCalStyle.rangefield}`}
+              >
+                <p>Monthly investment</p>
+                <span>₹ {monthlyContribution}</span>
+              </div>
+              <div className="d-flex justify-content-between  px-3">
+                <p>Investment duration</p>
+                <span>{investmentDuration} years</span>
+              </div>
+              <div className="d-flex justify-content-between  px-3">
+                <p>Total Amount</p>
+                <span>₹ {totalInvestment}</span>
+              </div>
+            </div>
+          </Card>
+        </div>
+        </div>
       </div>
 
       <div className={`${apyCalStyle.qaContent} container`}>
@@ -184,25 +184,22 @@ const ApyCal = () => {
               <div className={apyCalStyle.sidebar}>
                 <ul className="list-unstyled">
                   <li className={apyCalStyle.sidebarItem}>
-                    What is a SIP Calculator?
+                    What is a APY Calculator?
                   </li>
                   <li className={apyCalStyle.sidebarItem}>
-                    How can a SIP Calculator Help You?
+                    How can a APY Calculator Help You?
                   </li>
                   <li className={apyCalStyle.sidebarItem}>
-                    Advantages of SIP Calculator
+                    Advantages of APY Calculator
                   </li>
                   <li className={apyCalStyle.sidebarItem}>
-                    How to use ET Money's SIP Calculator?
+                    How to use Sernet's APY Calculator?
                   </li>
                   <li className={apyCalStyle.sidebarItem}>
-                    Related Mutual Fund SIP Calculators ?
+                    Related Calculators ?
                   </li>
                   <li className={apyCalStyle.sidebarItem}>
-                    Advantages of SIP Calculator
-                  </li>
-                  <li className={apyCalStyle.sidebarItem}>
-                    Related Mutual Fund SIP Calculators ?
+                    Advantages of APY Calculator
                   </li>
                 </ul>
               </div>
@@ -210,7 +207,7 @@ const ApyCal = () => {
 
             <Col xs={12} md={8} lg={9} className={apyCalStyle.qandA}>
               <div className={apyCalStyle.quesAnsSection}>
-                <h3>What is a SIP Calculator?</h3>
+                <h3>What is a APY Calculator?</h3>
                 <p>
                   A SIP (Systematic Investment Plan) Calculator is an online or
                   software tool used to calculate the potential returns from
@@ -221,7 +218,7 @@ const ApyCal = () => {
                 </p>
               </div>
               <div className={apyCalStyle.quesAnsSection}>
-                <h3>How can a SIP Calculator Help You?</h3>
+                <h3>How can a APY Calculator Help You?</h3>
                 <p>
                   The Systematic investment Plan calculator essentially gives
                   investors a bifurcation of the future value of the SIP
@@ -242,7 +239,7 @@ const ApyCal = () => {
                 </p>
               </div>
               <div className={apyCalStyle.quesAnsSection}>
-                <h3>Advantages of SIP Calculator</h3>
+                <h3>Advantages of APY Calculator</h3>
                 <p>
                   Investments made into market-linked instruments such as Mutual
                   Funds do not provide guaranteed returns. So investors might
@@ -273,7 +270,7 @@ const ApyCal = () => {
                 </p>
               </div>
               <div className={apyCalStyle.quesAnsSection}>
-                <h3>How to use ET Money's SIP Calculator?</h3>
+                <h3>How to use Sernet's APY Calculator?</h3>
                 <p>
                   If you know how much you want to invest in Mutual Funds every
                   month, you can use the ET Money SIP Calculator to estimate the
@@ -311,7 +308,7 @@ const ApyCal = () => {
                 </p>
               </div>
               <div className={apyCalStyle.quesAnsSection}>
-                <h3>Related Mutual Fund SIP Calculators ?</h3>
+                <h3>Related Mutual Fund APY Calculators ?</h3>
                 <p>
                   The Systematic investment Plan calculator essentially gives
                   investors a bifurcation of the future value of the SIP
@@ -334,65 +331,140 @@ const ApyCal = () => {
             </Col>
           </Row>
         </section>
+       
         <section className="pb-5 mt-5">
-          <div className={`${apyCalStyle.preHeading} py-5`}>
-            <h1 className="text-align-left pt-5">
+          <div className={`${apyCalStyle.faq_Heading} py-5`}>
+            <h1 className="text-align-left">
               FAQs (Frequently Asked Questions)
             </h1>
           </div>
-          <div>
-            <Accordion defaultActiveKey={["1"]} alwaysOpen>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header className={apyCalStyle.accordionHeader}>
-                  How can a SIP Calculator Help You?
-                </Accordion.Header>
-                <Accordion.Body className={apyCalStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
+            <div
+              className="accordion accordion-flush"
+              id="accordionFlushExample"
+            >
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${apyCalStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseOne"
+                  >
+                    How can a APY Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseOne"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${apyCalStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${apyCalStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseTwo"
+                  >
+                    Can I modify my APY amount?
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseTwo"
+                  className="accordion-collapse collapse show"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${apyCalStyle.acco_body}`}>
+                    There is no maximum tenure of a SIP. You can invest as long
+                    as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${apyCalStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseThree"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseThree"
+                  >
+                    How can a APY Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseThree"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${apyCalStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-              <Accordion.Item eventKey="1">
-                <Accordion.Header className={apyCalStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={apyCalStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${apyCalStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFour"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFour"
+                  >
+                    How can a APY Calculator Help You ?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseFour"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${apyCalStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-              <Accordion.Item eventKey="2">
-                <Accordion.Header className={apyCalStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={apyCalStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="3">
-                <Accordion.Header className={apyCalStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={apyCalStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="4">
-                <Accordion.Header className={apyCalStyle.accordionHeader}>
-                  Can I modify my SIP amount?
-                </Accordion.Header>
-                <Accordion.Body className={apyCalStyle.accordionbody}>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-          </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${apyCalStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFive"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFive"
+                  >
+                    How can a APY Calculator Help You  ?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseFive"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${apyCalStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+            </div>
         </section>
       </div>
     </>
@@ -401,125 +473,3 @@ const ApyCal = () => {
 
 export default ApyCal;
 
-
-
-
-      {/* <Form>
-                <Form.Group className="m-3 pt-4">
-                  <div
-                    className={`d-flex justify-content-between ${apyCalStyle.rangefield}`}
-                  >
-                    <Form.Label>Your joining age</Form.Label>
-                    <div className={apyCalStyle.rangefield}>
-                      <input
-                        type="number"
-                        value={joiningAge}
-                        onChange={(e) => setJoiningAge(Number(e.target.value))}
-                        className={`border-0 text-end ${apyCalStyle.custominput}`}
-                        onWheel={handleWheel}
-                        min={1}
-                        max={60}
-                        disabled // Disable manual entry for age
-                      />
-                      <span>Yrs</span>
-                    </div>
-                  </div>
-                  <Form.Range
-                    min={1}
-                    max={60}
-                    value={joiningAge}
-                    onChange={(e) => setJoiningAge(Number(e.target.value))}
-                  />
-                </Form.Group>
-
-                <Form.Group className="m-3 pt-4">
-                  <div
-                    className={`d-flex justify-content-between ${apyCalStyle.rangefield}`}
-                  >
-                    <Form.Label>Desired Monthly Amount</Form.Label>
-                    <div>
-                      <span className="me-2">₹</span>
-                      <input
-                        type="number"
-                        value={totalAmount}
-                        // onChange={(e) => setTotalAmount(Number(e.target.value))}
-
-                        onChange={(e) => {
-                          // Ensure that the value is one of the available amounts
-                          const amount = Number(e.target.value);
-                          if (availableAmounts.includes(amount)) {
-                            setTotalAmount(amount);
-                          }
-                        }}
-
-                        className={`border-0 text-end ${apyCalStyle.custominput}`}
-                        onWheel={handleWheel}
-                        min={1000}
-                        max={5000}
-                        
-                        style={{ width: "70px", textAlign: "right" }}
-                        disabled // Disable manual entry for age
-
-                      />
-                    </div>
-                  </div>
-                  <Form.Range
-                    min={1000}
-                    max={5000}
-                    value={totalAmount}
-                    step={1000} 
-                    // onChange={(e) => setTotalAmount(Number(e.target.value))}
-                    onChange={(e) => {
-                      const amount = Number(e.target.value);
-                      if (availableAmounts.includes(amount)) {
-                        setTotalAmount(amount);
-                      }
-                    }}
-                  />
-                </Form.Group>
-              </Form> */}
-
-
-              
-// const contributionTable = {
-//   1000: { 18: 42, 30: 74, 40: 145 },
-//   2000: { 18: 84, 30: 145, 40: 289 },
-//   3000: { 18: 126, 30: 217, 40: 434 },
-//   4000: { 18: 168, 30: 290, 40: 577 },
-//   5000: { 18: 210, 30: 362, 40: 722 },
-// };
-
-// const interpolate = (age, table) => {
-//   const ages = Object.keys(table).map(Number).sort((a, b) => a - b);
-
-//   if (age <= ages[0]) return table[ages[0]]; // Below minimum age, use minimum
-//   if (age >= ages[ages.length - 1]) return table[ages[ages.length - 1]]; // Above maximum age, use maximum
-
-//   for (let i = 0; i < ages.length - 1; i++) {
-//     const age1 = ages[i];
-//     const age2 = ages[i + 1];
-
-//     if (age >= age1 && age <= age2) {
-//       // Linear interpolation
-//       const value1 = table[age1];
-//       const value2 = table[age2];
-//       return value1 + ((value2 - value1) * (age - age1)) / (age2 - age1);
-//     }
-//   }
-//   return 0; // Fallback, though this shouldn't be reached
-// };
-
-// const calculateAPY = () => {
-//   const durationYears = Math.max(60 - joiningAge, 0);
-
-//   const monthly = interpolate(joiningAge, contributionTable[desiredPension]) || 0;
-//   const total = monthly * 12 * durationYears;
-
-//   setMonthlyInvestment(monthly.toFixed(2)); // Format to 2 decimal places if needed
-//   setInvestmentDuration(durationYears);
-//   setTotalAmount(total.toFixed(2)); // Format to 2 decimal places if needed
-// };
-
-// useEffect(() => {
-//   calculateAPY();
-// }, [joiningAge, desiredPension]);

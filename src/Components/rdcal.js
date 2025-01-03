@@ -18,10 +18,10 @@ import {
 } from "recharts";
 
 const RdCal = () => {
-  const [amount, setAmount] = useState(25000); // Principal amount for RD
-  const [durationYear, setDurationYear] = useState(10); // Default duration in Years
-  const [durationType, setDurationType] = useState("Years"); // Dropdown selection for Years/Months
-  const [expectedReturn, setExpectedReturn] = useState(8); // Expected interest rate in %
+  const [amount, setAmount] = useState(25000); 
+  const [durationYear, setDurationYear] = useState(10); 
+  const [durationType, setDurationType] = useState("Years"); 
+  const [expectedReturn, setExpectedReturn] = useState(8); 
 
   const handleWheel = (e) => e.target.blur();
 
@@ -30,10 +30,10 @@ const RdCal = () => {
   // Calculate Total Value (Maturity Amount) for RD
   const calculateTotalValue = () => {
     let convertedDuration = durationYear;
-    let monthlyInterestRate = expectedReturn / 100 / 12; // Monthly rate
+    let monthlyInterestRate = expectedReturn / 100 / 12; 
 
     // Calculate compound interest for RD (assuming monthly contributions)
-    const n = durationYear * (durationType === "Months" ? 1 : 12); // Total months for RD
+    const n = durationYear * (durationType === "Months" ? 1 : 12); 
     const totalAmount =
       amount *
       ((Math.pow(1 + monthlyInterestRate, n) - 1) / monthlyInterestRate);
@@ -88,10 +88,10 @@ const RdCal = () => {
 
   return (
     <>
-      <div className={` ${RdStyle.lumpsumContainer}`}>
+      <div className={` ${RdStyle.rdContainer}`}>
         <div className="container py-5">
           <div className={RdStyle.preHeading}>
-            <h1 className="text-align-left pt-3">RD Calculator</h1>
+            <h1 className="text-align-left">RD Calculator</h1>
             <p className="pt-2 pb-4">
               {" "}
               Recurring deposits (RDs) are an investment instrument almost
@@ -104,12 +104,11 @@ const RdCal = () => {
           </div>
 
           <div>
-            <Card className="p-5 border-0 shadow">
+            <Card className="p-5 border border-0 shadow-sm">
               <Row>
-                <Col xs={12} md={12} lg={6} className="mb-4">
-                  <div className={RdStyle.lumpsumCard}>
-                    <div className="mt-5">
-                      <div className="calc-img d-flex mb-4">
+                <Col xs={12} md={12} lg={6} className="mb-4 ">
+                  <div className={RdStyle.rdCard}>
+                      <div className="d-flex mb-4">
                         <Image src={LumpCalImg} alt="cal-img" />
                         <div className={RdStyle.returnEstimation}>
                           <h6 className="ps-2 mb-1">Return Estimator</h6>
@@ -118,7 +117,6 @@ const RdCal = () => {
                           </p>
                         </div>
                       </div>
-                    </div>
 
                     <Form>
                       <div className={`${RdStyle.customformgroup} `}>
@@ -144,7 +142,7 @@ const RdCal = () => {
                           <div className="d-flex align-items-center">
                             <Form.Label>Select Duration</Form.Label>
                             <select
-                              className="ms-2"
+                              className="ms-2 mb-2 border border-sm"
                               value={durationType}
                               onChange={(e) =>
                                 handleDurationTypeChange(e.target.value)
@@ -183,7 +181,7 @@ const RdCal = () => {
                         </div>
                       </Form.Group>
 
-                      <Form.Group className="pt-5">
+                      <Form.Group className="pt-4">
                         <div
                           className={`d-flex justify-content-between ${RdStyle.rangefield}`}
                         >
@@ -222,13 +220,13 @@ const RdCal = () => {
                   xs={12}
                   md={12}
                   lg={6}
-                  className={`d-flex align-items-center `}
+                  className={`d-flex pt-md-5 pt-lg-0 ${RdStyle.verticalLine}`}
                 >
                   <div className={RdStyle.lumpsumCard}>
                     <div
-                      className={`d-flex align-items-center flex-column ${RdStyle.verticalLine} `}
+                      className={`d-flex align-items-center flex-column  `}
                     >
-                      <div className={`${RdStyle.totalInvest} ps-5 mt-2`}>
+                      <div className={`${RdStyle.totalInvest} ps-lg-5  ps-sm-0 `}>
                         <p>
                           The total value of your investment after{" "}
                           <strong>
@@ -242,7 +240,6 @@ const RdCal = () => {
                         className={` d-lg-flex d-md-flex pt-4 ${RdStyle.pie_chart_d_block}`}
                       >
                         <div className="d-flex flex-column">
-                          {/* Responsive PieChart */}
                           <div className={RdStyle.piechart_div}>
                             <ResponsiveContainer>
                               <PieChart>
@@ -273,7 +270,6 @@ const RdCal = () => {
                           </div>
                         </div>
                         <div className="ps-lg-5  mt-3 ps-sm-0">
-                          {/* Invested Amount Section */}
                           <div
                             className={`ps-2 ${RdStyle.investedAmount} `}
                             style={{
@@ -281,12 +277,8 @@ const RdCal = () => {
                             }}
                           >
                             <p>Invested Amount</p>
-                            {/* <h6>₹ 25000</h6> */}
                             <h6>₹ {amount * durationYear * (durationType === "Months" ? 1 : 12)}</h6>
-
                           </div>
-
-                          {/* Estimated Returns Section */}
                           <div
                             className={`ps-2 mt-4 ${RdStyle.investedAmount} `}
                             style={{
@@ -294,7 +286,6 @@ const RdCal = () => {
                             }}
                           >
                             <p>Est. Returns</p>
-                            {/* <h6>₹ 4500</h6> */}
                             <h6>₹ {calculateEstReturn(calculateTotalValue()).toLocaleString()}</h6>
 
                           </div>
@@ -328,16 +319,16 @@ const RdCal = () => {
                     Advantages of RD Calculator
                   </li>
                   <li className={RdStyle.sidebarItem}>
-                    How to use ET Money's RD Calculator?
+                    How to use Sernet's RD Calculator?
                   </li>
                   <li className={RdStyle.sidebarItem}>
-                    Related Mutual Fund RD Calculators ?
+                    Related RD Calculators ?
                   </li>
                   <li className={RdStyle.sidebarItem}>
-                    Advantages of SIP Calculator
+                    Advantages of RD Calculator
                   </li>
                   <li className={RdStyle.sidebarItem}>
-                    Related Mutual Fund SIP Calculators ?
+                    Related RD Calculators ?
                   </li>
                 </ul>
               </div>
@@ -357,7 +348,7 @@ const RdCal = () => {
                   </p>
                 </div>
                 <div className={RdStyle.quesAnsSection}>
-                  <h3>How can a SIP Calculator Help You?</h3>
+                  <h3>How can a RD Calculator Help You?</h3>
                   <p>
                     The Systematic investment Plan calculator essentially gives
                     investors a bifurcation of the future value of the SIP
@@ -379,7 +370,7 @@ const RdCal = () => {
                   </p>
                 </div>
                 <div className={RdStyle.quesAnsSection}>
-                  <h3>Advantages of SIP Calculator</h3>
+                  <h3>Advantages of RD Calculator</h3>
                   <p>
                     Investments made into market-linked instruments such as
                     Mutual Funds do not provide guaranteed returns. So investors
@@ -411,7 +402,7 @@ const RdCal = () => {
                   </p>
                 </div>
                 <div className={RdStyle.quesAnsSection}>
-                  <h3>How to use ET Money's SIP Calculator?</h3>
+                  <h3>How to use Sernet's RD Calculator?</h3>
                   <p>
                     If you know how much you want to invest in Mutual Funds
                     every month, you can use the ET Money SIP Calculator to
@@ -451,7 +442,7 @@ const RdCal = () => {
                   </p>
                 </div>
                 <div className={RdStyle.quesAnsSection}>
-                  <h3>Related Mutual Fund SIP Calculators ?</h3>
+                  <h3>Related RD Calculators ?</h3>
                   <p>
                     The Systematic investment Plan calculator essentially gives
                     investors a bifurcation of the future value of the SIP
@@ -478,54 +469,138 @@ const RdCal = () => {
         </section>
 
         <section className="pb-5 mt-5">
-          <div className={`${RdStyle.preHeading} py-5`}>
-            <h1 className="text-align-left pt-5">
+          <div className={`${RdStyle.faq_Heading} py-5`}>
+            <h1 className="text-align-left">
               FAQs (Frequently Asked Questions)
             </h1>
           </div>
-          <div>
-            <Accordion defaultActiveKey="0" alwaysOpen>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header className={RdStyle.custom_acco_header}>
-                  How can a SIP Calculator Help You?
-                </Accordion.Header>
-                <Accordion.Body>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
+            <div
+              className="accordion accordion-flush"
+              id="accordionFlushExample"
+            >
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${RdStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseOne"
+                  >
+                    How can a RD Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseOne"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${RdStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${RdStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseTwo"
+                  >
+                    Can I modify my RD amount?
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseTwo"
+                  className="accordion-collapse collapse show"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${RdStyle.acco_body}`}>
+                    There is no maximum tenure of a SIP. You can invest as long
+                    as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${RdStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseThree"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseThree"
+                  >
+                    How can a RD Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseThree"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${RdStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-              <Accordion.Item eventKey="1">
-                <Accordion.Header>Can I modify my SIP amount?</Accordion.Header>
-                <Accordion.Body>
-                  Yes, you can modify your SIP amount at any point during your
-                  tenure by contacting your fund manager or using the online
-                  portal.
-                </Accordion.Body>
-              </Accordion.Item>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${RdStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFour"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFour"
+                  >
+                    How can a RD Calculator Help You ?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseFour"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${RdStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-              <Accordion.Item eventKey="2">
-                <Accordion.Header>
-                  What is the minimum tenure for SIP?
-                </Accordion.Header>
-                <Accordion.Body>
-                  The minimum tenure for a SIP is usually 6 months, but it can
-                  vary depending on the mutual fund you select.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="3">
-                <Accordion.Header>
-                  What happens if I miss a SIP payment?
-                </Accordion.Header>
-                <Accordion.Body>
-                  If you miss a SIP payment, your account will not be penalized.
-                  However, consistent payments are encouraged for better
-                  returns.
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-          </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${RdStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFive"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFive"
+                  >
+                    How can a Rd Calculator Help You  ?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseFive"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${RdStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+            </div>
         </section>
       </div>
     </>

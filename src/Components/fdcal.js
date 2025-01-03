@@ -130,11 +130,11 @@ const FdCal = () => {
           </div>
 
           <div>
-            <Card className="p-5 border-0 shadow">
+            <Card className="p-5 border border-0 shadow-sm">
               <Row>
-                <Col xs={12} md={12} lg={6} className="mb-4">
+                <Col xs={12} md={12} lg={6} className="mb-4 ">
                   <div className={FdStyle.lumpsumCard}>
-                    <div className="mt-5">
+                    <div>
                       <div className="calc-img d-flex mb-4">
                         <Image src={LumpCalImg} alt="cal-img" />
                         <div className={FdStyle.returnEstimation}>
@@ -171,7 +171,7 @@ const FdCal = () => {
                           <div className="d-flex align-items-center">
                             <Form.Label>Select Duration</Form.Label>
                             <select
-                              className="ms-2"
+                              className="ms-2 mb-2 border border-sm"
                               value={durationType}
                               onChange={(e) =>
                                 handleDurationTypeChange(e.target.value)
@@ -236,7 +236,7 @@ const FdCal = () => {
                         </div>
                       </Form.Group>
 
-                      <Form.Group className="pt-5">
+                      <Form.Group className="pt-4">
                         <div
                           className={`d-flex justify-content-between ${FdStyle.rangefield}`}
                         >
@@ -277,17 +277,17 @@ const FdCal = () => {
                   xs={12}
                   md={12}
                   lg={6}
-                  className={`d-flex align-items-center `}
+                  className={`d-flex justify-content-around  ${FdStyle.verticalLine} `}
                 >
                   <div className={FdStyle.lumpsumCard}>
                     <div
-                      className={`d-flex align-items-center flex-column ${FdStyle.verticalLine} `}
+                      className={`d-flex align-items-center flex-column `}
                     >
-                      <div className={`${FdStyle.totalInvest} ps-5 mt-2`}>
+                      <div className={`${FdStyle.totalInvest} ps-5`}>
                         <p>
                           The total value of your investment after{" "}
                           <strong>
-                            {durationYear} {durationType} Years
+                            {durationYear} {durationType} 
                           </strong>{" "}
                           will be
                         </p>
@@ -375,25 +375,25 @@ const FdCal = () => {
               <div className={FdStyle.sidebar}>
                 <ul className="list-unstyled">
                   <li className={FdStyle.sidebarItem}>
-                    What is a SIP Calculator?
+                    What is a FD Calculator?
                   </li>
                   <li className={FdStyle.sidebarItem}>
-                    How can a SIP Calculator Help You?
+                    How can a FD Calculator Help You?
                   </li>
                   <li className={FdStyle.sidebarItem}>
-                    Advantages of SIP Calculator
+                    Advantages of FD Calculator
                   </li>
                   <li className={FdStyle.sidebarItem}>
-                    How to use ET Money's SIP Calculator?
+                    How to use Sernet's FD Calculator?
                   </li>
                   <li className={FdStyle.sidebarItem}>
-                    Related Mutual Fund SIP Calculators ?
+                    Related FD Calculators ?
                   </li>
                   <li className={FdStyle.sidebarItem}>
-                    Advantages of SIP Calculator
+                    Advantages of FD Calculator
                   </li>
                   <li className={FdStyle.sidebarItem}>
-                    Related Mutual Fund SIP Calculators ?
+                    Related FD Calculators ?
                   </li>
                 </ul>
               </div>
@@ -402,7 +402,7 @@ const FdCal = () => {
             <Col xs={12} md={8} lg={9}>
               <div className={FdStyle.qandA}>
                 <div className={FdStyle.quesAnsSection}>
-                  <h3>What is a SIP Calculator?</h3>
+                  <h3>What is a FD Calculator?</h3>
                   <p>
                     A SIP (Systematic Investment Plan) Calculator is an online
                     or software tool used to calculate the potential returns
@@ -413,7 +413,7 @@ const FdCal = () => {
                   </p>
                 </div>
                 <div className={FdStyle.quesAnsSection}>
-                  <h3>How can a SIP Calculator Help You?</h3>
+                  <h3>How can a FD Calculator Help You?</h3>
                   <p>
                     The Systematic investment Plan calculator essentially gives
                     investors a bifurcation of the future value of the SIP
@@ -435,7 +435,7 @@ const FdCal = () => {
                   </p>
                 </div>
                 <div className={FdStyle.quesAnsSection}>
-                  <h3>Advantages of SIP Calculator</h3>
+                  <h3>Advantages of FD Calculator</h3>
                   <p>
                     Investments made into market-linked instruments such as
                     Mutual Funds do not provide guaranteed returns. So investors
@@ -467,7 +467,7 @@ const FdCal = () => {
                   </p>
                 </div>
                 <div className={FdStyle.quesAnsSection}>
-                  <h3>How to use ET Money's SIP Calculator?</h3>
+                  <h3>How to use Sernet's FD Calculator?</h3>
                   <p>
                     If you know how much you want to invest in Mutual Funds
                     every month, you can use the ET Money SIP Calculator to
@@ -507,7 +507,7 @@ const FdCal = () => {
                   </p>
                 </div>
                 <div className={FdStyle.quesAnsSection}>
-                  <h3>Related Mutual Fund SIP Calculators ?</h3>
+                  <h3>Related FD Calculators ?</h3>
                   <p>
                     The Systematic investment Plan calculator essentially gives
                     investors a bifurcation of the future value of the SIP
@@ -534,54 +534,138 @@ const FdCal = () => {
         </section>
 
         <section className="pb-5 mt-5">
-          <div className={`${FdStyle.preHeading} py-5`}>
-            <h1 className="text-align-left pt-5">
+          <div className={`${FdStyle.faq_Heading} py-5`}>
+            <h1 className="text-align-left">
               FAQs (Frequently Asked Questions)
             </h1>
           </div>
-          <div>
-            <Accordion defaultActiveKey="0" alwaysOpen>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header className={FdStyle.custom_acco_header}>
-                  How can a SIP Calculator Help You?
-                </Accordion.Header>
-                <Accordion.Body>
-                  There is no maximum tenure of a SIP. You can invest as long as
-                  you can. The minimum tenure you can go for is 3 years.
-                </Accordion.Body>
-              </Accordion.Item>
+            <div
+              className="accordion accordion-flush"
+              id="accordionFlushExample"
+            >
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${FdStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseOne"
+                  >
+                    How can a FD Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseOne"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${FdStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${FdStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseTwo"
+                  >
+                    Can I modify my FD amount?
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseTwo"
+                  className="accordion-collapse collapse show"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${FdStyle.acco_body}`}>
+                    There is no maximum tenure of a SIP. You can invest as long
+                    as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${FdStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseThree"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseThree"
+                  >
+                    How can a FD Calculator Help You?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseThree"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${FdStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-              <Accordion.Item eventKey="1">
-                <Accordion.Header>Can I modify my SIP amount?</Accordion.Header>
-                <Accordion.Body>
-                  Yes, you can modify your SIP amount at any point during your
-                  tenure by contacting your fund manager or using the online
-                  portal.
-                </Accordion.Body>
-              </Accordion.Item>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${FdStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFour"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFour"
+                  >
+                    How can a FD Calculator Help You ?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseFour"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${FdStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
 
-              <Accordion.Item eventKey="2">
-                <Accordion.Header>
-                  What is the minimum tenure for SIP?
-                </Accordion.Header>
-                <Accordion.Body>
-                  The minimum tenure for a SIP is usually 6 months, but it can
-                  vary depending on the mutual fund you select.
-                </Accordion.Body>
-              </Accordion.Item>
-
-              <Accordion.Item eventKey="3">
-                <Accordion.Header>
-                  What happens if I miss a SIP payment?
-                </Accordion.Header>
-                <Accordion.Body>
-                  If you miss a SIP payment, your account will not be penalized.
-                  However, consistent payments are encouraged for better
-                  returns.
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-          </div>
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className={`${FdStyle.accbtn} px-0 accordion-button collapsed `}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseFive"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseFive"
+                  >
+                    How can a FD Calculator Help You  ?{" "}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseFive"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div className={`accordion-body px-0 ${FdStyle.acco_body}`}>
+                  There is no maximum tenure of a SIP. You can invest as long
+                  as you can. The minimum tenure you can go for is 3 years.
+                  </div>
+                </div>
+              </div>
+            </div>
         </section>
       </div>
     </>
